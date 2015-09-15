@@ -1,0 +1,39 @@
+﻿@model TourGuideWebsite.Models.RegResponse
+
+@{
+    ViewBag.Title = "RegForm";
+}
+
+<h2>Registration Form</h2>
+<div>
+    <div>
+        <span>@Model.EventInfo.TourName</span><br />
+        <span>@Model.EventInfo.TourDate.ToString("dd/MM/yyyy hh:mm")</span><br />
+    </div>
+
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        // Passing the rest of the fields to the controller (the div is hidden)
+        <div hidden="hidden">
+            @Html.EditorFor(x => x.EventInfo);
+            @Html.EditorFor(x => x.UserInfo);
+        </div>
+
+
+        <p>First Name: @Html.EditorFor(x => x.FirstName) </p>
+            <p>Last Name: @Html.EditorFor(x => x.LastName)</p>
+            <p>Birthday: @Html.EditorFor(x => x.Birthday)</p>  //this needs to have a datetime picker
+            <p>
+                Will you attend?
+                @Html.DropDownListFor(x => x.WillAttend, new[] {
+            new SelectListItem() {Text = "Yes, I'll be there",
+                Value = bool.TrueString},
+                new SelectListItem() {Text = "No, I can't come",  Value = bool.FalseString}
+                }, "Choose an option")
+
+            </p>
+            <input type="submit" value="Register" />
+    }
+</div>

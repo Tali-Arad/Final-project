@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourGuideBLL", "TourGuideBLL\TourGuideBLL.csproj", "{C76BD2CB-910F-4857-9261-D12CC5EE810C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourGuideProtocol", "TourGuideProtocol\TourGuideProtocol.csproj", "{AA84FF56-BD74-4B58-904C-E7DECFD639AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourGuideWebsite", "TourGuideWebsite\TourGuideWebsite.csproj", "{284C83DB-F49A-4828-B112-F32632F1B72D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D821617D-CA67-41CF-9D6B-117A5BF1A70F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourGuideDAL", "TourGuideDAL\TourGuideDAL.csproj", "{57EE3755-A262-4841-B694-51BBB7D8F434}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C76BD2CB-910F-4857-9261-D12CC5EE810C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C76BD2CB-910F-4857-9261-D12CC5EE810C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C76BD2CB-910F-4857-9261-D12CC5EE810C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C76BD2CB-910F-4857-9261-D12CC5EE810C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA84FF56-BD74-4B58-904C-E7DECFD639AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA84FF56-BD74-4B58-904C-E7DECFD639AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA84FF56-BD74-4B58-904C-E7DECFD639AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA84FF56-BD74-4B58-904C-E7DECFD639AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284C83DB-F49A-4828-B112-F32632F1B72D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284C83DB-F49A-4828-B112-F32632F1B72D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284C83DB-F49A-4828-B112-F32632F1B72D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284C83DB-F49A-4828-B112-F32632F1B72D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57EE3755-A262-4841-B694-51BBB7D8F434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57EE3755-A262-4841-B694-51BBB7D8F434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57EE3755-A262-4841-B694-51BBB7D8F434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57EE3755-A262-4841-B694-51BBB7D8F434}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

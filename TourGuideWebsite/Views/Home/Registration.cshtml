@@ -1,0 +1,17 @@
+﻿@model TourGuideWebsite.Models.UserDetails
+
+@{
+    ViewBag.Title = "Registration";
+}
+
+<h1>Registration</h1>
+<p></p>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.EditorForModel()
+    <p><input type="submit" value="Register as user" /></p>
+    <p><input type="hidden" value="@ViewBag.returnUrl" /></p>
+
+       <!-- Add client-side validation -->
+}

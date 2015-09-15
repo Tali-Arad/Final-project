@@ -1,0 +1,56 @@
+﻿@model List<TourGuideProtocol.DataStruct.AEvent>
+@using TourGuideProtocol.DataStruct
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1> Eyal Arad. Your tour guide in Israel.</h1>
+
+<h2>
+    Hi! I'm Eyal, a certified tour guide.<br/>
+    I invite you to register to tours in amazing Israel!
+</h2>
+<div>
+    <input type="image" src="/Content/Images/Jerusalem.jpg" alt=" submit" width="100" height="100">
+    <h3> Jerusalem </h3>
+
+</div>
+<div>
+    <input type="image" src="/Content/Images/Haifa.jpg" alt=" submit" width="100" height="100">
+    <h3> Haifa </h3>
+</div>
+<div>
+    <input type="image" src="/Content/Images/Tel_Aviv.jpg" alt=" submit" width="100" height="100">
+    <h3> Tel Aviv </h3>
+
+</div>
+
+
+<form>
+    <input type="text" name="search"><br><br />
+    <input type="submit" value="Search Tour">
+</form>
+
+
+<ul>
+    @foreach(AEvent e in Model)
+    {
+
+        <li>@Html.ActionLink(@e.TourName +" " + @e.TourDate, "EventDetails", new { id = @e.TourID, date = @e.TourDate })  <span></span></li>
+    }
+</ul>
+
+<input type="button" value="Sign up" onclick="gotoRegistration()" />
+<input type="button" value="Log in" onclick="gotoLogin()" />
+
+<script type="text/javascript">
+    function gotoRegistration() {
+        window.location.href = 'Home/Registration';
+    }
+
+    function gotoLogin() {
+        window.location.href = 'Account/Login';
+    }
+</script>

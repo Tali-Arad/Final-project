@@ -1,0 +1,24 @@
+﻿@model TourGuideWebsite.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h1>Log In</h1>
+<p>Please log to register on tours:</p>
+@using(Html.BeginForm())
+{ 
+    @Html.EditorForModel()
+    <p><input type="submit" name="login" value="Log in"/></p>
+    <!-- Add client-side validation -->   
+}
+<input type="button" value="Sign up" onclick="gotoRegistration()" />
+<script type="text/javascript">
+    function gotoRegistration() {
+        console.log("test");
+        window.location.href = '../../Home/Registration';
+    }
+</script>
+
+
+

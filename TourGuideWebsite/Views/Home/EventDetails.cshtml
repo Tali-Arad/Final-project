@@ -1,0 +1,70 @@
+﻿@model TourGuideWebsite.Models.EventDetails
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Event Details</title>
+
+    <script type="text/javascript">
+
+        var tourid = '@Model.tourInfo.TourID';
+        var tourdate = '@Model.eventInfo.TourDate';
+        function gotoRegForm()
+        {
+            window.location.href = "../RegForm/"+tourid+"?date="+tourdate;
+        }
+    </script>
+</head>
+<body>
+    <h1>Event Details</h1>
+    <table class="Grid">
+        <tr>
+            <td>Name</td>
+            <td>@Model.tourInfo.TourName</td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>@Model.eventInfo.TourDate.ToString("dd/MM/yyyy hh:mm")</td>
+        </tr>
+        <tr>
+            <td>Location</td>
+            <td>@Model.tourInfo.TourLocation</td>
+        </tr>
+        <tr>
+            <td>Area</td>
+            <td>@Model.tourInfo.TourArea</td>
+        </tr>
+        <tr>
+            <td>Duration</td>
+            <td>@Model.tourInfo.TourDuration</td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>@Model.tourInfo.TourCategory</td>
+        </tr>
+        <tr>
+            <td>Guide</td>
+            <td>@Model.eventInfo.TourGuide</td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td>@Model.tourInfo.TourPrice.ToString()</td>
+        </tr>
+        <tr>
+            <td>Is on?</td>
+            <td>@Model.eventInfo.IsOn.ToString()</td>
+        </tr>
+    </table>
+    <p> @Model.tourInfo.TourDescription</p>
+
+    <!-- the button click calls a js function taht goes to RegForm with the parameters TourID and TourDate --> 
+    <input type="button" value="Register" onclick="gotoRegForm()"/>
+
+</body>
+</html>
