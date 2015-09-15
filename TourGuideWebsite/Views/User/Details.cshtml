@@ -1,0 +1,85 @@
+﻿@model TourGuideProtocol.DataStruct.AUser
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>AUser</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RegTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RegTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserIP)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserIP)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserFirstName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserFirstName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserLastName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserLastName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserPhone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserPhone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserEmail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserEmail)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserPassword)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserPassword)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Username)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserBirthday)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserBirthday)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

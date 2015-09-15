@@ -23,6 +23,9 @@ namespace TourGuideWebsite.Models
         [Required]
         [DataType(DataType.Password)] 
         public string UserPassword { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        public string ConfirmPass { get; set; }
        
     }
 }

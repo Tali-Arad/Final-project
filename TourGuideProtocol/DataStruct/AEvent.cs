@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace TourGuideProtocol.DataStruct
 {
@@ -10,8 +11,12 @@ namespace TourGuideProtocol.DataStruct
     {
         public string TourID { get; set; }
         public string TourName { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
         public DateTime TourDate { get; set; }
+        [Required]
         public string TourGuide { get; set; }
+        [Required]
         public int IsOn { get; set; }
     }
 }

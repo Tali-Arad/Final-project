@@ -19,6 +19,9 @@ namespace TourGuideProtocol.DataInt
         List<AUser> GetUsers();
         AUser GetUserByUsername(string username);
         bool AddUser(AUser userReg);
+        List<AReg> GetRegistrations();
+        bool AddTour(ATour tour);
+        bool AddEvent(AEvent tourEvent);
 
 
     }

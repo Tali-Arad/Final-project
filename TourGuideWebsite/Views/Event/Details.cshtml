@@ -1,0 +1,50 @@
+﻿@model TourGuideProtocol.DataStruct.AEvent
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>AEvent</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourGuide)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourGuide)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsOn)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsOn)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

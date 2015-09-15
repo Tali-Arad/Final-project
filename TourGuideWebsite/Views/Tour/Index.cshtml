@@ -1,0 +1,87 @@
+﻿@model IEnumerable<TourGuideProtocol.DataStruct.ATour>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tours</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TourID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourArea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourDuration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinReg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxReg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TourDescription)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourArea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourDuration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinReg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxReg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourDescription)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TourID  }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

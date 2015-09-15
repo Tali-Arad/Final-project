@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Administation Actions</h2>
+
+<p><input type="button" value="Tours" onclick="gotoTour()" /></p>
+<p><input type="button" value="Events" onclick="gotoEvent()" /></p>
+<p><input type="button" value="Registrations" onclick="gotoReg()" /></p>
+<p><input type="button" value="Users" onclick="gotoUser()" /></p>
+
+<script type="text/javascript">
+
+    // pass login credentials?
+    function gotoTour() {
+        window.location.href = "../Tour/";
+    }
+    function gotoEvent() {
+        window.location.href = "../Event/";
+    }
+    function gotoReg() {
+        window.location.href = "../Reg/";
+    }
+    function gotoUser() {
+        window.location.href = "../User/";
+    }
+</script>
+

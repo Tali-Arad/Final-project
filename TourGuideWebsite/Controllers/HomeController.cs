@@ -7,6 +7,7 @@ using TourGuideWebsite.Models;
 using TourGuideBLL;
 using TourGuideProtocol.DataInt;
 using TourGuideProtocol.DataStruct;
+
 namespace TourGuideWebsite.Controllers
 {
     public class HomeController : Controller
@@ -72,7 +73,7 @@ namespace TourGuideWebsite.Controllers
             }
             else
                 return View();
-           
+ 
         }
 
         [HttpGet]
@@ -88,6 +89,7 @@ namespace TourGuideWebsite.Controllers
             if (ModelState.IsValid)
             {
                 // Add validation and password hashing
+                // Add password confirmation
                 AUser user = new AUser();
                 user.RegTime = DateTime.Now;
                 user.UserIP = Request.ServerVariables["REMOTE_ADDR"];

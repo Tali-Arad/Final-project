@@ -23,9 +23,10 @@ namespace TourGuideDAL
                                         TourArea = c.TourArea,
                                         TourCategory = c.TourCategory,
                                         TourDuration = (int)c.TourDuration,
-                                        TourPrice = (double)c.TourPrice,
+                                        TourPrice = (decimal)c.TourPrice,
                                         MinReg = (int)c.MinReg,
-                                        MaxReg = (int)c.MaxReg
+                                        MaxReg = (int)c.MaxReg,
+                                        TourDescription = c.TourDescription
                                     }
                               ).ToList<ATour>();
                 return rows;
@@ -46,7 +47,7 @@ namespace TourGuideDAL
                                          TourArea = c.TourArea,
                                          TourCategory = c.TourCategory,
                                          TourDuration = (int)c.TourDuration, 
-                                         TourPrice = (double)c.TourPrice,
+                                         TourPrice = (decimal)c.TourPrice,
                                          MinReg = (int)c.MinReg,
                                          MaxReg = (int)c.MaxReg
                                      }
@@ -127,13 +128,61 @@ namespace TourGuideDAL
                                   TourArea = c.TourArea,
                                   TourCategory = c.TourCategory,
                                   TourDuration = (int)c.TourDuration,
-                                  TourPrice = (double)c.TourPrice,
+                                  TourPrice = (decimal)c.TourPrice,
                                   MinReg = (int)c.MinReg,
                                   MaxReg = (int)c.MaxReg,
                                   TourDescription = c.TourDescription
                               }
                               ).FirstOrDefault<ATour>();
                 return tour;
+            }
+        }
+
+        public List<AReg> GetRegistrations() // gets all events
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                List<AReg> rows = (from c in dc.Registrations
+                                     select new AReg()
+                                     {
+                                        RegID = c.RegID.ToString(),
+                                        TourID = c.TourID.ToString(),
+                                        TourDate = c.TourDate,
+                                        UserID = c.UserID.ToString(),
+                                        RegFirstName = c.RegFirstName,
+                                        RegLastName = c.RegLastName,
+                                        RegBirthday = c.RegBirthday,
+                                        WillAttend = c.WillAttend,
+                                        IsPaid = c.IsPaid,
+                                        IsSentEmail = c.IsSentEmail,
+                                        Attended = c.Attended,
+                                        RegTime = c.RegTime   
+                                     }
+                              ).ToList<AReg>();
+                return rows;
+            }
+        }
+
+        public List<AUser> GetUsers() // gets all users
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                List<AUser> rows = (from c in dc.Users
+                                    select new AUser()
+                                    {
+                                        UserID = c.UserID.ToString(),
+                                        RegTime = c.RegTime,
+                                        UserIP = c.RegIP,
+                                        UserFirstName = c.UserFirstName,
+                                        UserLastName = c.UserLastName,
+                                        UserPhone = c.UserPhone,
+                                        UserEmail = c.UserEmail,
+                                        UserPassword = c.UserPassword,
+                                        Username = c.Username,
+                                        UserBirthday = c.UserBirthday,
+                                    }
+                              ).ToList<AUser>();
+                return rows;
             }
         }
 
@@ -182,28 +231,42 @@ namespace TourGuideDAL
             }
         }
 
-        public List<AUser> GetUsers() // gets all users
+        public bool AddTour(ATour tour)
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
-                List<AUser> rows = (from c in dc.Users
-                                    select new AUser()
-                                    {
-                                        UserID = c.UserID.ToString(),
-                                        RegTime = c.RegTime,
-                                        UserIP = c.RegIP,
-                                        UserFirstName = c.UserFirstName,
-                                        UserLastName = c.UserLastName,
-                                        UserPhone = c.UserPhone,
-                                        UserEmail = c.UserEmail,
-                                        UserPassword = c.UserPassword,
-                                        Username = c.Username,
-                                        UserBirthday = c.UserBirthday,
-                                    }
-                              ).ToList<AUser>();
-                return rows;
+                Tour newTour = new Tour();
+                newTour.TourName = tour.TourName;
+                newTour.TourPrice = tour.TourPrice;
+                newTour.TourLocation = tour.TourLocation;
+                newTour.TourArea = tour.TourArea;
+                newTour.TourCategory = tour.TourCategory;
+                newTour.TourDuration = (short)tour.TourDuration;
+                newTour.TourDescription = tour.TourDescription;
+                newTour.MinReg = (byte)tour.MinReg;
+                newTour.MaxReg = (byte)tour.MaxReg;
+                newTour.TourID = System.Guid.NewGuid(); 
+                dc.Tours.InsertOnSubmit(newTour);
+                dc.SubmitChanges();
+                return true;
             }
         }
+
+        public bool AddEvent(AEvent tourEvent)
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                Event newEvent = new Event();
+                newEvent.TourID = System.Guid.Parse(tourEvent.TourID);
+                newEvent.TourDate = tourEvent.TourDate;
+                newEvent.TourGuide = tourEvent.TourGuide;
+                newEvent.IsOn = (byte)tourEvent.IsOn;
+                dc.Events.InsertOnSubmit(newEvent);
+                dc.SubmitChanges();
+                return true;
+            }
+        }
+
 
         public AUser GetUserByUsername(string username) // gets user by username
         {

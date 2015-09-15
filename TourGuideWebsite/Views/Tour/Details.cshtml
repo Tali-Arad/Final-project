@@ -1,0 +1,85 @@
+﻿@model TourGuideProtocol.DataStruct.ATour
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ATour</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourLocation)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourLocation)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourArea)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourArea)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourCategory)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourCategory)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourDuration)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourDuration)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourPrice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourPrice)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MinReg)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MinReg)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MaxReg)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MaxReg)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourDescription)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourDescription)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

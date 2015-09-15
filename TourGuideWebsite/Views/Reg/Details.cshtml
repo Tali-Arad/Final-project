@@ -1,0 +1,99 @@
+﻿@model TourGuideProtocol.DataStruct.AReg
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>AReg</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RegID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RegID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RegFirstName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RegFirstName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RegLastName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RegLastName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RegBirthday)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RegBirthday)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RegTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RegTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.WillAttend)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.WillAttend)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsPaid)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsPaid)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsSentEmail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsSentEmail)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Attended)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Attended)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
