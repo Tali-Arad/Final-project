@@ -14,6 +14,7 @@ namespace TourGuideProtocol.DataStruct
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime TourDate { get; set; }
+        public DateTime TourOriginalDate { get; set; }
         [Required]
         public string TourGuide { get; set; }
         [Required]

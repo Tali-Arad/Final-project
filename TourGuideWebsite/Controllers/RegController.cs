@@ -43,13 +43,20 @@ namespace TourGuideWebsite.Controllers
         // POST: /Reg/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(AReg reg)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    tourOp.AddReg(reg);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
             }
             catch
             {
@@ -60,47 +67,59 @@ namespace TourGuideWebsite.Controllers
         //
         // GET: /Reg/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<AReg> registrations = tourOp.GetRegistrations();
+            AReg reg = registrations.Single<AReg>(x => x.RegID == id);
+            return View(reg);
         }
 
         //
         // POST: /Reg/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string id, AReg reg)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    reg.RegID = id;
+                    tourOp.EditReg(reg);
+                    return RedirectToAction("Index");
+                }
+                else
+                    return View(reg);
             }
             catch
             {
-                return View();
+                return View(reg);
             }
         }
 
         //
         // GET: /Reg/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<AReg> regs = tourOp.GetRegistrations();
+            AReg reg = regs.Single<AReg>(x => x.RegID == id);
+            return View(reg);
         }
 
         //
         // POST: /Reg/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string id, AReg reg)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                BTourGuideOp tourOp = new BTourGuideOp();
+                tourOp.DeleteReg(id);
                 return RedirectToAction("Index");
             }
             catch

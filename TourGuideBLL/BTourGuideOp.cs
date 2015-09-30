@@ -38,10 +38,7 @@ namespace TourGuideBLL
             return TourDAL.GetEvent(id, date);
         }
 
-        public bool AddReg(AReg reg)
-        {
-            return TourDAL.AddReg(reg);
-        }
+        
 
         public List<AUser> GetUsers()
         {
@@ -71,6 +68,43 @@ namespace TourGuideBLL
         public bool AddEvent(AEvent tourEvent)
         {
             return TourDAL.AddEvent(tourEvent);
+        }
+        public bool AddReg(AReg reg)
+        {
+            return TourDAL.AddReg(reg);
+        }
+        public bool EditEvent(AEvent tourEvent)
+        {
+            return TourDAL.EditEvent(tourEvent);
+        }
+
+        public bool DeleteEvent(string tourid, DateTime tourdate)
+        {
+            return TourDAL.DeleteEvent(tourid, tourdate);
+        }
+        public bool EditReg(AReg reg)
+        {
+            return TourDAL.EditReg(reg);
+        }
+        public bool DeleteReg(string id)
+        {
+            return TourDAL.DeleteReg(id);
+        }
+        public bool EditTour(ATour tour)
+        {
+            return TourDAL.EditTour(tour);
+        }
+        public bool DeleteTour(string id)
+        {
+            return TourDAL.DeleteTour(id);
+        }
+        public bool EditUser(AUser user)
+        {
+            return TourDAL.EditUser(user);
+        }
+        public bool DeleteUser(string id)
+        {
+            return TourDAL.DeleteUser(id);
         }
     }
 }

@@ -1,0 +1,92 @@
+﻿@model TourGuideProtocol.DataStruct.AReg
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    // Passing the TourOriginalDate to the controller (the div is hidden)
+    <div hidden="hidden">
+        @Html.EditorFor(x => x.RegID);
+        @Html.EditorFor(x => x.TourID);
+        @Html.EditorFor(x => x.TourDate);
+        @Html.EditorFor(x => x.UserID);
+        @Html.EditorFor(x => x.RegTime);
+    </div>
+
+    <fieldset>
+        <legend>AReg</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RegFirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RegFirstName)
+            @Html.ValidationMessageFor(model => model.RegFirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RegLastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RegLastName)
+            @Html.ValidationMessageFor(model => model.RegLastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RegBirthday)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RegBirthday)
+            @Html.ValidationMessageFor(model => model.RegBirthday)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WillAttend)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WillAttend)
+            @Html.ValidationMessageFor(model => model.WillAttend)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPaid)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsPaid)
+            @Html.ValidationMessageFor(model => model.IsPaid)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsSentEmail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsSentEmail)
+            @Html.ValidationMessageFor(model => model.IsSentEmail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Attended)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Attended)
+            @Html.ValidationMessageFor(model => model.Attended)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

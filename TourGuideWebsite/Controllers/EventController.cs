@@ -77,48 +77,72 @@ namespace TourGuideWebsite.Controllers
 
         //
         // GET: /Event/Edit/5
-
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string tourid, DateTime tourdate)
         {
-            return View();
+            // This does not work because UrlReferrer does not include the querystring
+            // Preventing access to the Edit/Delete view after an Event was deleted or updated
+            //string url = Request.UrlReferrer.AbsoluteUri;
+        //    if (url.Contains("Yes"))
+       //     {
+         //       return RedirectToAction("Index");
+         //   }
+          //  else
+          //  {
+            // Passing the current values to the view:
+            BTourGuideOp tourOp = new BTourGuideOp();
+            AEvent tourEvent = tourOp.GetEvent(tourid, tourdate);
+            return View(tourEvent);
+          //  }
         }
+        
 
         //
         // POST: /Event/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string tourid, AEvent tourEvent)
         {
             try
             {
                 // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    tourEvent.TourID = tourid;
+                    tourEvent.TourOriginalDate = tourEvent.TourOriginalDate;
+                    tourOp.EditEvent(tourEvent);
+                    return RedirectToAction("Index", new { edited="Yes" });
+                }
+                else
+                    return View(tourEvent);
             }
             catch
             {
-                return View();
+                return View(tourEvent);
             }
         }
 
         //
         // GET: /Event/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string tourid, DateTime tourdate)
         {
-            return View();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<AEvent> events = tourOp.GetEvents();
+            AEvent tourEvent = events.Single<AEvent>(x => x.TourID == tourid && x.TourDate == tourdate);
+            return View(tourEvent);
         }
 
         //
         // POST: /Event/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string tourid, AEvent tourEvent)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                BTourGuideOp tourOp = new BTourGuideOp();
+                tourOp.DeleteEvent(tourid, tourEvent.TourDate);
                 return RedirectToAction("Index");
             }
             catch

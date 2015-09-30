@@ -1,0 +1,101 @@
+﻿@model TourGuideProtocol.DataStruct.ATour
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ATour</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TourName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TourName)
+            @Html.ValidationMessageFor(model => model.TourName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TourLocation)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TourLocation)
+            @Html.ValidationMessageFor(model => model.TourLocation)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TourArea)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TourArea)
+            @Html.ValidationMessageFor(model => model.TourArea)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TourCategory)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TourCategory)
+            @Html.ValidationMessageFor(model => model.TourCategory)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TourDuration)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TourDuration)
+            @Html.ValidationMessageFor(model => model.TourDuration)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TourPrice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TourPrice)
+            @Html.ValidationMessageFor(model => model.TourPrice)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MinReg)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MinReg)
+            @Html.ValidationMessageFor(model => model.MinReg)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MaxReg)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MaxReg)
+            @Html.ValidationMessageFor(model => model.MaxReg)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TourDescription)
+        </div>
+        
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TourDescription) <!-- This should be a text field -->
+            @Html.ValidationMessageFor(model => model.TourDescription)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

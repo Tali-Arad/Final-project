@@ -68,6 +68,7 @@ namespace TourGuideDAL
                                          TourName = tours.TourName, 
                                          TourID = events.TourID.ToString(),
                                          TourDate = events.TourDate,
+                                         TourOriginalDate = events.TourDate,
                                          TourGuide = events.TourGuide,
                                          IsOn = events.IsOn
                                      }
@@ -106,6 +107,7 @@ namespace TourGuideDAL
                                         TourName = tours.TourName,
                                         TourID = events.TourID.ToString(),
                                         TourDate = events.TourDate,
+                                        TourOriginalDate = events.TourDate,
                                         TourGuide = events.TourGuide,
                                         IsOn = events.IsOn
                                     }
@@ -200,9 +202,9 @@ namespace TourGuideDAL
                 registration.TourDate = reg.TourDate;
                 registration.TourID = System.Guid.Parse(reg.TourID);
                 registration.UserID = System.Guid.Parse(reg.UserID);
-                registration.RegID = System.Guid.NewGuid();
                 registration.RegTime = DateTime.Now;
                 registration.WillAttend = (byte)reg.WillAttend;
+                registration.RegID = System.Guid.NewGuid();
                 dc.Registrations.InsertOnSubmit(registration);
                 dc.SubmitChanges();
                 return true;
@@ -292,9 +294,204 @@ namespace TourGuideDAL
             }
         }
 
-
-
+        public bool EditEvent(AEvent tourEvent)
+        {
+        using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+        {
+            if (tourEvent.TourDate == tourEvent.TourOriginalDate) // The TourDate is not changed - save the other changes
+            {
+                    Event row = (from c in dc.Events
+                                 where (c.TourID.ToString() == tourEvent.TourID && c.TourDate == tourEvent.TourDate)
+                                 select c).FirstOrDefault<Event>();
+                    row.TourGuide = tourEvent.TourGuide;
+                    row.IsOn = (byte)tourEvent.IsOn;
+                    dc.SubmitChanges();
+                    return true;
+            }
+            else // The TourDate has been changed - delete the event and create a new one with the new date. Copy the registrations with the new date
+            {
+                    AddEvent(tourEvent); // Adding the new event (the same event with the new date)
+                    // Adding new registrations to the new event (with the new date)
+                    List<Registration> registrations = (from r in dc.Registrations
+                                                        where (r.TourID.ToString() == tourEvent.TourID && r.TourDate == tourEvent.TourOriginalDate)
+                                                        select r).ToList();
+                    foreach (Registration reg in registrations)
+                    {
+                        AReg newReg = new AReg();
+                        newReg.IsSentEmail = reg.IsSentEmail;
+                        newReg.IsPaid = reg.IsPaid;
+                        newReg.Attended = reg.Attended;
+                        newReg.RegFirstName = reg.RegFirstName;
+                        newReg.RegLastName = reg.RegLastName;
+                        newReg.RegBirthday = reg.RegBirthday;
+                        newReg.TourDate = tourEvent.TourDate;
+                        newReg.TourID = tourEvent.TourID;
+                        newReg.UserID = reg.UserID.ToString();
+                        newReg.WillAttend = (byte)reg.WillAttend;
+                        AddReg(newReg);
+                    }
+                    DeleteEvent(tourEvent.TourID, tourEvent.TourOriginalDate); // this function also deletes the previous date regisrations
+                    dc.SubmitChanges();
+                    return true;  
+              }
         }
+                    
+        }
+
+        public bool EditReg(AReg reg)
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+
+                Registration row = (from c in dc.Registrations
+                             where (c.RegID.ToString() == reg.RegID)
+                             select c).FirstOrDefault<Registration>();
+                row.IsSentEmail = (byte)reg.IsSentEmail;
+                row.IsPaid = (byte)reg.IsPaid;
+                row.Attended = (byte)reg.Attended; ;
+                row.RegFirstName = reg.RegFirstName;
+                row.RegLastName = reg.RegLastName;
+                row.RegBirthday = reg.RegBirthday;
+                row.WillAttend = (byte)reg.WillAttend;
+                dc.SubmitChanges();
+                return true;     
+            }
+        }
+
+        public bool EditTour(ATour tour)
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+
+                Tour row = (from c in dc.Tours
+                                    where (c.TourID.ToString() == tour.TourID)
+                                    select c).FirstOrDefault<Tour>();
+                row.MaxReg = (byte)tour.MaxReg;
+                row.MinReg = (byte)tour.MinReg;
+                row.TourArea = tour.TourArea;
+                row.TourCategory = tour.TourCategory;
+                row.TourDescription = tour.TourDescription;
+                row.TourDuration = (short)tour.TourDuration;
+                row.TourLocation = tour.TourLocation;
+                row.TourName = tour.TourName;
+                row.TourPrice = tour.TourPrice;
+                dc.SubmitChanges();
+                return true;
+            }
+        }
+
+        public bool EditUser(AUser user)
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+
+                User row = (from c in dc.Users
+                            where (c.UserID.ToString() == user.UserID)
+                            select c).FirstOrDefault<User>();
+                row.UserBirthday = user.UserBirthday;
+                row.UserEmail = user.UserEmail;
+                row.UserFirstName = user.UserFirstName;
+                row.UserLastName = user.UserLastName;
+                row.Username = user.Username;
+                row.UserPassword = user.UserPassword;
+                row.UserPhone = user.UserPhone;
+                dc.SubmitChanges();
+                return true;
+            }
+        }
+
+
+
+          public bool DeleteEvent(string tourid, DateTime tourdate)
+          {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+
+                Event row = (from c in dc.Events
+                             where (c.TourID.ToString() == tourid && c.TourDate == tourdate)
+                             select c).FirstOrDefault<Event>();
+                dc.Events.DeleteOnSubmit(row);
+
+                // The deleted event's registrations must be deleted too. Otherwise, the sql servers throws an 
+                // exeption.
+                List<Registration> registrations= (from r in dc.Registrations
+                              where (r.TourID.ToString() == tourid && r.TourDate == tourdate)
+                              select r).ToList();
+                foreach(Registration reg in registrations)
+                {
+                   dc.Registrations.DeleteOnSubmit(reg);
+                }
+                dc.SubmitChanges();
+                return true;
+            }
+
+        
        }
+
+          public bool DeleteReg(string id)
+          {
+              using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+              {
+
+                  Registration row = (from c in dc.Registrations
+                               where (c.RegID.ToString() == id)
+                               select c).FirstOrDefault<Registration>();
+                  dc.Registrations.DeleteOnSubmit(row);
+                  dc.SubmitChanges();
+                  return true;
+              }
+          }
+
+          public bool DeleteTour(string id)
+          {
+              using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+              {
+
+                  Tour row = (from c in dc.Tours
+                                      where (c.TourID.ToString() == id)
+                                      select c).FirstOrDefault<Tour>();
+                  dc.Tours.DeleteOnSubmit(row);
+
+                  // The deleted Tour's events must be deleted too. Otherwise, the sql servers throws an 
+                  // exeption.
+                  List<Event> events = (from e in dc.Events
+                                                      where (e.TourID.ToString() == id)
+                                                      select e).ToList();
+                  foreach (Event e in events)
+                  {
+                      DeleteEvent(e.TourID.ToString(), e.TourDate); // this will also deleted all registrations for the event
+                  }
+
+                  dc.SubmitChanges();
+                  return true;
+              }
+          }
+
+          public bool DeleteUser(string id)
+          {
+              using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+              {
+
+                  User row = (from c in dc.Users
+                              where (c.UserID.ToString() == id)
+                              select c).FirstOrDefault<User>();
+                  dc.Users.DeleteOnSubmit(row);
+
+                  // The deleted User's registrations must be deleted too. Otherwise, the sql servers throws an 
+                  // exeption.
+                  List<Registration> registrations = (from r in dc.Registrations
+                                        where (r.UserID.ToString() == id)
+                                        select r).ToList();
+                  foreach (Registration reg in registrations)
+                  {
+                      dc.Registrations.DeleteOnSubmit(reg);
+                  }
+
+                  dc.SubmitChanges();
+                  return true;
+              }
+          }
+}
+}
 
 

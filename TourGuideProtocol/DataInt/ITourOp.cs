@@ -22,6 +22,14 @@ namespace TourGuideProtocol.DataInt
         List<AReg> GetRegistrations();
         bool AddTour(ATour tour);
         bool AddEvent(AEvent tourEvent);
+        bool EditEvent(AEvent tourEvent);
+        bool DeleteEvent(string tourid, DateTime tourdate);
+        bool EditReg(AReg reg);
+        bool DeleteReg(string id);
+        bool EditTour(ATour tour);
+        bool DeleteTour(string id);
+        bool EditUser(AUser user);
+        bool DeleteUser(string id);
 
 
     }

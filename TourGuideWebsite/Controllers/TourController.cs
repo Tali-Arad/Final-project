@@ -67,47 +67,59 @@ namespace TourGuideWebsite.Controllers
         //
         // GET: /Tour/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<ATour> tours = tourOp.GetTours();
+            ATour tour = tours.Single<ATour>(x => x.TourID == id);
+            return View(tour);
         }
 
         //
         // POST: /Tour/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string id, ATour tour)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    tour.TourID = id;
+                    tourOp.EditTour(tour);
+                    return RedirectToAction("Index");
+                }
+                else
+                    return View(tour);
             }
             catch
             {
-                return View();
+                return View(tour);
             }
         }
 
         //
         // GET: /Tour/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<ATour> tours = tourOp.GetTours();
+            ATour tour = tours.Single<ATour>(x => x.TourID == id);
+            return View(tour);
         }
 
         //
         // POST: /Tour/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string id, ATour tour)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                BTourGuideOp tourOp = new BTourGuideOp();
+                tourOp.DeleteTour(id);
                 return RedirectToAction("Index");
             }
             catch

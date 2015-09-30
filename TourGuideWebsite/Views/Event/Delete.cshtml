@@ -1,11 +1,12 @@
 ﻿@model TourGuideProtocol.DataStruct.AEvent
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
 }
 
-<h2>Details</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <fieldset>
     <legend>AEvent</legend>
 
@@ -31,6 +32,13 @@
     </div>
 
     <div class="display-label">
+         @Html.DisplayNameFor(model => model.TourOriginalDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TourOriginalDate)
+    </div>
+
+    <div class="display-label">
          @Html.DisplayNameFor(model => model.TourGuide)
     </div>
     <div class="display-field">
@@ -44,7 +52,10 @@
         @Html.DisplayFor(model => model.IsOn)
     </div>
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { tourid=@Model.TourID, tourdate = @Model.TourDate  } ) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
