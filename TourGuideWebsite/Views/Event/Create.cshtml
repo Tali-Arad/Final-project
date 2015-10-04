@@ -10,21 +10,18 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
+    // Passing the TourID to the controller (the div is hidden)
+    <div hidden="hidden">
+        @Html.EditorFor(x => x.TourID);
+    </div>
+
     <fieldset>
         <legend>AEvent</legend>
         <div class="editor-label">
-            @Html.LabelFor(model => model.TourID)
+            @Html.LabelFor(model => model.TourName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.TourID)
-            @Html.ValidationMessageFor(model => model.TourID)
-        </div>
-
-        <div class="display-label">
-            @Html.DisplayNameFor(model => model.TourName)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.TourName) <!-- Why is this not working? -->
+            @Html.DropDownList("TourNameOptions")
         </div>
 
         <div class="editor-label">

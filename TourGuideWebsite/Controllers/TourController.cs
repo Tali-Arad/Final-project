@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TourGuideBLL;
 using TourGuideProtocol.DataStruct;
+using TourGuideWebsite.Models;
 
 namespace TourGuideWebsite.Controllers
 {
@@ -127,5 +128,56 @@ namespace TourGuideWebsite.Controllers
                 return View();
             }
         }
+
+        // GET: /Tour/AddEvent
+        public ActionResult AddEvent(string id)
+        {
+            BTourGuideOp tourOp = new BTourGuideOp();
+            ATour tour = tourOp.GetTourByID(id);
+            AEvent tourEvent = new AEvent();
+            tourEvent.TourName = tour.TourName;
+            tourEvent.TourDate = DateTime.Now;
+            tourEvent.TourOriginalDate = DateTime.Now;
+            tourEvent.TourGuide = "";
+            tourEvent.TourID = tour.TourID;
+            tourEvent.IsOn = 0;
+            EventDetails eventDetails = new EventDetails();
+            eventDetails.tourInfo = tour;
+            eventDetails.eventInfo = tourEvent;
+            return View(eventDetails);
+        }
+
+        // POST: /Tour/AddEvent
+        [HttpPost]
+        public ActionResult AddEvent(string id, EventDetails eventDetails)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    AEvent tourEvent = new AEvent();
+                    tourEvent.TourID = eventDetails.tourInfo.TourID;
+                    tourEvent.TourName = eventDetails.tourInfo.TourName;
+                    tourEvent.TourDate = eventDetails.eventInfo.TourDate;
+                    tourEvent.TourGuide = eventDetails.eventInfo.TourGuide;
+                    tourEvent.IsOn = eventDetails.eventInfo.IsOn;
+                    tourEvent.TourOriginalDate = eventDetails.eventInfo.TourOriginalDate;
+                    tourOp.AddEvent(tourEvent);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(eventDetails);
+                }
+            }
+            catch
+            {
+                return View(eventDetails);
+            }
+        }
     }
 }
+
+    
+    

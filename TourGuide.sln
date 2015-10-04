@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D82161
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourGuideDAL", "TourGuideDAL\TourGuideDAL.csproj", "{57EE3755-A262-4841-B694-51BBB7D8F434}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourGuideService", "TourGuideService\TourGuideService.csproj", "{A9E926BC-22BA-42FB-9A2B-D5B128320C3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{57EE3755-A262-4841-B694-51BBB7D8F434}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57EE3755-A262-4841-B694-51BBB7D8F434}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57EE3755-A262-4841-B694-51BBB7D8F434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E926BC-22BA-42FB-9A2B-D5B128320C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E926BC-22BA-42FB-9A2B-D5B128320C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E926BC-22BA-42FB-9A2B-D5B128320C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E926BC-22BA-42FB-9A2B-D5B128320C3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

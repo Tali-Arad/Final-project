@@ -9,32 +9,28 @@
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
     <fieldset>
         <legend>AReg</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.TourID)
+            Tour Name
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.TourID)
-            @Html.ValidationMessageFor(model => model.TourID)
+                @Html.DropDownList("TourNameOptions", (List<SelectListItem>)ViewBag.TourNameOptions, new { @Id = "tourName" })
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.TourDate)
+           Tour Date
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.TourDate)
-            @Html.ValidationMessageFor(model => model.TourDate)
+            @Html.DropDownList("TourDateOptions", (List<SelectListItem>)ViewBag.TourDateOptions, new { @Id = "tourDate" })
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.UserID)
+           Username
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.UserID)
-            @Html.ValidationMessageFor(model => model.UserID)
+            @Html.DropDownList("UsernameOptions")
         </div>
 
         <div class="editor-label">
@@ -106,3 +102,66 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script src="@Url.Content("~/JS/jquery.min.js")"></script>
+<script src="@Url.Content("~/JS/bootstrap.min.js")"></script>
+<script src="@Url.Content("~/JS/bootstrap-accessibility_1.0.3.min.js")"></script>
+<script src="@Url.Content("~/JS/functions.js")"></script>
+<script src="@Url.Content("~/JS/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/JS/dataTables.bootstrap.js")"></script>
+
+<script language="javascript">
+    $("#tourName").change(function () {
+        var tourName = $(this).val();
+        var Data = {
+            Name: tourName
+        }
+       // console.log("call function")
+        Type = "POST";
+        Url = "http://localhost:53887/TourGuideSvc/TourGuideSvc.svc/GetTourDates"; // Do not hard code the URL! change this!
+        ContentType = "application/json; charset=utf-8";
+        DataType = "json"; varProcessData = true;
+
+        $.ajax({
+            type: Type,                   //GET or POST or PUT or DELETE verb
+            url: Url,                     // Location of the service
+            data: JSON.stringify(Data),             //Data sent to server
+            contentType: ContentType,               // content type sent to server
+            dataType: DataType,                     //Expected data format from server
+            processdata: varProcessData,            //True or False
+            success: function (msg) {               //On Successfull service call
+                GetTourDatesSucceeded(msg);
+            },
+            error: ServiceFailed// When Service call fails
+        });
+    }
+    )
+
+ function ServiceFailed(result) {
+        alert('Service call failed: ' + result.status + ' ' + result.statusText);
+        Type = null;
+        varUrl = null;
+        Data = null;
+        ContentType = null;
+        DataType = null;
+        ProcessData = null;
+    }
+    var tourDates = $('#tourDate');
+    
+    function GetTourDatesSucceeded(result) {    
+       // console.log("GetTourDatesSucceeded")
+        var tourDates = $('#tourDate');
+        tourDates.empty();
+        $.each(result, function (index, item) {
+         //   console.log(item);
+          //  console.log("Create Dropdown")
+            tourDates.append("<option>" + this.Value + "</option>");
+
+            // The following does not allow TourDateOptions choice to be passed back to the server:
+            //$(document.createElement('option'))
+            ////.attr('value', this)
+            ////.text(this.Value)
+            ////.appendTo(tourDates);
+                });
+        }
+</script>

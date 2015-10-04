@@ -106,6 +106,12 @@ namespace TourGuideBLL
         {
             return TourDAL.DeleteUser(id);
         }
+        public List<AEvent> GetEvents(string tourName)
+        {
+            return TourDAL.GetEvents(tourName);
+        }
+
+
     }
 }
 

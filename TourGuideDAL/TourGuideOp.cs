@@ -77,6 +77,27 @@ namespace TourGuideDAL
             }
         }
 
+        public List<AEvent> GetEvents(string tourName) // gets events for specific tour
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                List<AEvent> rows = (from tours in dc.Tours
+                                     where tours.TourName == tourName
+                                     join events in dc.Events on tours.TourID equals events.TourID
+                                     select new AEvent()
+                                     {
+                                         TourName = tours.TourName,
+                                         TourID = events.TourID.ToString(),
+                                         TourDate = events.TourDate,
+                                         TourOriginalDate = events.TourDate,
+                                         TourGuide = events.TourGuide,
+                                         IsOn = events.IsOn
+                                     }
+                              ).ToList<AEvent>();
+                return rows;
+            }
+        }
+
         public List<AEvent> GetEvents(DateTime date) // gets events by date
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())

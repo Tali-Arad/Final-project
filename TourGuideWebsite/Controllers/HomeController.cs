@@ -16,7 +16,7 @@ namespace TourGuideWebsite.Controllers
         //
         // GET: /Home/
         public ActionResult Index()
-        {
+        {   
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AEvent> events = tourOp.GetEvents();
             return View(events);

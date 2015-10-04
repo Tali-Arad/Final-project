@@ -79,7 +79,9 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.TourID }) |
             @Html.ActionLink("Details", "Details", new { id=item.TourID  }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.TourID })
+            @Html.ActionLink("Delete", "Delete", new { id = item.TourID }) |
+            @Html.ActionLink("Add Event", "AddEvent", new { id = item.TourID })
+            
         </td>
     </tr>
 }

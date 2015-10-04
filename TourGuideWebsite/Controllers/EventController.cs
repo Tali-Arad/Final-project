@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TourGuideBLL;
 using TourGuideProtocol.DataStruct;
+using TourGuideWebsite.Models;
 
 
 namespace TourGuideWebsite.Controllers
@@ -36,7 +37,8 @@ namespace TourGuideWebsite.Controllers
         // GET: /Event/Create
 
         public ActionResult Create()
-        {
+        { 
+            ViewBag.TourNameOptions = Lists.CreateTourList();
             return View();
         }
 
@@ -44,7 +46,7 @@ namespace TourGuideWebsite.Controllers
         // POST: /Event/Create
 
         [HttpPost]
-        public ActionResult Create(AEvent tourEvent)
+        public ActionResult Create(AEvent tourEvent, string TourNameOptions)
         {
             try
             {
@@ -52,21 +54,15 @@ namespace TourGuideWebsite.Controllers
                 {
                     BTourGuideOp tourOp = new BTourGuideOp();
                     List<ATour> tours = tourOp.GetTours();
-                    if (tours.Any(tour => tour.TourID == tourEvent.TourID))
-                    {
-                        tourOp.AddEvent(tourEvent);
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        return View(); // add message for user: no tour with this id. Redirect to 
-                        // another action which asks the admin if he wants to create a new tour, and 
-                        // then with a button to TourController/Create
-                    }
+                    ATour tour = tours.Single(x => x.TourName == TourNameOptions);
+                    tourEvent.TourID = tour.TourID;
+                    tourEvent.TourName = TourNameOptions;
+                    tourOp.AddEvent(tourEvent);
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    return View();
+                    return View(tourEvent);
                 }
             }
             catch
@@ -74,6 +70,7 @@ namespace TourGuideWebsite.Controllers
                 return View();
             }
         }
+    
 
         //
         // GET: /Event/Edit/5

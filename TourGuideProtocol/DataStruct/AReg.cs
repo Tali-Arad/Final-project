@@ -11,11 +11,9 @@ namespace TourGuideProtocol.DataStruct
     public class AReg
     {
         public string RegID { get; set; }
-        [Required]
         public string TourID { get; set; }
         [Required]
         public DateTime TourDate { get; set; }
-        [Required]
         public string UserID { get; set; }
         [Required]
         public string RegFirstName { get; set; }

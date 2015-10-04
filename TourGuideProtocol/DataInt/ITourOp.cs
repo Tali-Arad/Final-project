@@ -30,7 +30,7 @@ namespace TourGuideProtocol.DataInt
         bool DeleteTour(string id);
         bool EditUser(AUser user);
         bool DeleteUser(string id);
-
+        List<AEvent> GetEvents(string tourName);
 
     }
 }
