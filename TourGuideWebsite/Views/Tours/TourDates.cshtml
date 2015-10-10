@@ -1,0 +1,33 @@
+﻿@model List<TourGuideProtocol.DataStruct.AEvent>
+
+@{
+    ViewBag.Title = "TourDates";
+}
+
+<h2>Dates for the tour @Model[0].TourName</h2>
+
+<table>
+    <tr>
+        <th>
+            Date
+        </th>
+        <th>
+           Guide
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourDate)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => item.TourGuide)
+        </td>
+        <td>
+            @Html.ActionLink("Register", "RegForm", "Home", new { id=item.TourID, date = item.TourDate }, null) |
+            @Html.ActionLink("Tour Description", "TourDescription", new { id = item.TourID, keyword = ViewBag.keyword })
+        </td>
+    </tr>
+}
+</table>

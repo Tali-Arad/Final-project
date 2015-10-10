@@ -9,6 +9,7 @@ using TourGuideWebsite.Models;
 
 namespace TourGuideWebsite.Controllers
 {
+     [Authorize(Users = "admin")]
     public class TourController : Controller
     {
         //

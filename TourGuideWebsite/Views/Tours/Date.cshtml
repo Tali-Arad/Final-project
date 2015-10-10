@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TourGuideProtocol.DataStruct.AEvent>
+@using TourGuideProtocol.DataStruct;
+
+@{
+    ViewBag.Title = "Date";
+}
+
+<h2>Date</h2>
+<div id="sorting">
+    @foreach (string date in @ViewBag.dates)
+    {
+        <input type="button" onclick="sortByEventField('@date')" value="@date" />
+    }
+
+</div>
+
+<ul id="sortingBy">
+    @foreach (AEvent e in Model)
+    {
+        <li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>
+    }
+</ul>
+
+
+
+<script src="@Url.Content("~/JS/myFunctions.js")"></script>
+
+
+
+
+
+
+
+
+
+

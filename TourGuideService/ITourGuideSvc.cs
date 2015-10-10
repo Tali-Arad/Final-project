@@ -19,6 +19,16 @@ namespace TourGuideService
             ResponseFormat = WebMessageFormat.Json)]
         List<SelectListItem> GetTourDates(TourName tourName);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/SortToursByTourField", RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        List<AEvent> SortToursByTourField(TourField tourField);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/SortToursByEventField", RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        List<AEvent> SortToursByEventField(EventField eventField);
+
     }
 
     [DataContract]
@@ -26,6 +36,20 @@ namespace TourGuideService
     {
         [DataMember]
         public string Name { get; set; }
+    }
+
+    [DataContract]
+    public class TourField
+    {
+        [DataMember]
+        public string Field { get; set; }
+    }
+
+    [DataContract]
+    public class EventField
+    {
+        [DataMember]
+        public string Field { get; set; }
     }
        
 }

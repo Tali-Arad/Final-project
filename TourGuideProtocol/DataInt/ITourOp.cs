@@ -31,6 +31,10 @@ namespace TourGuideProtocol.DataInt
         bool EditUser(AUser user);
         bool DeleteUser(string id);
         List<AEvent> GetEvents(string tourName);
+        List<AEvent> GetEventsByTourId(string id);
+        List<AEvent> GetEventsByTourField(string sort);
+        List<AEvent> GetEventsByEventField(string sort);
+      
 
     }
 }

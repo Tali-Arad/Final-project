@@ -16,7 +16,17 @@ namespace TourGuideWebsite.Controllers
         //
         // GET: /Home/
         public ActionResult Index()
-        {   
+        {
+            if (TempData["SearchMessage"]==null)
+            {
+                TempData["SearchMessage"] = "";
+            }
+            if (TempData["SearchTextbox"] == null)
+            {
+                TempData["SearchTextbox"] = "";
+            }
+            ViewBag.SearchMessage = TempData["SearchMessage"].ToString();
+            ViewBag.SearchTextbox = TempData["SearchTextbox"].ToString();
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AEvent> events = tourOp.GetEvents();
             return View(events);
@@ -54,6 +64,7 @@ namespace TourGuideWebsite.Controllers
         [HttpPost]
         public ActionResult RegForm(RegResponse rr, string id)
         {
+            
             if (ModelState.IsValid)
             {
                 AReg reg = new AReg();
@@ -72,7 +83,7 @@ namespace TourGuideWebsite.Controllers
                 // Add email sending in a desktop app
             }
             else
-                return View();
+                return View(rr);
  
         }
 
@@ -108,6 +119,62 @@ namespace TourGuideWebsite.Controllers
             else
                 return View();
         }
+
+
+        //[HttpGet]
+        //public ActionResult Tours(string id)
+        //{
+        //    if(id!=null && id!="" && id!="undefined") // The user typed a keyword
+        //    { 
+        //        ViewBag.keyword = id;
+        //        BTourGuideOp tourOp = new BTourGuideOp();
+        //        List<ATour> tours = tourOp.GetTours(id);
+        //        if (tours.Count > 0)
+        //        {
+        //            return View(tours);
+        //        }
+        //        else
+        //        {
+        //            TempData["SearchMessage"] = "No tours that match your keyword were found";
+        //            TempData["SearchTextbox"] = id;
+        //            return RedirectToAction("Index");
+        //        }
+        //    }
+        //    else // The search textbox is empty / the user clicked on "Tours"
+        //    {
+        //        BTourGuideOp tourOp = new BTourGuideOp();
+        //        List<ATour> tours = tourOp.GetTours();
+        //        return View(tours);
+        //        //return RedirectToAction("AdvancedSearch");
+        //    }
+        //}
+
+        //[HttpGet]
+        //public ActionResult TourDescription(string id, string keyword)
+        //{
+        //    ViewBag.keyword = keyword;
+        //    BTourGuideOp tourOp = new BTourGuideOp();
+        //    ATour tour = tourOp.GetTourByID(id);
+        //    return View(tour);
+        //}
+
+        //[HttpGet]
+        //public ActionResult TourDates(string id, string keyword="")
+        //{
+        //    ViewBag.keyword = keyword;
+        //    BTourGuideOp tourOp = new BTourGuideOp();
+        //    List<AEvent> tourEvents = tourOp.GetEventsByTourId(id);
+        //    return View(tourEvents);
+        //}
+
+        [HttpGet]
+        public ActionResult AdvancedSearch()
+        {
+            return View();
+        }
+
+
+
 
     }
     }

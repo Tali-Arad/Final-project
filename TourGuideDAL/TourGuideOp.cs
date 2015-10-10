@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TourGuideProtocol.DataStruct;
 using TourGuideProtocol.DataInt;
 
+
 namespace TourGuideDAL
 {
     public class TourGuideOp : ITourOp
@@ -83,6 +84,70 @@ namespace TourGuideDAL
             {
                 List<AEvent> rows = (from tours in dc.Tours
                                      where tours.TourName == tourName
+                                     join events in dc.Events on tours.TourID equals events.TourID
+                                     select new AEvent()
+                                     {
+                                         TourName = tours.TourName,
+                                         TourID = events.TourID.ToString(),
+                                         TourDate = events.TourDate,
+                                         TourOriginalDate = events.TourDate,
+                                         TourGuide = events.TourGuide,
+                                         IsOn = events.IsOn
+                                     }
+                              ).ToList<AEvent>();
+                return rows;
+            }
+        }
+
+        public List<AEvent> GetEventsByTourField(string sort) // gets events with sorting by location, area, category 
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                List<AEvent> rows = (from tours in dc.Tours
+                                     where tours.TourLocation == sort || tours.TourArea == sort || tours.TourCategory == sort
+                                     join events in dc.Events on tours.TourID equals events.TourID
+                                     select new AEvent()
+                                     {
+                                         TourName = tours.TourName,
+                                         TourID = events.TourID.ToString(),
+                                         TourDate = events.TourDate,
+                                         TourOriginalDate = events.TourDate,
+                                         TourGuide = events.TourGuide,
+                                         IsOn = events.IsOn
+                                     }
+                              ).ToList<AEvent>();
+                return rows;
+            }
+        }
+
+        public List<AEvent> GetEventsByEventField(string sort) // gets events with sorting by guide or date
+        {
+            int month = DateTime.Parse("1." + sort + " 1900").Month;
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                List<AEvent> rows = (from events in dc.Events
+                                     where events.TourGuide == sort || events.TourDate.Month == month
+                                     join tours in dc.Tours on events.TourID equals tours.TourID
+                                     select new AEvent()
+                                     {
+                                         TourName = tours.TourName,
+                                         TourID = events.TourID.ToString(),
+                                         TourDate = events.TourDate,
+                                         TourOriginalDate = events.TourDate,
+                                         TourGuide = events.TourGuide,
+                                         IsOn = events.IsOn
+                                     }
+                              ).ToList<AEvent>();
+                return rows;
+            }
+        }
+
+        public List<AEvent> GetEventsByTourId(string id)
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                List<AEvent> rows = (from tours in dc.Tours
+                                     where tours.TourID.ToString() == id
                                      join events in dc.Events on tours.TourID equals events.TourID
                                      select new AEvent()
                                      {

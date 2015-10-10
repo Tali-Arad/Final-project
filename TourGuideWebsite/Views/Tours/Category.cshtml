@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TourGuideProtocol.DataStruct.AEvent>
+@using TourGuideProtocol.DataStruct;
+
+@{
+    ViewBag.Title = "Category";
+}
+
+<h2>Category</h2>
+<div id="sorting">
+    @foreach (string cat in @ViewBag.categories)
+    {
+        <input type="button" onclick="sortByTourField('@cat')" value="@cat" />
+    }
+
+</div>
+
+<ul id="sortingBy">
+    @foreach (AEvent e in Model)
+    {
+        <li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>
+    }
+</ul>
+
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    <script src="@Url.Content("~/JS/jquery.min.js")"></script>
+    <script src="@Url.Content("~/JS/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/JS/bootstrap-accessibility_1.0.3.min.js")"></script>
+    <script src="@Url.Content("~/JS/functions.js")"></script>
+    <script src="@Url.Content("~/JS/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/JS/dataTables.bootstrap.js")"></script>*@
+<script src="@Url.Content("~/JS/myFunctions.js")"></script>
+
+
+
+
+
+
+
+
+
+

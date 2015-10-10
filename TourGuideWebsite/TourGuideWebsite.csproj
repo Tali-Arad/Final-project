@@ -135,6 +135,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\RegController.cs" />
     <Compile Include="Controllers\TourController.cs" />
+    <Compile Include="Controllers\ToursController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -214,6 +215,7 @@
     <Content Include="JS\jquery.canvasjs.min.js" />
     <Content Include="JS\jquery.dataTables.min.js" />
     <Content Include="JS\jquery.min.js" />
+    <Content Include="JS\myFunctions.js" />
     <Content Include="JS\respond.min.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -271,6 +273,16 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\Tour\AddEvent.cshtml" />
+    <Content Include="Views\Home\Tours.cshtml" />
+    <Content Include="Views\Tours\TourDescription.cshtml" />
+    <Content Include="Views\Tours\TourDates.cshtml" />
+    <Content Include="Views\Home\AdvancedSearch.cshtml" />
+    <Content Include="Views\Tours\Index.cshtml" />
+    <Content Include="Views\Tours\Area.cshtml" />
+    <Content Include="Views\Tours\Guide.cshtml" />
+    <Content Include="Views\Tours\Category.cshtml" />
+    <Content Include="Views\Tours\Date.cshtml" />
+    <Content Include="Views\Tours\Location.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

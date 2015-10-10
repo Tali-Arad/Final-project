@@ -1,0 +1,71 @@
+﻿@model List<TourGuideProtocol.DataStruct.ATour>
+@using TourGuideProtocol.DataStruct;
+
+@{
+    ViewBag.Title = "Tours";
+}
+
+<h2>Tours</h2>
+
+<div id="sorting">
+    <ul id="sortingBy">
+        <li class="active"><a href="@Url.Action("Index")">Tour Name</a></li>
+        <li><a href="@Url.Action("Date")">Date</a></li>
+        <li><a href="@Url.Action("Location")">Location</a></li>
+        <li><a href="@Url.Action("Area")">Area</a></li>
+        <li><a href="@Url.Action("Category")">Category</a></li>
+        <li><a href="@Url.Action("Guide")">Guide</a></li>
+    </ul>
+    </div>
+        <table>
+            <tr>
+                <th>
+                    Tour Name
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Area
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Duration (hours)
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourLocation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourArea)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourCategory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourDuration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourPrice)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Tour Description", "TourDescription", new { id = item.TourID, keyword = ViewBag.keyword }) |
+                        @Html.ActionLink("Tour Dates", "TourDates", new { id = item.TourID, keyword = ViewBag.keyword })
+
+                    </td>
+                </tr>
+            }
+
+        </table>

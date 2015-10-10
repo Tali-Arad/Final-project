@@ -26,14 +26,19 @@
             <p>Last Name: @Html.EditorFor(x => x.LastName)</p>
             <p>Birthday: @Html.EditorFor(x => x.Birthday)</p>  //this needs to have a datetime picker
             <p>
-                Will you attend?
+                <div class="row">
+                    @Html.CheckBoxFor(x => x.WillAttend) 
+                    <label for="WillAttend">I will attend</label>
+                </div>
+
+                    @*Will you attend?
                 @Html.DropDownListFor(x => x.WillAttend, new[] {
             new SelectListItem() {Text = "Yes, I'll be there",
                 Value = bool.TrueString},
                 new SelectListItem() {Text = "No, I can't come",  Value = bool.FalseString}
-                }, "Choose an option")
+                }, "Choose an option")*@
 
-            </p>
+</p>
             <input type="submit" value="Register" />
     }
 </div>

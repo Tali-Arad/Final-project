@@ -8,6 +8,7 @@ using TourGuideProtocol.DataStruct;
 
 namespace TourGuideWebsite.Controllers
 {
+     [Authorize(Users = "admin")]
     public class UserController : Controller
     {
         //

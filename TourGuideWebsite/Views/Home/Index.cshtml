@@ -29,8 +29,8 @@
 
 
 <form>
-    <input type="text" name="search"><br><br />
-    <input type="submit" value="Search Tour">
+    <input type="text" name="search" id="searchTextbox" value="@ViewBag.SearchTextbox">&nbsp @ViewBag.SearchMessage<br><br />
+    <input type="button" onclick="gotoTours(document.getElementById('searchTextbox').value)" value="Search Tour"/>&nbsp<input type="button" onclick="gotoAdvancedSearch()" value="Advanced Search" />
 </form>
 
 
@@ -44,7 +44,9 @@
 
 <input type="button" value="Sign up" onclick="gotoRegistration()" />
 <input type="button" value="Log in" onclick="gotoLogin()" />
-<input type="button" value="Admin" onclick="gotoAdmin()" />
+<input type="button" value="Admin" onclick="gotoAdmin()" /> 
+<input type="button" value="Tours" onclick="gotoTours()" /> 
+
 <script type="text/javascript">
     function gotoRegistration() {
         window.location.href = 'Home/Registration';
@@ -56,5 +58,21 @@
 
     function gotoAdmin() {
         window.location.href = 'Admin';
+    }
+ 
+    function gotoTours(keyword) {
+        if (keyword != undefined)
+        {
+            window.location.href = "../Tours/Index/" + keyword;
+        }
+        else
+        {
+            window.location.href = "../Tours/";
+        }
+   }
+    
+    
+    function gotoAdvancedSearch() {
+        window.location.href = "Home/AdvancedSearch/";
     }
 </script>

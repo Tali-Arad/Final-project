@@ -17,7 +17,6 @@ namespace TourGuideService
     {
         public List<SelectListItem> GetTourDates(TourName tourName)
         {
-          //  string tourName = "Jerusalem highlights";
             BTourGuideOp op = new BTourGuideOp();
             List<AEvent> tourEvents = op.GetEvents(tourName.Name);
             List<SelectListItem> tourDates = new List<SelectListItem>();
@@ -25,8 +24,21 @@ namespace TourGuideService
             {
                 tourDates.Add(new SelectListItem { Text = tourEvent.TourDate.ToString(), Value = tourEvent.TourDate.ToString() });
             }
-            return tourDates;
-            
+            return tourDates;  
+        }
+
+        public List<AEvent> SortToursByTourField(TourField tourField)
+        {
+            BTourGuideOp op = new BTourGuideOp();
+            List<AEvent> tourEvents = op.GetEventsByTourField(tourField.Field);
+            return tourEvents;
+        }
+
+        public List<AEvent> SortToursByEventField(EventField eventField)
+        {
+            BTourGuideOp op = new BTourGuideOp();
+            List<AEvent> tourEvents = op.GetEventsByEventField(eventField.Field);
+            return tourEvents;
         }
     }
 }

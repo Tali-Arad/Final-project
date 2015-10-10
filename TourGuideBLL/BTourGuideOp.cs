@@ -38,7 +38,6 @@ namespace TourGuideBLL
             return TourDAL.GetEvent(id, date);
         }
 
-        
 
         public List<AUser> GetUsers()
         {
@@ -109,6 +108,23 @@ namespace TourGuideBLL
         public List<AEvent> GetEvents(string tourName)
         {
             return TourDAL.GetEvents(tourName);
+        }
+        public List<ATour> GetTours(string keyword)
+        {
+            return TourDAL.GetTours(keyword);
+        }
+        public List<AEvent> GetEventsByTourId(string id)
+        {
+            return TourDAL.GetEventsByTourId(id);
+        }
+        public List<AEvent> GetEventsByTourField(string sort)
+        {
+            return TourDAL.GetEventsByTourField(sort);
+        }
+
+        public List<AEvent> GetEventsByEventField(string sort)
+        {
+            return TourDAL.GetEventsByEventField(sort);
         }
 
 

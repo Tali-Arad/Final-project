@@ -23,6 +23,32 @@ namespace TourGuideWebsite.Models
             return tourNames;
         }
 
+        public static List<SelectListItem> CreateTourDateList()
+        {
+            // Creating a dropdown list for TourDates:
+            List<SelectListItem> tourDates = new List<SelectListItem>();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<AEvent> events = tourOp.GetEvents();
+            foreach (AEvent tourEvent in events)
+            {
+                tourDates.Add(new SelectListItem { Text = tourEvent.TourDate.ToString(), Value = tourEvent.TourDate.ToString() });
+            }
+            return tourDates;
+        }
+
+        public static List<SelectListItem> CreateTourAreaList()
+        {
+            // Creating a dropdown list for TourDates:
+            List<SelectListItem> tourDates = new List<SelectListItem>();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<AEvent> events = tourOp.GetEvents();
+            foreach (AEvent tourEvent in events)
+            {
+                tourDates.Add(new SelectListItem { Text = tourEvent.TourDate.ToString(), Value = tourEvent.TourDate.ToString() });
+            }
+            return tourDates;
+        }
+
         public static List<SelectListItem> CreateUserList()
         {
             // Creating a dropdown list for Users Names:
