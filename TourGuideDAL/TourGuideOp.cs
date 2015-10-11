@@ -64,6 +64,7 @@ namespace TourGuideDAL
             {
                 List<AEvent> rows = (from tours in dc.Tours
                                      join events in dc.Events on tours.TourID equals events.TourID
+                                     orderby events.TourDate
                                      select new AEvent()
                                      {
                                          TourName = tours.TourName, 
@@ -85,6 +86,7 @@ namespace TourGuideDAL
                 List<AEvent> rows = (from tours in dc.Tours
                                      where tours.TourName == tourName
                                      join events in dc.Events on tours.TourID equals events.TourID
+                                     orderby events.TourDate
                                      select new AEvent()
                                      {
                                          TourName = tours.TourName,
@@ -106,6 +108,7 @@ namespace TourGuideDAL
                 List<AEvent> rows = (from tours in dc.Tours
                                      where tours.TourLocation == sort || tours.TourArea == sort || tours.TourCategory == sort
                                      join events in dc.Events on tours.TourID equals events.TourID
+                                     orderby events.TourDate
                                      select new AEvent()
                                      {
                                          TourName = tours.TourName,
@@ -128,6 +131,7 @@ namespace TourGuideDAL
                 List<AEvent> rows = (from events in dc.Events
                                      where events.TourGuide == sort || events.TourDate.Month == month
                                      join tours in dc.Tours on events.TourID equals tours.TourID
+                                     orderby events.TourDate
                                      select new AEvent()
                                      {
                                          TourName = tours.TourName,
@@ -149,6 +153,7 @@ namespace TourGuideDAL
                 List<AEvent> rows = (from tours in dc.Tours
                                      where tours.TourID.ToString() == id
                                      join events in dc.Events on tours.TourID equals events.TourID
+                                     orderby events.TourDate
                                      select new AEvent()
                                      {
                                          TourName = tours.TourName,

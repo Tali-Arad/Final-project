@@ -7,6 +7,8 @@ using System.ServiceModel.Web;
 using System.Text;
 using TourGuideProtocol.DataStruct;
 using System.Web.Mvc;
+using System.Data.Services.Client;
+using System.Web;
 
 namespace TourGuideService
 {
@@ -28,6 +30,12 @@ namespace TourGuideService
         [WebInvoke(Method = "POST", UriTemplate = "/SortToursByEventField", RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         List<AEvent> SortToursByEventField(EventField eventField);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetUpcomingEvents", RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        List<AEvent> GetUpcomingEvents();
+       
 
     }
 

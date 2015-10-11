@@ -7,7 +7,9 @@ using System.ServiceModel.Web;
 using System.Text;
 using TourGuideBLL;
 using TourGuideProtocol.DataStruct;
+using System.Web;
 using System.Web.Mvc;
+using System.Data.Services.Client;
 
 namespace TourGuideService
 {
@@ -24,7 +26,7 @@ namespace TourGuideService
             {
                 tourDates.Add(new SelectListItem { Text = tourEvent.TourDate.ToString(), Value = tourEvent.TourDate.ToString() });
             }
-            return tourDates;  
+            return tourDates;
         }
 
         public List<AEvent> SortToursByTourField(TourField tourField)
@@ -40,5 +42,29 @@ namespace TourGuideService
             List<AEvent> tourEvents = op.GetEventsByEventField(eventField.Field);
             return tourEvents;
         }
+
+        public List<AEvent> GetUpcomingEvents()
+        {
+            // prevent the browser from caching WCF JSON responses
+            HttpContext.Current.Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            HttpContext.Current.Response.Cache.SetNoStore();
+            //---------------------------------------------------
+
+            BTourGuideOp op = new BTourGuideOp();
+            List<AEvent> tourEvents = op.GetEvents();
+            List<AEvent> upcomingEvents = new List<AEvent>();
+            foreach (AEvent tourEvent in tourEvents)
+            {
+                if (tourEvent.TourDate > DateTime.Now)
+                {
+                    if (upcomingEvents.Count > 2)
+                        break;
+                    upcomingEvents.Add(tourEvent);
+                }
+            }
+            return upcomingEvents;
+        }
     }
-}
+    }
+

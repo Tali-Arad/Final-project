@@ -27,9 +27,10 @@ namespace TourGuideWebsite.Controllers
             }
             ViewBag.SearchMessage = TempData["SearchMessage"].ToString();
             ViewBag.SearchTextbox = TempData["SearchTextbox"].ToString();
-            BTourGuideOp tourOp = new BTourGuideOp();
-            List<AEvent> events = tourOp.GetEvents();
-            return View(events);
+        //    BTourGuideOp tourOp = new BTourGuideOp();
+       //     List<AEvent> events = tourOp.GetEvents();
+           // return View(events);
+            return View();
         }
 
         // GET: /EventDetails/
