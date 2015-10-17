@@ -1,0 +1,142 @@
+﻿@model IEnumerable<TourGuideProtocol.DataStruct.AEvent>
+@using TourGuideProtocol.DataStruct;
+
+@{
+    ViewBag.Title = "Location";
+}
+
+<h2>Location</h2>
+
+<div id="sortingCats">
+    <ul class="nav nav-tabs" id="sortingByCats">
+        <li><a href="@Url.Action("Index")">Tour Name</a></li>
+        <li><a href="@Url.Action("Date")">Date</a></li>
+        <li class="active"><a href="@Url.Action("Location")">Location</a></li>
+        <li><a href="@Url.Action("Area")">Area</a></li>
+        <li><a href="@Url.Action("Category")">Category</a></li>
+        <li><a href="@Url.Action("Guide")">Guide</a></li>
+    </ul>
+</div><br /><br />
+
+<div id="sorting">
+        @foreach (string loc in @ViewBag.locations)
+        {
+            <input type="button" class="btn btn-default" onclick="sortByTourField('@loc')" value="@loc" />
+        }
+</div><br /><br />
+
+@*<ul id="sortingBy">
+    @foreach (AEvent e in Model)
+    {
+        <li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>
+    }
+</ul>*@
+
+<ul id="sortingBy" class="list-group">
+    @foreach (AEvent e in Model)
+    {
+        <li class="list-group-item">
+            <a href="@Url.Action("EventDetails", "Home", new {id = e.TourID, date=@e.TourDate})" class="img-rounded">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="@Url.Action("GetImage", "Tour", new { e.TourID })" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <h2>@e.TourDate</h2>
+                        <h3 style="color:coral">@e.TourName</h3>
+                        <p>@Html.ActionLink("Details and Registration", "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)</p>
+                    </div>
+                </div>
+            </a>
+        </li>
+        @*<li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>*@
+    }
+</ul>
+
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="@Url.Content("~/JS/jquery.min.js")"></script>
+<script src="@Url.Content("~/JS/bootstrap.min.js")"></script>
+<script src="@Url.Content("~/JS/bootstrap-accessibility_1.0.3.min.js")"></script>
+<script src="@Url.Content("~/JS/functions.js")"></script>
+<script src="@Url.Content("~/JS/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/JS/dataTables.bootstrap.js")"></script>*@
+<script src="@Url.Content("~/JS/myFunctions.js")"></script>
+
+<script language="javascript">
+    //function sortByTourField(loc) {
+    //    console.log("sortByTourField");
+    //    console.log(loc);
+    //    var Data = {
+    //        Field: loc
+    //    }
+
+    //    Type = "POST";
+    //    Url = "http://localhost:53887/TourGuideSvc/TourGuideSvc.svc/SortToursByTourField"; // Do not hard code the URL! change this!
+    //    ContentType = "application/json; charset=utf-8";
+    //    DataType = "json"; varProcessData = true;
+
+    //    $.ajax({
+    //        type: Type,                   //GET or POST or PUT or DELETE verb
+    //        url: Url,                     // Location of the service
+    //        data: JSON.stringify(Data),             //Data sent to server
+    //        contentType: ContentType,               // content type sent to server
+    //        dataType: DataType,                     //Expected data format from server
+    //        processdata: varProcessData,            //True or False
+    //        success: function (msg) {               //On Successfull service call
+    //            sortByTourFieldSucceeded(msg);
+    //        },
+    //        error: ServiceFailed// When Service call fails
+    //    });
+    //    }
+
+    //function ServiceFailed(result) {
+    //    alert('Service call failed: ' + result.status + ' ' + result.statusText);
+    //    Type = null;
+    //    varUrl = null;
+    //    Data = null;
+    //    ContentType = null;
+    //    DataType = null;
+    //    ProcessData = null;
+    //}
+    //function sortByTourFieldSucceeded(result) {
+    //    objUL = document.getElementById("sortingBy");
+    //    objUL.innerHTML = "";
+    //    if(objUL!=null)
+    //    {
+    //        for (i = 0; i < result.length; i++) {
+    //            var objli = document.createElement("li");
+    //            console.log(result[i].TourDate);
+    //            var date = result[i].TourDate.split("(");
+    //            date = date[1].split("+");
+    //            date = date[0];
+    //            console.log(date);
+    //            date = new Date(parseInt(date));
+    //            console.log(date);
+    //            var tourId = result[i].TourID;
+    //            var tourDate = result[i].TourDate;
+
+    //        //    var cSharpDate = "" + year + "" + month + "" + day + "" + hours + "" + minutes + "00";
+    //          //  console.log(cSharpDate);
+    //            var cSharpDate = new Date(result[i]);
+    //            console.log(cSharpDate);
+    //            // Decide about the date format. Make it consistent.
+    //          //  objli.innerHTML = "<a href='../Home/EventDetails'>" + result[i].TourName + " " + date + "</a>";
+    //            objli.innerHTML = "<a href='../Home/EventDetails/" + result[i].TourID + "?date=" + date.toISOString() + "')>" + result[i].TourName + " " + date + "</a>";
+    //            objUL.appendChild(objli);
+    //        }
+    //    }
+
+    //}
+</script>
+
+
+
+
+
+
+
+
