@@ -1,23 +1,22 @@
 ﻿@model List<TourGuideProtocol.DataStruct.ATour>
 @using TourGuideProtocol.DataStruct;
-
 @{
     ViewBag.Title = "Tours";
 }
-
 <h2>Tours</h2>
-
-<div id="sorting">
-    <ul id="sortingBy">
-        <li class="active"><a href="@Url.Action("Index")">Tour Name</a></li>
-        <li><a href="@Url.Action("Date")">Date</a></li>
-        <li><a href="@Url.Action("Location")">Location</a></li>
-        <li><a href="@Url.Action("Area")">Area</a></li>
-        <li><a href="@Url.Action("Category")">Category</a></li>
-        <li><a href="@Url.Action("Guide")">Guide</a></li>
-    </ul>
-    </div>
-        <table>
+            <div id="sortingCats">
+                <ul class="nav nav-tabs responsive" id="sortingByCats">
+                    <li class="active"><a href="@Url.Action("Index")">Tour Name</a></li>
+                    <li><a href="@Url.Action("Date")">Date</a></li>
+                    <li><a href="@Url.Action("Location")">Location</a></li>
+                    <li><a href="@Url.Action("Area")">Area</a></li>
+                    <li><a href="@Url.Action("Category")">Category</a></li>
+                    <li><a href="@Url.Action("Guide")">Guide</a></li>
+                </ul>
+            </div><br /><br />
+<div class="tab-content responsive">
+    @*<div class="table-responsive">
+        <table class="table table-condensed">
             <tr>
                 <th>
                     Tour Name
@@ -32,7 +31,7 @@
                     Category
                 </th>
                 <th>
-                    Duration (hours)
+                    Duration (in hours)
                 </th>
                 <th>
                     Price
@@ -67,5 +66,32 @@
                     </td>
                 </tr>
             }
+        </table>*@
 
-        </table>
+        <!-- Tours section -->
+                <div class="container">
+                    <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4 col-sm-6 col-xs-12 thumbnail">
+                            <a href="@Url.Action("TourDescription", new {id = item.TourID})" class="img-rounded">
+                                <p> @item.TourName</p>
+                                @if (item.ImageData != null)
+                                {
+                                    <img class="img-responsive img-rounded img-hover" style="width:260px;height:200px" src="@Url.Action("GetImage", "Tour", new { item.TourID })" alt=@item.TourName>
+                                }
+                                else
+                                {
+                                    <img class="img-responsive img-rounded img-hover" style="width:260px;height:200px" src="~/Content/Images/placehold700X450.png" alt="@item.TourName">
+                                }
+                            </a>
+                            <a class="panel-body" href="@Url.Action("TourDates", new {id = item.TourID})">Tour Dates</a>
+                        </div>
+                    }
+                    </div>
+                    <!-- /.row -->
+                </div>
+        </div>
+
+
+

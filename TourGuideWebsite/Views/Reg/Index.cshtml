@@ -6,94 +6,103 @@
 
 <h2>Registrations</h2>
 
+<div id="sortingCats">
+    <ul class="nav nav-tabs responsive" id="sortingByCats">
+        <li><a href="@Url.Action("Index", "Tour")">Tours</a></li>
+        <li><a href="@Url.Action("Index", "Event")">Events</a></li>
+        <li class="active"><a href="@Url.Action("Index", "Reg")">Registrations</a></li>
+        <li><a href="@Url.Action("Index", "User")">Users</a></li>
+    </ul>
+</div>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RegID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TourID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TourDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegFirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegLastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegBirthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WillAttend)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsPaid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsSentEmail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Attended)
-        </th>
-        <th></th>
-    </tr>
+<div class="tab-content responsive">
+    <div class=" table table-responsive">
+        <table class="table table-condensed">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegFirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegLastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegBirthday)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WillAttend)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsPaid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsSentEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Attended)
+                </th>
+                <th></th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TourID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TourDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegFirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegLastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegBirthday)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WillAttend)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsPaid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsSentEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Attended)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RegID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RegID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.RegID })
-        </td>
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.TourName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegFirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegBirthday)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WillAttend)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsPaid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSentEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Attended)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.RegID, RegBirthday = item.RegBirthday}) |
+                        @Html.ActionLink("Details", "Details", new { id = item.RegID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.RegID })
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+    </div>
+    </div>
+

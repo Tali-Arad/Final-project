@@ -27,7 +27,9 @@ namespace TourGuideDAL
                                         TourPrice = (decimal)c.TourPrice,
                                         MinReg = (int)c.MinReg,
                                         MaxReg = (int)c.MaxReg,
-                                        TourDescription = c.TourDescription
+                                        TourDescription = c.TourDescription,
+                                        ImageData = c.ImageData,
+                                        ImageMimeType = c.ImageMimeType
                                     }
                               ).ToList<ATour>();
                 return rows;
@@ -39,7 +41,7 @@ namespace TourGuideDAL
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
                 List<ATour> rows = (from c in dc.Tours
-                                    where c.TourLocation == keyword || c.TourArea == keyword || c.TourCategory == keyword
+                                    where c.TourLocation.Contains(keyword) || c.TourArea.Contains(keyword) || c.TourCategory.Contains(keyword)
                                     select new ATour()
                                      {
                                          TourID= c.TourID.ToString(),
@@ -50,7 +52,10 @@ namespace TourGuideDAL
                                          TourDuration = (int)c.TourDuration, 
                                          TourPrice = (decimal)c.TourPrice,
                                          MinReg = (int)c.MinReg,
-                                         MaxReg = (int)c.MaxReg
+                                         MaxReg = (int)c.MaxReg,
+                                         TourDescription = c.TourDescription,
+                                         ImageData = c.ImageData,
+                                         ImageMimeType = c.ImageMimeType
                                      }
                               ).ToList<ATour>();
                 return rows;       
@@ -72,7 +77,7 @@ namespace TourGuideDAL
                                          TourDate = events.TourDate,
                                          TourOriginalDate = events.TourDate,
                                          TourGuide = events.TourGuide,
-                                         IsOn = events.IsOn
+                                         IsOn =  (events.IsOn==1) ? true:false
                                      }
                               ).ToList<AEvent>();
                 return rows;
@@ -94,7 +99,7 @@ namespace TourGuideDAL
                                          TourDate = events.TourDate,
                                          TourOriginalDate = events.TourDate,
                                          TourGuide = events.TourGuide,
-                                         IsOn = events.IsOn
+                                         IsOn = events.IsOn==1? true : false
                                      }
                               ).ToList<AEvent>();
                 return rows;
@@ -116,7 +121,7 @@ namespace TourGuideDAL
                                          TourDate = events.TourDate,
                                          TourOriginalDate = events.TourDate,
                                          TourGuide = events.TourGuide,
-                                         IsOn = events.IsOn
+                                         IsOn = events.IsOn==1 ? true:false
                                      }
                               ).ToList<AEvent>();
                 return rows;
@@ -125,7 +130,13 @@ namespace TourGuideDAL
 
         public List<AEvent> GetEventsByEventField(string sort) // gets events with sorting by guide or date
         {
-            int month = DateTime.Parse("1." + sort + " 1900").Month;
+            List<string> months = new List<string>{"January", "February", "March", "April", "May", "June",
+                                  "July", "August", "September", "October", "November", "December"};
+            int month = 0;
+            if(months.Contains(sort))
+            { 
+                  month = DateTime.Parse("1." + sort + " 1900").Month;
+            }
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
                 List<AEvent> rows = (from events in dc.Events
@@ -139,7 +150,7 @@ namespace TourGuideDAL
                                          TourDate = events.TourDate,
                                          TourOriginalDate = events.TourDate,
                                          TourGuide = events.TourGuide,
-                                         IsOn = events.IsOn
+                                         IsOn = events.IsOn==1? true:false
                                      }
                               ).ToList<AEvent>();
                 return rows;
@@ -161,7 +172,7 @@ namespace TourGuideDAL
                                          TourDate = events.TourDate,
                                          TourOriginalDate = events.TourDate,
                                          TourGuide = events.TourGuide,
-                                         IsOn = events.IsOn
+                                         IsOn = events.IsOn==1?true:false
                                      }
                               ).ToList<AEvent>();
                 return rows;
@@ -179,7 +190,7 @@ namespace TourGuideDAL
                                         TourID = c.TourID.ToString(),
                                         TourDate = c.TourDate,
                                         TourGuide = c.TourGuide,
-                                        IsOn = c.IsOn
+                                        IsOn = c.IsOn==1?true:false
                                     }
                               ).ToList<AEvent>();
                 return rows;
@@ -200,7 +211,7 @@ namespace TourGuideDAL
                                         TourDate = events.TourDate,
                                         TourOriginalDate = events.TourDate,
                                         TourGuide = events.TourGuide,
-                                        IsOn = events.IsOn
+                                        IsOn = events.IsOn==1?true:false
                                     }
                               ).Single<AEvent>();
                 return tourEvent;
@@ -224,32 +235,39 @@ namespace TourGuideDAL
                                   TourPrice = (decimal)c.TourPrice,
                                   MinReg = (int)c.MinReg,
                                   MaxReg = (int)c.MaxReg,
-                                  TourDescription = c.TourDescription
+                                  TourDescription = c.TourDescription,
+                                  ImageData = c.ImageData,
+                                  ImageMimeType = c.ImageMimeType
                               }
                               ).FirstOrDefault<ATour>();
                 return tour;
             }
         }
 
-        public List<AReg> GetRegistrations() // gets all events
+        public List<AReg> GetRegistrations() // gets all registrations
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
-                List<AReg> rows = (from c in dc.Registrations
-                                     select new AReg()
+                List<AReg> rows = (from users in dc.Users
+                                   join regs in dc.Registrations on users.UserID equals regs.UserID
+                                   join tours in dc.Tours on regs.TourID equals tours.TourID
+                                   orderby regs.TourDate
+                                   select new AReg()
                                      {
-                                        RegID = c.RegID.ToString(),
-                                        TourID = c.TourID.ToString(),
-                                        TourDate = c.TourDate,
-                                        UserID = c.UserID.ToString(),
-                                        RegFirstName = c.RegFirstName,
-                                        RegLastName = c.RegLastName,
-                                        RegBirthday = c.RegBirthday,
-                                        WillAttend = c.WillAttend,
-                                        IsPaid = c.IsPaid,
-                                        IsSentEmail = c.IsSentEmail,
-                                        Attended = c.Attended,
-                                        RegTime = c.RegTime   
+                                         RegID = regs.RegID.ToString(),
+                                         TourID = regs.TourID.ToString(),
+                                         TourName = tours.TourName,
+                                         TourDate = regs.TourDate,
+                                         UserID = regs.UserID.ToString(),
+                                         UserName = users.Username,
+                                         RegFirstName = regs.RegFirstName,
+                                         RegLastName = regs.RegLastName,
+                                         RegBirthday = regs.RegBirthday,
+                                         WillAttend = regs.WillAttend==1?true:false,
+                                         IsPaid = regs.IsPaid==1? true:false,
+                                         IsSentEmail = regs.IsSentEmail==1?true:false,
+                                         Attended = regs.Attended==1?true:false,
+                                         RegTime = regs.RegTime   
                                      }
                               ).ToList<AReg>();
                 return rows;
@@ -261,6 +279,7 @@ namespace TourGuideDAL
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
                 List<AUser> rows = (from c in dc.Users
+                                    orderby c.RegTime
                                     select new AUser()
                                     {
                                         UserID = c.UserID.ToString(),
@@ -294,7 +313,7 @@ namespace TourGuideDAL
                 registration.TourID = System.Guid.Parse(reg.TourID);
                 registration.UserID = System.Guid.Parse(reg.UserID);
                 registration.RegTime = DateTime.Now;
-                registration.WillAttend = (byte)reg.WillAttend;
+                registration.WillAttend = (byte)(reg.WillAttend?1:0);
                 registration.RegID = System.Guid.NewGuid();
                 dc.Registrations.InsertOnSubmit(registration);
                 dc.SubmitChanges();
@@ -353,7 +372,7 @@ namespace TourGuideDAL
                 newEvent.TourID = System.Guid.Parse(tourEvent.TourID);
                 newEvent.TourDate = tourEvent.TourDate;
                 newEvent.TourGuide = tourEvent.TourGuide;
-                newEvent.IsOn = (byte)tourEvent.IsOn;
+                newEvent.IsOn = (byte)(tourEvent.IsOn? 1 : 0);
                 dc.Events.InsertOnSubmit(newEvent);
                 dc.SubmitChanges();
                 return true;
@@ -395,7 +414,7 @@ namespace TourGuideDAL
                                  where (c.TourID.ToString() == tourEvent.TourID && c.TourDate == tourEvent.TourDate)
                                  select c).FirstOrDefault<Event>();
                     row.TourGuide = tourEvent.TourGuide;
-                    row.IsOn = (byte)tourEvent.IsOn;
+                row.IsOn = (byte)(tourEvent.IsOn?1:0);
                     dc.SubmitChanges();
                     return true;
             }
@@ -409,16 +428,16 @@ namespace TourGuideDAL
                     foreach (Registration reg in registrations)
                     {
                         AReg newReg = new AReg();
-                        newReg.IsSentEmail = reg.IsSentEmail;
-                        newReg.IsPaid = reg.IsPaid;
-                        newReg.Attended = reg.Attended;
+                        newReg.IsSentEmail = reg.IsSentEmail==1?true:false;
+                        newReg.IsPaid = reg.IsPaid==1?true:false;
+                        newReg.Attended = reg.Attended==1?true:false;
                         newReg.RegFirstName = reg.RegFirstName;
                         newReg.RegLastName = reg.RegLastName;
                         newReg.RegBirthday = reg.RegBirthday;
                         newReg.TourDate = tourEvent.TourDate;
                         newReg.TourID = tourEvent.TourID;
                         newReg.UserID = reg.UserID.ToString();
-                        newReg.WillAttend = (byte)reg.WillAttend;
+                        newReg.WillAttend = reg.WillAttend==1?true:false;
                         AddReg(newReg);
                     }
                     DeleteEvent(tourEvent.TourID, tourEvent.TourOriginalDate); // this function also deletes the previous date regisrations
@@ -437,13 +456,13 @@ namespace TourGuideDAL
                 Registration row = (from c in dc.Registrations
                              where (c.RegID.ToString() == reg.RegID)
                              select c).FirstOrDefault<Registration>();
-                row.IsSentEmail = (byte)reg.IsSentEmail;
-                row.IsPaid = (byte)reg.IsPaid;
-                row.Attended = (byte)reg.Attended; ;
+                row.IsSentEmail = (byte)(reg.IsSentEmail?1:0);
+                row.IsPaid = (byte)(reg.IsPaid?1:0);
+                row.Attended = (byte)(reg.Attended?1:0);
                 row.RegFirstName = reg.RegFirstName;
                 row.RegLastName = reg.RegLastName;
                 row.RegBirthday = reg.RegBirthday;
-                row.WillAttend = (byte)reg.WillAttend;
+                row.WillAttend = (byte)(reg.WillAttend?1:0);
                 dc.SubmitChanges();
                 return true;     
             }
@@ -466,6 +485,8 @@ namespace TourGuideDAL
                 row.TourLocation = tour.TourLocation;
                 row.TourName = tour.TourName;
                 row.TourPrice = tour.TourPrice;
+                row.ImageData = tour.ImageData;
+                row.ImageMimeType = tour.ImageMimeType;
                 dc.SubmitChanges();
                 return true;
             }

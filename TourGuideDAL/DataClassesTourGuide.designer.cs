@@ -36,12 +36,12 @@ namespace TourGuideDAL
     partial void InsertRegistration(Registration instance);
     partial void UpdateRegistration(Registration instance);
     partial void DeleteRegistration(Registration instance);
-    partial void InsertTour(Tour instance);
-    partial void UpdateTour(Tour instance);
-    partial void DeleteTour(Tour instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
+    partial void InsertTour(Tour instance);
+    partial void UpdateTour(Tour instance);
+    partial void DeleteTour(Tour instance);
     #endregion
 		
 		public DataClassesTourGuideDataContext() : 
@@ -90,19 +90,19 @@ namespace TourGuideDAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Tour> Tours
-		{
-			get
-			{
-				return this.GetTable<Tour>();
-			}
-		}
-		
 		public System.Data.Linq.Table<User> Users
 		{
 			get
 			{
 				return this.GetTable<User>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Tour> Tours
+		{
+			get
+			{
+				return this.GetTable<Tour>();
 			}
 		}
 	}
@@ -724,312 +724,6 @@ namespace TourGuideDAL
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tours")]
-	public partial class Tour : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _TourID;
-		
-		private string _TourName;
-		
-		private string _TourLocation;
-		
-		private string _TourCategory;
-		
-		private string _TourArea;
-		
-		private System.Nullable<short> _TourDuration;
-		
-		private System.Nullable<decimal> _TourPrice;
-		
-		private System.Nullable<byte> _MinReg;
-		
-		private System.Nullable<byte> _MaxReg;
-		
-		private string _TourDescription;
-		
-		private EntitySet<Event> _Events;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnTourIDChanging(System.Guid value);
-    partial void OnTourIDChanged();
-    partial void OnTourNameChanging(string value);
-    partial void OnTourNameChanged();
-    partial void OnTourLocationChanging(string value);
-    partial void OnTourLocationChanged();
-    partial void OnTourCategoryChanging(string value);
-    partial void OnTourCategoryChanged();
-    partial void OnTourAreaChanging(string value);
-    partial void OnTourAreaChanged();
-    partial void OnTourDurationChanging(System.Nullable<short> value);
-    partial void OnTourDurationChanged();
-    partial void OnTourPriceChanging(System.Nullable<decimal> value);
-    partial void OnTourPriceChanged();
-    partial void OnMinRegChanging(System.Nullable<byte> value);
-    partial void OnMinRegChanged();
-    partial void OnMaxRegChanging(System.Nullable<byte> value);
-    partial void OnMaxRegChanged();
-    partial void OnTourDescriptionChanging(string value);
-    partial void OnTourDescriptionChanged();
-    #endregion
-		
-		public Tour()
-		{
-			this._Events = new EntitySet<Event>(new Action<Event>(this.attach_Events), new Action<Event>(this.detach_Events));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid TourID
-		{
-			get
-			{
-				return this._TourID;
-			}
-			set
-			{
-				if ((this._TourID != value))
-				{
-					this.OnTourIDChanging(value);
-					this.SendPropertyChanging();
-					this._TourID = value;
-					this.SendPropertyChanged("TourID");
-					this.OnTourIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string TourName
-		{
-			get
-			{
-				return this._TourName;
-			}
-			set
-			{
-				if ((this._TourName != value))
-				{
-					this.OnTourNameChanging(value);
-					this.SendPropertyChanging();
-					this._TourName = value;
-					this.SendPropertyChanged("TourName");
-					this.OnTourNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourLocation", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string TourLocation
-		{
-			get
-			{
-				return this._TourLocation;
-			}
-			set
-			{
-				if ((this._TourLocation != value))
-				{
-					this.OnTourLocationChanging(value);
-					this.SendPropertyChanging();
-					this._TourLocation = value;
-					this.SendPropertyChanged("TourLocation");
-					this.OnTourLocationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourCategory", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string TourCategory
-		{
-			get
-			{
-				return this._TourCategory;
-			}
-			set
-			{
-				if ((this._TourCategory != value))
-				{
-					this.OnTourCategoryChanging(value);
-					this.SendPropertyChanging();
-					this._TourCategory = value;
-					this.SendPropertyChanged("TourCategory");
-					this.OnTourCategoryChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourArea", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string TourArea
-		{
-			get
-			{
-				return this._TourArea;
-			}
-			set
-			{
-				if ((this._TourArea != value))
-				{
-					this.OnTourAreaChanging(value);
-					this.SendPropertyChanging();
-					this._TourArea = value;
-					this.SendPropertyChanged("TourArea");
-					this.OnTourAreaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourDuration", DbType="SmallInt")]
-		public System.Nullable<short> TourDuration
-		{
-			get
-			{
-				return this._TourDuration;
-			}
-			set
-			{
-				if ((this._TourDuration != value))
-				{
-					this.OnTourDurationChanging(value);
-					this.SendPropertyChanging();
-					this._TourDuration = value;
-					this.SendPropertyChanged("TourDuration");
-					this.OnTourDurationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourPrice", DbType="Money")]
-		public System.Nullable<decimal> TourPrice
-		{
-			get
-			{
-				return this._TourPrice;
-			}
-			set
-			{
-				if ((this._TourPrice != value))
-				{
-					this.OnTourPriceChanging(value);
-					this.SendPropertyChanging();
-					this._TourPrice = value;
-					this.SendPropertyChanged("TourPrice");
-					this.OnTourPriceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MinReg", DbType="TinyInt")]
-		public System.Nullable<byte> MinReg
-		{
-			get
-			{
-				return this._MinReg;
-			}
-			set
-			{
-				if ((this._MinReg != value))
-				{
-					this.OnMinRegChanging(value);
-					this.SendPropertyChanging();
-					this._MinReg = value;
-					this.SendPropertyChanged("MinReg");
-					this.OnMinRegChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaxReg", DbType="TinyInt")]
-		public System.Nullable<byte> MaxReg
-		{
-			get
-			{
-				return this._MaxReg;
-			}
-			set
-			{
-				if ((this._MaxReg != value))
-				{
-					this.OnMaxRegChanging(value);
-					this.SendPropertyChanging();
-					this._MaxReg = value;
-					this.SendPropertyChanged("MaxReg");
-					this.OnMaxRegChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourDescription", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string TourDescription
-		{
-			get
-			{
-				return this._TourDescription;
-			}
-			set
-			{
-				if ((this._TourDescription != value))
-				{
-					this.OnTourDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._TourDescription = value;
-					this.SendPropertyChanged("TourDescription");
-					this.OnTourDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tour_Event", Storage="_Events", ThisKey="TourID", OtherKey="TourID")]
-		public EntitySet<Event> Events
-		{
-			get
-			{
-				return this._Events;
-			}
-			set
-			{
-				this._Events.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Events(Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.Tour = this;
-		}
-		
-		private void detach_Events(Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.Tour = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
 	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1333,6 +1027,360 @@ namespace TourGuideDAL
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tours")]
+	public partial class Tour : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _TourID;
+		
+		private string _TourName;
+		
+		private string _TourLocation;
+		
+		private string _TourCategory;
+		
+		private string _TourArea;
+		
+		private System.Nullable<short> _TourDuration;
+		
+		private System.Nullable<decimal> _TourPrice;
+		
+		private System.Nullable<byte> _MinReg;
+		
+		private System.Nullable<byte> _MaxReg;
+		
+		private string _TourDescription;
+		
+		private byte[] _ImageData;
+		
+		private string _ImageMimeType;
+		
+		private EntitySet<Event> _Events;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTourIDChanging(System.Guid value);
+    partial void OnTourIDChanged();
+    partial void OnTourNameChanging(string value);
+    partial void OnTourNameChanged();
+    partial void OnTourLocationChanging(string value);
+    partial void OnTourLocationChanged();
+    partial void OnTourCategoryChanging(string value);
+    partial void OnTourCategoryChanged();
+    partial void OnTourAreaChanging(string value);
+    partial void OnTourAreaChanged();
+    partial void OnTourDurationChanging(System.Nullable<short> value);
+    partial void OnTourDurationChanged();
+    partial void OnTourPriceChanging(System.Nullable<decimal> value);
+    partial void OnTourPriceChanged();
+    partial void OnMinRegChanging(System.Nullable<byte> value);
+    partial void OnMinRegChanged();
+    partial void OnMaxRegChanging(System.Nullable<byte> value);
+    partial void OnMaxRegChanged();
+    partial void OnTourDescriptionChanging(string value);
+    partial void OnTourDescriptionChanged();
+    partial void OnImageDataChanging(byte[] value);
+    partial void OnImageDataChanged();
+    partial void OnImageMimeTypeChanging(string value);
+    partial void OnImageMimeTypeChanged();
+    #endregion
+		
+		public Tour()
+		{
+			this._Events = new EntitySet<Event>(new Action<Event>(this.attach_Events), new Action<Event>(this.detach_Events));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid TourID
+		{
+			get
+			{
+				return this._TourID;
+			}
+			set
+			{
+				if ((this._TourID != value))
+				{
+					this.OnTourIDChanging(value);
+					this.SendPropertyChanging();
+					this._TourID = value;
+					this.SendPropertyChanged("TourID");
+					this.OnTourIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TourName
+		{
+			get
+			{
+				return this._TourName;
+			}
+			set
+			{
+				if ((this._TourName != value))
+				{
+					this.OnTourNameChanging(value);
+					this.SendPropertyChanging();
+					this._TourName = value;
+					this.SendPropertyChanged("TourName");
+					this.OnTourNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourLocation", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TourLocation
+		{
+			get
+			{
+				return this._TourLocation;
+			}
+			set
+			{
+				if ((this._TourLocation != value))
+				{
+					this.OnTourLocationChanging(value);
+					this.SendPropertyChanging();
+					this._TourLocation = value;
+					this.SendPropertyChanged("TourLocation");
+					this.OnTourLocationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourCategory", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TourCategory
+		{
+			get
+			{
+				return this._TourCategory;
+			}
+			set
+			{
+				if ((this._TourCategory != value))
+				{
+					this.OnTourCategoryChanging(value);
+					this.SendPropertyChanging();
+					this._TourCategory = value;
+					this.SendPropertyChanged("TourCategory");
+					this.OnTourCategoryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourArea", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TourArea
+		{
+			get
+			{
+				return this._TourArea;
+			}
+			set
+			{
+				if ((this._TourArea != value))
+				{
+					this.OnTourAreaChanging(value);
+					this.SendPropertyChanging();
+					this._TourArea = value;
+					this.SendPropertyChanged("TourArea");
+					this.OnTourAreaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourDuration", DbType="SmallInt")]
+		public System.Nullable<short> TourDuration
+		{
+			get
+			{
+				return this._TourDuration;
+			}
+			set
+			{
+				if ((this._TourDuration != value))
+				{
+					this.OnTourDurationChanging(value);
+					this.SendPropertyChanging();
+					this._TourDuration = value;
+					this.SendPropertyChanged("TourDuration");
+					this.OnTourDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourPrice", DbType="Money")]
+		public System.Nullable<decimal> TourPrice
+		{
+			get
+			{
+				return this._TourPrice;
+			}
+			set
+			{
+				if ((this._TourPrice != value))
+				{
+					this.OnTourPriceChanging(value);
+					this.SendPropertyChanging();
+					this._TourPrice = value;
+					this.SendPropertyChanged("TourPrice");
+					this.OnTourPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MinReg", DbType="TinyInt")]
+		public System.Nullable<byte> MinReg
+		{
+			get
+			{
+				return this._MinReg;
+			}
+			set
+			{
+				if ((this._MinReg != value))
+				{
+					this.OnMinRegChanging(value);
+					this.SendPropertyChanging();
+					this._MinReg = value;
+					this.SendPropertyChanged("MinReg");
+					this.OnMinRegChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaxReg", DbType="TinyInt")]
+		public System.Nullable<byte> MaxReg
+		{
+			get
+			{
+				return this._MaxReg;
+			}
+			set
+			{
+				if ((this._MaxReg != value))
+				{
+					this.OnMaxRegChanging(value);
+					this.SendPropertyChanging();
+					this._MaxReg = value;
+					this.SendPropertyChanged("MaxReg");
+					this.OnMaxRegChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TourDescription", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string TourDescription
+		{
+			get
+			{
+				return this._TourDescription;
+			}
+			set
+			{
+				if ((this._TourDescription != value))
+				{
+					this.OnTourDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._TourDescription = value;
+					this.SendPropertyChanged("TourDescription");
+					this.OnTourDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageData", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public byte[] ImageData
+		{
+			get
+			{
+				return this._ImageData;
+			}
+			set
+			{
+				if ((this._ImageData != value))
+				{
+					this.OnImageDataChanging(value);
+					this.SendPropertyChanging();
+					this._ImageData = value;
+					this.SendPropertyChanged("ImageData");
+					this.OnImageDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageMimeType", DbType="VarChar(50)")]
+		public string ImageMimeType
+		{
+			get
+			{
+				return this._ImageMimeType;
+			}
+			set
+			{
+				if ((this._ImageMimeType != value))
+				{
+					this.OnImageMimeTypeChanging(value);
+					this.SendPropertyChanging();
+					this._ImageMimeType = value;
+					this.SendPropertyChanged("ImageMimeType");
+					this.OnImageMimeTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tour_Event", Storage="_Events", ThisKey="TourID", OtherKey="TourID")]
+		public EntitySet<Event> Events
+		{
+			get
+			{
+				return this._Events;
+			}
+			set
+			{
+				this._Events.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Events(Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tour = this;
+		}
+		
+		private void detach_Events(Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tour = null;
 		}
 	}
 }

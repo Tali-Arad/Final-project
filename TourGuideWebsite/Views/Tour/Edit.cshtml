@@ -4,9 +4,111 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h1 class="page-header">
+    Edit Tour
+</h1>
 
-@using (Html.BeginForm()) {
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">Tour</a> </li>
+    <li><a href="#"></a>Edit</li>
+    <li class="active">
+        @Html.DisplayFor(model => model.TourName)
+    </li>
+</ol>
+
+@using (Html.BeginForm("Edit", "Tour", FormMethod.Post, new { @class = "form-horizontal", @role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourName">Tour Name:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.TourName, new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.TourName)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourLocation">Tour Location:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.TourLocation, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TourLocation)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourArea">Tour Area:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.TourArea, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TourArea)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourCategory">Tour Category:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.TourCategory, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TourCategory)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourDuration">Tour Duration:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.TourDuration, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TourDuration)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourPrice">Tour Price:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.TourPrice, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TourPrice)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="MinReg">Tour Minimum:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.MinReg, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MinReg)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="MaxReg">Tour Maximum:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.MaxReg, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaxReg)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourDescription">Tour Description:</label>
+            <div class="col-sm-4">
+                @Html.TextAreaFor(model => model.TourDescription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TourDescription)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ImageData">Image:</label>
+            <div class="col-sm-4">
+                @if (Model.ImageData == null)
+                {
+                    @:None
+                }
+                else
+                {
+                    <img width="150" height="150"
+                         src="@Url.Action("GetImage", "Tour", new { Model.TourID })" />
+                }
+                <div>Upload new image: <input type="file" name="Image" /></div>
+            </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-default" value="Save" />
+                </div>
+            </div>
+        </div>
+}
+
+@*@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -82,7 +184,7 @@
         </div>
         
         <div class="editor-field">
-            @Html.EditorFor(model => model.TourDescription) <!-- This should be a text field -->
+            @Html.TextAreaFor(model => model.TourDescription)  This should be a text field 
             @Html.ValidationMessageFor(model => model.TourDescription)
         </div>
 
@@ -90,12 +192,8 @@
             <input type="submit" value="Save" />
         </p>
     </fieldset>
-}
+}*@
 
-<div>
+<div class="container">
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

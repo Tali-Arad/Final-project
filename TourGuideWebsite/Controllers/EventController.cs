@@ -63,6 +63,7 @@ namespace TourGuideWebsite.Controllers
                 }
                 else
                 {
+                    ViewBag.TourNameOptions = Lists.CreateTourList();
                     return View(tourEvent);
                 }
             }

@@ -1,161 +1,204 @@
-﻿@model List<TourGuideProtocol.DataStruct.AEvent>
-@using TourGuideProtocol.DataStruct
-
+﻿@model List<TourGuideWebsite.Models.EventDetails>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h1> Eyal Arad. Your tour guide in Israel.</h1>
+<div class="container">
+    <div class="col-lg-12">
+        <h1 class="page-header responsive">
+            I invite you to register on tours and discover amazing Israel!
+        </h1>
+    </div>
+</div>
+<!-- Upcoming tours section -->
+<div class="container">
+    <div class="row">
+        <div class="container">
+            <div class="col-md-12">
+                <h2>
+                    Upcoming Tours
+                </h2>
+            </div>
+        </div>
+        <div class="container" id="upcomingEvents">
+        </div>
+    </div>
+</div>
 
-<h2>
-    Hi! I'm Eyal, a certified tour guide.<br/>
-    I invite you to register to tours in amazing Israel!
-</h2>
+<!-- /.row -->
 @*<div>
-    <input type="image" src="/Content/Images/Jerusalem.jpg" alt=" submit" width="100" height="100">
-    <h3> Jerusalem </h3>
+        <input type="image" src="/Content/Images/Jerusalem.jpg" alt=" submit" width="100" height="100">
+        <h3> Jerusalem </h3>
 
-</div>
-<div>
-    <input type="image" src="/Content/Images/Haifa.jpg" alt=" submit" width="100" height="100">
-    <h3> Haifa </h3>
-</div>
-<div>
-    <input type="image" src="/Content/Images/Tel_Aviv.jpg" alt=" submit" width="100" height="100">
-    <h3> Tel Aviv </h3>
+    </div>
+    <div>
+        <input type="image" src="/Content/Images/Haifa.jpg" alt=" submit" width="100" height="100">
+        <h3> Haifa </h3>
+    </div>
+    <div>
+        <input type="image" src="/Content/Images/Tel_Aviv.jpg" alt=" submit" width="100" height="100">
+        <h3> Tel Aviv </h3>
 
-</div>*@
+    </div>*@
 
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4
+                   <label for=" searchtextbox">
+                <label> Enter a Location (e.g., "Jerusalem"), an Area (e.g., "south") or a Category (e.g., "nature"): </label>
+                <div class="input-group">
+                    <input class="form-control" type="text" name="search" id="searchTextbox" value="@ViewBag.SearchTextbox">
+                    <span class="input-group-btn">
+                        <input type="button" class="btn btn-primary" onclick="gotoTours(document.getElementById('searchTextbox').value)" value="Search Tour"/>
+                    </span>
+                </div><!-- /input-group -->
+                <p> @ViewBag.SearchMessage</p>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+        </form>
+    </div>
+        @*<ul>
+                @foreach(AEvent e in Model)
+                {
 
-<form>
-    <input type="text" name="search" id="searchTextbox" value="@ViewBag.SearchTextbox">&nbsp @ViewBag.SearchMessage<br><br />
-    <input type="button" onclick="gotoTours(document.getElementById('searchTextbox').value)" value="Search Tour"/>&nbsp<input type="button" onclick="gotoAdvancedSearch()" value="Advanced Search" />
-</form>
+                    <li>@Html.ActionLink(@e.TourName +" " + @e.TourDate, "EventDetails", new { id = @e.TourID, date = @e.TourDate })  <span></span></li>
+                }
+            </ul>*@
 
-<h2> Upcoming Tours</h2>
-    <ul id="upcomingEvents"></ul>
+        @*<input type="button" value="Sign up" onclick="gotoRegistration()" />
+            <input type="button" value="Log in" onclick="gotoLogin()" />
+            <input type="button" value="Admin" onclick="gotoAdmin()" />
+            <input type="button" value="Tours" onclick="gotoTours()" />*@
 
-    @*<ul>
-    @foreach(AEvent e in Model)
-    {
+        <script src="@Url.Content("~/JS/jquery.min.js")"></script>
+        <script src="@Url.Content("~/JS/bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/JS/bootstrap-accessibility_1.0.3.min.js")"></script>
+        <script src="@Url.Content("~/JS/functions.js")"></script>
+        <script src="JS/jquery.dataTables.min.js"></script>
+        <script src="JS/dataTables.bootstrap.js"></script>
 
-        <li>@Html.ActionLink(@e.TourName +" " + @e.TourDate, "EventDetails", new { id = @e.TourID, date = @e.TourDate })  <span></span></li>
-    }
-</ul>*@
+        <script type="text/javascript">
+            //function gotoRegistration() {
+            //    window.location.href = 'Home/Registration';
+            //}
 
-    <input type="button" value="Sign up" onclick="gotoRegistration()" />
-    <input type="button" value="Log in" onclick="gotoLogin()" />
-    <input type="button" value="Admin" onclick="gotoAdmin()" />
-    <input type="button" value="Tours" onclick="gotoTours()" />
+            //function gotoLogin() {
+            //    window.location.href = 'Account/Login';
+            //}
 
+            //function gotoAdmin() {
+            //    window.location.href = 'Admin';
+            //}
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
-
-<script src="@Url.Content("~/JS/jquery.min.js")"></script>
-<script src="@Url.Content("~/JS/bootstrap.min.js")"></script>
-<script src="@Url.Content("~/JS/bootstrap-accessibility_1.0.3.min.js")"></script>
-<script src="@Url.Content("~/JS/functions.js")"></script>
-<script src="JS/jquery.dataTables.min.js"></script>
-<script src="JS/dataTables.bootstrap.js"></script>
-
-<script type="text/javascript">
-    function gotoRegistration() {
-        window.location.href = 'Home/Registration';
-    }
-
-    function gotoLogin() {
-        window.location.href = 'Account/Login';
-    }
-
-    function gotoAdmin() {
-        window.location.href = 'Admin';
-    }
- 
-    function gotoTours(keyword) {
-        if (keyword != undefined)
-        {
-            window.location.href = "../Tours/Index/" + keyword;
-        }
-        else
-        {
-            window.location.href = "../Tours/";
-        }
-   }
-    
-    
-    function gotoAdvancedSearch() {
-        window.location.href = "Home/AdvancedSearch/";
-    }
-   
-    // Search tour with Enter
-    $(function () { 
-        $('input').keydown(function (e) {
-            console.log("Enter");
-            if (e.keyCode == 13) {
-                $("input[value='Search Tour']").focus().click();
-                return false;
+            function gotoTours(keyword) {
+                if (keyword != undefined) {
+                    window.location.href = "../Tours/Index/" + keyword;
+                }
+                else {
+                    window.location.href = "../Tours/";
+                }
             }
-        });
-    });
 
-    function GetUpcomingEvents() {
-        console.log('function')
-        Type = "GET";
-        Url = "http://localhost:53887/TourGuideSvc/TourGuideSvc.svc/GetUpcomingEvents";
-        Data = {}
-        ContentType = "application/json; charset=utf-8";
-        DataType = "json"; varProcessData = true;
 
-        $.ajax({
-            type: Type,                   //GET or POST or PUT or DELETE verb
-            url: Url,                     // Location of the service
-            data: Data,                   //Data sent to server
-            contentType: ContentType,               // content type sent to server
-            dataType: DataType,                     //Expected data format from server
-            processdata: varProcessData,            //True or False
-            success: function (msg) {               //On Successfull service call
-                GetUpcomingEventsSucceeded(msg);
-            },
-            error: ServiceFailed// When Service call fails
-        });
-    }
-
-    function ServiceFailed(result) {
-        alert('Service call failed: ' + result.status + '' + result.statusText);
-        Type = null;
-        varUrl = null;
-        Data = null;
-        ContentType = null;
-        DataType = null;
-        ProcessData = null;
-    }
-
-    function GetUpcomingEventsSucceeded(result) {
-        console.log(result);
-        var i=0;
-        objUL = document.getElementById("upcomingEvents");
-        objUL.innerHTML = "";
-        if (objUL != null) {
-            for (i = 0; i < result.length; i++) {
-                var objli = document.createElement("li"); 
-                var date = result[i].TourDate.split("(");
-                date = date[1].split("+");
-                date = date[0];
-                date = new Date(parseInt(date));
-                // Decide about the date format. Make it consistent.
-                objli.innerHTML = "<a href='../Home/EventDetails/" + result[i].TourID + "?date=" + date.toISOString() + "')>" + result[i].TourName + " " + date + "</a>";
-                objUL.appendChild(objli);
+            function gotoAdvancedSearch() {
+                window.location.href = "Home/AdvancedSearch/";
             }
-        }
 
-       
-    }
-    window.onload = GetUpcomingEvents();
+            // Search tour with Enter
+            $(function () {
+                $('input').keydown(function (e) {
+                    console.log("Enter");
+                    if (e.keyCode == 13) {
+                        $("input[value='Search Tour']").focus().click();
+                        return false;
+                    }
+                });
+            });
 
-    </script>
+            function GetUpcomingEvents() {
+                console.log('function')
+                Type = "GET";
+                Url = "http://localhost:53887/TourGuideSvc/TourGuideSvc.svc/GetUpcomingEvents";
+                Data = {}
+                ContentType = "application/json; charset=utf-8";
+                DataType = "json"; varProcessData = true;
+
+                $.ajax({
+                    type: Type,                   //GET or POST or PUT or DELETE verb
+                    url: Url,                     // Location of the service
+                    data: Data,                   //Data sent to server
+                    contentType: ContentType,               // content type sent to server
+                    dataType: DataType,                     //Expected data format from server
+                    processdata: varProcessData,            //True or False
+                    success: function (msg) {               //On Successfull service call
+                        GetUpcomingEventsSucceeded(msg);
+                    },
+                    error: ServiceFailed// When Service call fails
+                });
+            }
+
+            function ServiceFailed(result) {
+                alert('Service call failed: ' + result.status + '' + result.statusText);
+                Type = null;
+                varUrl = null;
+                Data = null;
+                ContentType = null;
+                DataType = null;
+                ProcessData = null;
+            }
+
+            function GetUpcomingEventsSucceeded(result) {
+                console.log(result);
+                var i = 0;
+                objUL = document.getElementById("upcomingEvents");
+                objUL.innerHTML = "";
+                //if (objUL != null) {
+                //    for (i = 0; i < result.length; i++) {
+                //        var objli = document.createElement("li");
+                //        var date = result[i].TourDate.split("(");
+                //        date = date[1].split("+");
+                //        date = date[0];
+                //        date = new Date(parseInt(date));
+                //         Decide about the date format. Make it consistent.
+                //        objli.innerHTML = "<a href='../Home/EventDetails/" + result[i].TourID + "?date=" + date.toISOString() + "')>" + result[i].TourName + " " + date + "</a>";
+                //        objUL.appendChild(objli);
+                //    }
+
+                if (objUL != null) {
+                    for (i = 0; i < result.length; i++) {
+                        var div1 = document.createElement('div');
+                        if (result.length < 3) {
+                            div1.className = 'col-md-6';
+                        }
+                        else {
+                            div1.className = 'col-md-4';
+                        }
+                        var date = result[i].EventInfo.TourDate.split("(");
+                        date = date[1].split("+");
+                        date = date[0];
+                        date = new Date(parseInt(date));
+                        // Decide about the date format. Make it consistent.
+                        var heading = "" + result[i].TourInfo.TourName + " " + date.toDateString() + " " + date.toLocaleTimeString();
+
+
+                        div1.innerHTML = '<div class="panel panel-default">\
+                                                <div class="panel-heading">\
+                                                   <h4>' + heading + '</h4>\
+                                                </div>\
+                                                <div class="panel-body">\
+                                                    <p>'+ result[i].TourInfo.TourDescription + '</p>\
+                                                    <a href="../Home/EventDetails/' + result[i].TourInfo.TourID + '?date=' + date.toISOString() + '" class="btn btn-default">More Details</a>\
+                                                </div>\
+                                                </div>'
+                        objUL.appendChild(div1);
+                    }
+                }
+            }
+            window.onload = GetUpcomingEvents();
+
+        </script>
 
 
 

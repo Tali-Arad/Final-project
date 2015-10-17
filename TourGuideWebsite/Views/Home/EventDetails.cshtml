@@ -1,15 +1,125 @@
 ﻿@model TourGuideWebsite.Models.EventDetails
-
 @{
-    Layout = null;
+    ViewBag.Title = "EventDetails";
 }
 
-<!DOCTYPE html>
+<h1 class="page-header">
+    @Html.DisplayFor(model => @model.tourInfo.TourName)
+    @Html.DisplayFor(model => @model.eventInfo.TourDate)
+</h1>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Event Details</title>
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">Tours</a> </li>
+    <li><a href="#"></a>Event Details</li>
+    <li class="active">
+        @Html.DisplayFor(model => model.tourInfo.TourName)
+    </li>
+</ol>
+
+<!-- Portfolio Item Row -->
+@*<script type="text/javascript">
+        var location = '@Model.TourLocation.ToLower()';
+        var imageName1 = '' + location.toString() + '1.jpg';
+        console.log(imageName1);
+        var imageName2 = '' + location.toString() + '2.jpg';
+        var imageName3 = '' + location.toString() + '3.jpg';
+        document.getElementById("img1").src = "~/Content/Images/" + imageName1;
+    </script>*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img class="img-responsive" id="img1" src="http://placehold.it/750x500" alt="" />
+                    </div>
+                    <div class="item">
+                        <img class="img-responsive" id="img2" src="http://placehold.it/750x500" alt="" />
+                    </div>
+                    <div class="item">
+                        <img class="img-responsive" id="img3" src="http://placehold.it/750x500" alt="" />
+                    </div>
+                </div>
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.DisplayFor(model => model.tourInfo.TourName) </h2>
+            <p>@Html.DisplayFor(model => model.tourInfo.TourDescription)</p>
+              <h3> @Html.DisplayFor(model=>model.eventInfo.TourDate)</h3>
+            <h3>Tour Details</h3>
+            <table class="table table-condensed">
+                <tr>
+                    <td>
+                        Location
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.tourInfo.TourLocation)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Area
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.tourInfo.TourArea)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Category
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.tourInfo.TourCategory)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Duration (in hours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.tourInfo.TourDuration)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Price
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.tourInfo.TourPrice)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Guide
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.eventInfo.TourGuide)
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <input type="button" class="btn btn-default" value="Register" onclick="gotoRegForm()" />
+            </p>
+
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
 
     <script type="text/javascript">
 
@@ -20,51 +130,5 @@
             window.location.href = "../RegForm/"+tourid+"?date="+tourdate;
         }
     </script>
-</head>
-<body>
-    <h1>Event Details</h1>
-    <table class="Grid">
-        <tr>
-            <td>Name</td>
-            <td>@Model.tourInfo.TourName</td>
-        </tr>
-        <tr>
-            <td>Date</td>
-            <td>@Model.eventInfo.TourDate.ToString("dd/MM/yyyy hh:mm")</td>
-        </tr>
-        <tr>
-            <td>Location</td>
-            <td>@Model.tourInfo.TourLocation</td>
-        </tr>
-        <tr>
-            <td>Area</td>
-            <td>@Model.tourInfo.TourArea</td>
-        </tr>
-        <tr>
-            <td>Duration</td>
-            <td>@Model.tourInfo.TourDuration</td>
-        </tr>
-        <tr>
-            <td>Category</td>
-            <td>@Model.tourInfo.TourCategory</td>
-        </tr>
-        <tr>
-            <td>Guide</td>
-            <td>@Model.eventInfo.TourGuide</td>
-        </tr>
-        <tr>
-            <td>Price</td>
-            <td>@Model.tourInfo.TourPrice.ToString()</td>
-        </tr>
-        <tr>
-            <td>Is on?</td>
-            <td>@Model.eventInfo.IsOn.ToString()</td>
-        </tr>
-    </table>
-    <p> @Model.tourInfo.TourDescription</p>
 
-    <!-- the button click calls a JS function taht goes to RegForm with the parameters TourID and TourDate --> 
-    <input type="button" value="Register" onclick="gotoRegForm()"/>
 
-</body>
-</html>

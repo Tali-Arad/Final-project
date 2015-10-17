@@ -4,18 +4,20 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h1 class="page-header">
+    Tour Details
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">Tour</a> </li>
+    <li><a href="#"></a>Details</li>
+    <li class="active">
+        @Html.DisplayFor(model => model.TourName)
+    </li>
+</ol>
 
 <fieldset>
-    <legend>ATour</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TourID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TourID)
-    </div>
-
+    <legend>@Html.DisplayFor(model => model.TourName)</legend>
     <div class="display-label">
          @Html.DisplayNameFor(model => model.TourName)
     </div>

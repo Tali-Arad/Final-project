@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace TourGuideProtocol.DataStruct
 {
@@ -28,5 +29,8 @@ namespace TourGuideProtocol.DataStruct
         public int MaxReg { get; set; }
         [Required]
         public string TourDescription { get; set; }
+        public byte[] ImageData { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
     }
 }

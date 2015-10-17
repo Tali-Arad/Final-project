@@ -6,18 +6,42 @@
 }
 
 <h2>Area</h2>
+<div id="sortingCats">
+    <ul class="nav nav-tabs" id="sortingByCats">
+        <li><a href="@Url.Action("Index")">Tour Name</a></li>
+        <li><a href="@Url.Action("Date")">Date</a></li>
+        <li><a href="@Url.Action("Location")">Location</a></li>
+        <li class="active"><a href="@Url.Action("Area")">Area</a></li>
+        <li><a href="@Url.Action("Category")">Category</a></li>
+        <li><a href="@Url.Action("Guide")">Guide</a></li>
+    </ul>
+</div><br /><br />
+
 <div id="sorting">
     @foreach (string area in @ViewBag.areas)
     {
-        <input type="button" onclick="sortByTourField('@area')" value="@area" />
+        <input type="button" class="btn btn-default" onclick="sortByTourField('@area')" value="@area" />
     }
-
-</div>
+</div><br /><br />
 
 <ul id="sortingBy">
     @foreach (AEvent e in Model)
     {
-        <li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>
+        <li class="list-group-item">
+            <a href="@Url.Action("EventDetails", "Home", new {id = e.TourID, date=@e.TourDate})" class="img-rounded">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="@Url.Action("GetImage", "Tour", new { e.TourID })" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <h2>@e.TourDate</h2>
+                        <h3 style="color:coral">@e.TourName</h3>
+                        <p>@Html.ActionLink("Details and Registration", "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)</p>
+                    </div>
+                </div>
+            </a>
+        </li>
+        @*<li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>*@
     }
 </ul>
 

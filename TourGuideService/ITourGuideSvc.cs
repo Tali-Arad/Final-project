@@ -34,7 +34,7 @@ namespace TourGuideService
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetUpcomingEvents", RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        List<AEvent> GetUpcomingEvents();
+        List<EventDetails> GetUpcomingEvents();
        
 
     }
@@ -59,5 +59,13 @@ namespace TourGuideService
         [DataMember]
         public string Field { get; set; }
     }
-       
+
+    [DataContract]
+    public class EventDetails
+    {
+        [DataMember]
+        public AEvent EventInfo { get; set; }
+        [DataMember]
+        public ATour TourInfo { get; set; }
+    }
 }

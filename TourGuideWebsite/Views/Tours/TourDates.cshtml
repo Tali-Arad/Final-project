@@ -3,31 +3,53 @@
 @{
     ViewBag.Title = "TourDates";
 }
-
-<h2>Dates for the tour @Model[0].TourName</h2>
-
-<table>
-    <tr>
-        <th>
-            Date
-        </th>
-        <th>
-           Guide
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TourDate)
-        </td> 
-        <td>
-            @Html.DisplayFor(modelItem => item.TourGuide)
-        </td>
-        <td>
-            @Html.ActionLink("Register", "RegForm", "Home", new { id=item.TourID, date = item.TourDate }, null) |
-            @Html.ActionLink("Tour Description", "TourDescription", new { id = item.TourID, keyword = ViewBag.keyword })
-        </td>
-    </tr>
+@if (Model.Count < 1)
+{
+    <div class="container">
+        <h2>There are no upcoming events for the tour./h2>
+    </div>
 }
-</table>
+
+else
+{
+<h1 class="page-header">
+    Dates for the tour: @Model[0].TourName
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">Tours</a> </li>
+    <li><a href="#"></a>Tour Dates</li>
+    <li class="active">
+            @Html.DisplayFor(model => model[0].TourName)
+    </li>
+</ol>
+
+    <div class="table-responsive">
+        <table class="table table-condensed">
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Guide
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourGuide)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Register", "RegForm", "Home", new { id = item.TourID, date = item.TourDate }, null) |
+                        @Html.ActionLink("Tour Description", "TourDescription", new { id = item.TourID, keyword = ViewBag.keyword })
+                    </td>
+                </tr>
+            }
+        </table>
+        </div>
+}

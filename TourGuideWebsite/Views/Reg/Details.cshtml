@@ -4,23 +4,29 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h1 class="page-header">
+   Registration Details
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">Registration</a> </li>
+    <li><a href="#"></a>Details</li>
+    <li class="active">
+        <span>@Html.DisplayFor(model => model.RegFirstName)</span>&nbsp
+        <span>@Html.DisplayFor(model => model.RegLastName)</span>&nbsp
+        @Html.DisplayFor(model => model.TourDate)
+    </li>
+</ol>
 
 <fieldset>
-    <legend>AReg</legend>
-
+    <legend><span>@Html.DisplayFor(model => model.RegFirstName)</span>&nbsp
+    <span>@Html.DisplayFor(model => model.RegLastName)</span>&nbsp
+    @Html.DisplayFor(model => model.TourDate)</legend>
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.RegID)
+         @Html.DisplayNameFor(model => model.TourName)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.RegID)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TourID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TourID)
+        @Html.DisplayFor(model => model.TourName)
     </div>
 
     <div class="display-label">
@@ -31,10 +37,10 @@
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.UserID)
+         @Html.DisplayNameFor(model => model.UserName)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.UserID)
+        @Html.DisplayFor(model => model.UserName)
     </div>
 
     <div class="display-label">
@@ -94,6 +100,6 @@
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = @Model.RegID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = @Model.RegID, RegBirthday = @Model.RegBirthday}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

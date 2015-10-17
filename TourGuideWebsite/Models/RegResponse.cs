@@ -14,7 +14,6 @@ namespace TourGuideWebsite.Models
         [Required]
         public string LastName { get; set; }
         [Required]
-        [DataType(DataType.Date)] 
         public DateTime Birthday { get; set; }
         [Required]
         public bool WillAttend { get; set; }

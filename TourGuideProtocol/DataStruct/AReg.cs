@@ -13,8 +13,11 @@ namespace TourGuideProtocol.DataStruct
         public string RegID { get; set; }
         public string TourID { get; set; }
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime TourDate { get; set; }
         public string UserID { get; set; }
+        public string UserName { get; set; }
+        public string TourName { get; set; }
         [Required]
         public string RegFirstName { get; set; }
         [Required]
@@ -24,10 +27,10 @@ namespace TourGuideProtocol.DataStruct
         public DateTime RegBirthday { get; set; }
         public DateTime RegTime { get; set; }
         [Required]
-        public int WillAttend { get; set; }
-        public int IsPaid { get; set; }
-        public int IsSentEmail { get; set; }
-        public int Attended { get; set; }
+        public bool WillAttend { get; set; }
+        public bool IsPaid { get; set; }
+        public bool IsSentEmail { get; set; }
+        public bool Attended { get; set; }
 
     }
 }

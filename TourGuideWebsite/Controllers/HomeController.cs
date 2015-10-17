@@ -48,7 +48,7 @@ namespace TourGuideWebsite.Controllers
 
         // GET: /RegForm/
 
-        [Authorize]// only users can register on tours
+        [Authorize]// only logged in users can register on tours
         [HttpGet] 
         public ActionResult RegForm(string id, DateTime date)
         {
@@ -76,7 +76,7 @@ namespace TourGuideWebsite.Controllers
                 reg.RegBirthday = rr.Birthday;
                 reg.UserID = rr.UserInfo.UserID;
                 reg.RegTime = DateTime.Now;
-                reg.WillAttend = (rr.WillAttend) ? 1 : 0;
+                reg.WillAttend = rr.WillAttend;
 
                 BTourGuideOp tourOp = new BTourGuideOp();
                 tourOp.AddReg(reg);
@@ -170,6 +170,18 @@ namespace TourGuideWebsite.Controllers
 
         [HttpGet]
         public ActionResult AdvancedSearch()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Contact()
         {
             return View();
         }
