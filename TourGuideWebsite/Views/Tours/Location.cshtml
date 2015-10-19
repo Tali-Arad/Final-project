@@ -39,7 +39,7 @@
             <a href="@Url.Action("EventDetails", "Home", new {id = e.TourID, date=@e.TourDate})" class="img-rounded">
                 <div class="row">
                     <div class="col-md-4">
-                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="@Url.Action("GetImage", "Tour", new { e.TourID })" alt="">
+                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="@Url.Action("GetImage", "Tours", new { e.TourID })" alt="">
                     </div>
                     <div class="col-md-8">
                         <h2>@e.TourDate</h2>

@@ -78,7 +78,8 @@
                                 <p> @item.TourName</p>
                                 @if (item.ImageData != null)
                                 {
-                                    <img class="img-responsive img-rounded img-hover" style="width:260px;height:200px" src="@Url.Action("GetImage", "Tour", new { item.TourID })" alt=@item.TourName>
+                                    <img class="img-responsive img-rounded img-hover" style="width:260px;height:200px" src="@Url.Action("GetImage", "Tours", new { tourid=item.TourID })" alt=@item.TourName>
+                               
                                 }
                                 else
                                 {

@@ -151,6 +151,20 @@ namespace TourGuideWebsite.Controllers
             return View(tourEvents);
         }
 
+        public FileContentResult GetImage(string tourid)
+        {
+            BTourGuideOp tourOp = new BTourGuideOp();
+            ATour tour = tourOp.GetTourByID(tourid);
+            if (tour != null)
+            {
+                return File(tour.ImageData, tour.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
     }
 }

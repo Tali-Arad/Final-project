@@ -52,7 +52,7 @@ function sortByTourFieldSucceeded(result) {
             objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
                               <div class="row">\
                               <div class="col-md-4">\
-                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tour/GetImage/?tourid=' + result[i].TourID + '" alt="">\
+                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tours/GetImage/?tourid=' + result[i].TourID + '" alt="">\
                     </div>\
                     <div class="col-md-8">\
                         <h2>'+ date + '</h2>\
@@ -161,7 +161,7 @@ function sortByEventFieldSucceeded(result) {
             objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
                               <div class="row">\
                               <div class="col-md-4">\
-                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tour/GetImage/?tourid=' + result[i].TourID + '" alt="">\
+                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tours/GetImage/?tourid=' + result[i].TourID + '" alt="">\
                     </div>\
                     <div class="col-md-8">\
                         <h2>'+date+'</h2>\
