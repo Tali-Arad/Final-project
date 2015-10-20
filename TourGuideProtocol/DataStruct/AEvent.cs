@@ -18,6 +18,6 @@ namespace TourGuideProtocol.DataStruct
         [Required]
         public string TourGuide { get; set; }
         [Required]
-        public int IsOn { get; set; }
+        public bool IsOn { get; set; }
     }
 }

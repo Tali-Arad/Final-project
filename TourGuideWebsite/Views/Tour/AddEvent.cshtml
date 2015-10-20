@@ -4,9 +4,19 @@
     ViewBag.Title = "AddEvent";
 }
 
-<h2>Add Event to Tour</h2>
+<h1 class="page-header">
+    Add Event to Tour
+</h1>
 
-@using (Html.BeginForm()) {
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">Tour</a> </li>
+    <li><a href="#"></a>Add Event</li>
+    <li class="active">
+        @Html.DisplayFor(model => model.tourInfo.TourName)
+    </li>
+</ol>
+
+@using(Html.BeginForm(new {@class="form-horizontal",  @role="form"})){
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -21,72 +31,96 @@
         @Html.EditorFor(x => x.tourInfo.TourPrice);
         @Html.EditorFor(x => x.tourInfo.TourDescription);
     </div>
-
-    <fieldset>
-        <legend>EventDetails</legend>
-
-        <table class="Grid">
-            <tr>
-                <td>
-                    <div class="display-label">
-                        @Html.DisplayNameFor(model => model.tourInfo.TourName)
-                    </div>
-                </td>  
-                <td>
-                    <div class="display-field">
-                        @Html.DisplayFor(model => model.tourInfo.TourName)
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td><div class="editor-label">
-                    @Html.LabelFor(model => model.eventInfo.TourDate)
-                    </div>
-                </td>
-                <td>
-                <div class="editor-field">
-                 @Html.EditorFor(model => model.eventInfo.TourDate)  <!-- This should be a datetime picker with calender-->
-                 @Html.ValidationMessageFor(model => model.eventInfo.TourDate)
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourDate">Tour Date:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.eventInfo.TourDate, new { @class = "form-control", @type = "datetime-local" })
+                @Html.ValidationMessageFor(model => model.eventInfo.TourDate)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="TourGuide">Tour Guide:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.eventInfo.TourGuide, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.eventInfo.TourGuide)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="row">
+                    @Html.CheckBoxFor(model => model.eventInfo.IsOn, new { @id="IsOn"})
+                    <label class="control-label" for="IsOn">Event is on</label>
                 </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.eventInfo.TourGuide)
-                    </div>
-                </td>
-                <td>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.eventInfo.TourGuide)
-                        @Html.ValidationMessageFor(model => model.eventInfo.TourGuide)
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.eventInfo.IsOn)
-                    </div>
-                </td>
-                <td>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.eventInfo.IsOn)
-                        @Html.ValidationMessageFor(model => model.eventInfo.IsOn)
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <p>
-            <input type="submit" value="Add Event" />
-        </p>
-    </fieldset>
-}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-default" value="Add Event" />
+            </div>
+        </div>
+        </div>
+        @*<fieldset>
+                <legend>EventDetails</legend>
+                <table class="Grid">
+                    <tr>
+                        <td>
+                            <div class="display-label">
+                                @Html.DisplayNameFor(model => model.tourInfo.TourName)
+                            </div>
+                        </td>
+                        <td>
+                            <div class="display-field">
+                                @Html.DisplayFor(model => model.tourInfo.TourName)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.eventInfo.TourDate)
+                            </div>
+                        </td>
+                        <td>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.eventInfo.TourDate)   This should be a datetime picker with calender
+                                @Html.ValidationMessageFor(model => model.eventInfo.TourDate)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.eventInfo.TourGuide)
+                            </div>
+                        </td>
+                        <td>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.eventInfo.TourGuide)
+                                @Html.ValidationMessageFor(model => model.eventInfo.TourGuide)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.eventInfo.IsOn)
+                            </div>
+                        </td>
+                        <td>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.eventInfo.IsOn)
+                                @Html.ValidationMessageFor(model => model.eventInfo.IsOn)
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    <input type="submit" value="Add Event" />
+                </p>
+            </fieldset>*@
+        }
 
-<div>
-    @Html.ActionLink("Back to Tours", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        <div>
+            @Html.ActionLink("Back to Tours", "Index")
+        </div>

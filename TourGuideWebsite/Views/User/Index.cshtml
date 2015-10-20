@@ -6,82 +6,84 @@
 
 <h2>Users</h2>
 
+<div id="sortingCats">
+    <ul class="nav nav-tabs responsive" id="sortingByCats">
+        <li><a href="@Url.Action("Index", "Tour")">Tours</a></li>
+        <li><a href="@Url.Action("Index", "Event")">Events</a></li>
+        <li><a href="@Url.Action("Index", "Reg")">Registrations</a></li>
+        <li class="active"><a href="@Url.Action("Index", "User")">Users</a></li>
+    </ul>
+</div>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserIP)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserFirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserLastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserPhone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserEmail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserPassword)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserBirthday)
-        </th>
-        <th></th>
-    </tr>
+<div class="tab-content responsive">
+    <div class="table-responsive">
+        <table class="table table-condensed">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserIP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserFirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserLastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserBirthday)
+                </th>
+                <th></th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserIP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserFirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserLastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserPhone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserPassword)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserBirthday)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
-        </td>
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserIP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserFirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserBirthday)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UserID,  UserBirthday=item.UserBirthday}) |
+                        @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+    </div>
+    </div>

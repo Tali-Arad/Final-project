@@ -1,28 +1,120 @@
-﻿@{
+﻿@model IEnumerable<TourGuideProtocol.DataStruct.ATour>
+
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Administation Actions</h2>
 
-<p><input type="button" value="Tours" onclick="gotoTour()" /></p>
-<p><input type="button" value="Events" onclick="gotoEvent()" /></p>
-<p><input type="button" value="Registrations" onclick="gotoReg()" /></p>
-<p><input type="button" value="Users" onclick="gotoUser()" /></p>
+<div id="sortingCats">
+    <ul class="nav nav-tabs responsive" id="sortingByCats">
+        <li class="active"><a href="@Url.Action("Index", "Tour")">Tours</a></li>
+        <li><a href="@Url.Action("Index", "Event")">Events</a></li>
+        <li><a href="@Url.Action("Index", "Reg")">Registrations</a></li>
+        <li><a href="@Url.Action("Index", "User")">Users</a></li>
+    </ul>
+</div>
 
-<script type="text/javascript">
+<div class="tab-content responsive">
+    <p>
+        @Html.ActionLink("Create New", "Create", "Tour")
+    </p>
+    <div class="table-responsive">
+        <table class="table table-condensed">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourArea)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourCategory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourDuration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MinReg)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxReg)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TourDescription)
+                </th>
+                <th></th>
+            </tr>
 
-    // pass login credentials?
-    function gotoTour() {
-        window.location.href = "Tour/";
-    }
-    function gotoEvent() {
-        window.location.href = "Event/";
-    }
-    function gotoReg() {
-        window.location.href = "Reg/";
-    }
-    function gotoUser() {
-        window.location.href = "User/";
-    }
-</script>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourLocation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourArea)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourCategory)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourDuration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MinReg)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaxReg)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourDescription)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Tour", new { id = item.TourID }, null) |
+                        @Html.ActionLink("Details", "Details", "Tour", new { id = item.TourID }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Tour", new { id = item.TourID }, null) |
+                        @Html.ActionLink("Add Event", "AddEvent", "Tour", new { id = item.TourID }, null)
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+    </div>
+
+        @*<p><input type="button" value="Tours" onclick="gotoTour()" /></p>
+            <p><input type="button" value="Events" onclick="gotoEvent()" /></p>
+            <p><input type="button" value="Registrations" onclick="gotoReg()" /></p>
+            <p><input type="button" value="Users" onclick="gotoUser()" /></p>
+
+            <script type="text/javascript">
+
+                // pass login credentials?
+                function gotoTour() {
+                    window.location.href = "Tour/";
+                }
+                function gotoEvent() {
+                    window.location.href = "Event/";
+                }
+                function gotoReg() {
+                    window.location.href = "Reg/";
+                }
+                function gotoUser() {
+                    window.location.href = "User/";
+                }
+            </script>*@
 

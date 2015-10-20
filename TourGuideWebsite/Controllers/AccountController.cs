@@ -15,8 +15,9 @@ namespace TourGuideWebsite.Controllers
     public class AccountController : Controller
     {
         [HttpGet]
-        public ViewResult Login()
+        public ViewResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 

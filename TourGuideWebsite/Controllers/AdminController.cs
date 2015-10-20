@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Security;
+using TourGuideProtocol.DataInt;
+using TourGuideProtocol.DataStruct;
+using TourGuideBLL;
 
 namespace TourGuideWebsite.Controllers
 {
@@ -15,7 +18,9 @@ namespace TourGuideWebsite.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            BTourGuideOp tourOp = new BTourGuideOp();
+            List<ATour> tours = tourOp.GetTours();
+            return View(tours);
         }
 
     }

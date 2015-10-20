@@ -37,7 +37,8 @@ namespace TourGuideWebsite.Controllers
         // GET: /Reg/Create
 
         public ActionResult Create()
-        {   List<SelectListItem> tourList= Lists.CreateTourList();
+        {
+            List<SelectListItem> tourList= Lists.CreateTourList();
             ViewBag.TourNameOptions = tourList;
             // The initial TourDateOptions ddl fits the first tour in the TourNameOptions ddl:
             string tourName = tourList[0].Text;
@@ -45,7 +46,6 @@ namespace TourGuideWebsite.Controllers
             //The tourDates dropdown list options change based on the tourName choice. This is done with AJAX via query using
             // a web service. 
             ViewBag.UsernameOptions = Lists.CreateUserList();
-            
             return View();  
         }
 
@@ -74,6 +74,15 @@ namespace TourGuideWebsite.Controllers
                 }
                 else
                 {
+                    // Saving the dropdown values selected by user:
+                    List<SelectListItem> tourList = Lists.CreateTourList();
+                    ViewBag.TourNameOptions = tourList;
+                    // The initial TourDateOptions ddl fits the first tour already selected by user:
+                    string tourName = TourNameOptions;
+                    ViewBag.TourDateOptions = Lists.CreateTourDateList(tourName);
+                    //The tourDates dropdown list options change based on the tourName choice. This is done with AJAX via query using
+                    // a web service. 
+                    ViewBag.UsernameOptions = Lists.CreateUserList();
                     return View(reg);
                 }
             }
@@ -86,7 +95,7 @@ namespace TourGuideWebsite.Controllers
         //
         // GET: /Reg/Edit/5
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, DateTime RegBirthday)
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AReg> registrations = tourOp.GetRegistrations();

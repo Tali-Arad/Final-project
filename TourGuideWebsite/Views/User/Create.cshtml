@@ -4,9 +4,99 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h1 class="page-header">
+    Create User
+</h1>
 
-@using (Html.BeginForm()) {
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">User</a> </li>
+    <li class="active"><a href="#"></a>Create</li>
+</ol>
+
+@using (Html.BeginForm(new { @class = "form-horizontal", @role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="UserFirstName">First Name:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.UserFirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserFirstName)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="UserLastName">Last Name:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.UserLastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserLastName)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="UserPhone">Phone:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.UserPhone, new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.UserPhone)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="UserEmail">Email:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.UserEmail, new { @class = "form-control", @type="email"})
+                @Html.ValidationMessageFor(model => model.UserEmail)
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <label class="control-label col-sm-2" for="UserBirthday">Birthday:</label>
+                <div class='col-sm-4'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker2'>
+                            @Html.TextBoxFor(model => model.UserBirthday, new { @class = "form-control", @type = "text" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.UserBirthday)
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker2').datetimepicker();
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Username">Username:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="UserPassword">Password:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.UserPassword, new { @class = "form-control", @type = "password" })
+                @Html.ValidationMessageFor(model => model.UserPassword)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ConfirmPass">Confirm Password:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.ConfirmPass, new { @class = "form-control", @type = "password"})
+                @Html.ValidationMessageFor(model => model.ConfirmPass)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-default" value="Save" />
+            </div>
+        </div>
+    </div>
+}
+@*@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -81,12 +171,7 @@
             <input type="submit" value="Create" />
         </p>
     </fieldset>
-}
-
+}*@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

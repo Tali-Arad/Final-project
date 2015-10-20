@@ -81,12 +81,18 @@ namespace TourGuideWebsite.Controllers
         // POST: /Tour/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(string id, ATour tour)
+        public ActionResult Edit(string id, ATour tour, HttpPostedFileBase image)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (image != null)
+                    {
+                        tour.ImageMimeType = image.ContentType;
+                        tour.ImageData = new byte[image.ContentLength];
+                        image.InputStream.Read(tour.ImageData, 0, image.ContentLength);
+                    }
                     BTourGuideOp tourOp = new BTourGuideOp();
                     tour.TourID = id;
                     tourOp.EditTour(tour);
@@ -141,7 +147,7 @@ namespace TourGuideWebsite.Controllers
             tourEvent.TourOriginalDate = DateTime.Now;
             tourEvent.TourGuide = "";
             tourEvent.TourID = tour.TourID;
-            tourEvent.IsOn = 0;
+            tourEvent.IsOn = false;
             EventDetails eventDetails = new EventDetails();
             eventDetails.tourInfo = tour;
             eventDetails.eventInfo = tourEvent;
@@ -177,7 +183,23 @@ namespace TourGuideWebsite.Controllers
                 return View(eventDetails);
             }
         }
+
+        public FileContentResult GetImage(string tourid)
+        {
+            BTourGuideOp tourOp = new BTourGuideOp();
+            ATour tour = tourOp.GetTourByID(tourid);
+            if (tour != null)
+            {
+                return File(tour.ImageData, tour.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
+
+
 }
 
     

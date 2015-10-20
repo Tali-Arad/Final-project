@@ -37,27 +37,54 @@ function sortByTourFieldSucceeded(result) {
     objUL = document.getElementById("sortingBy");
     objUL.innerHTML = "";
     if (objUL != null) {
+
         for (i = 0; i < result.length; i++) {
-            var objli = document.createElement("li");
-            console.log(result[i].TourDate);
             var date = result[i].TourDate.split("(");
             date = date[1].split("+");
-            date = date[0];
-            console.log(date);
+            date = date[0];;
             date = new Date(parseInt(date));
-            console.log(date);
             var tourId = result[i].TourID;
-            var tourDate = result[i].TourDate;
-
-            //    var cSharpDate = "" + year + "" + month + "" + day + "" + hours + "" + minutes + "00";
-            //  console.log(cSharpDate);
+            tourDate = result[i].TourDate;
+            var tourName = result[i].TourName;
             var cSharpDate = new Date(result[i]);
-            console.log(cSharpDate);
-            // Decide about the date format. Make it consistent.
-            //  objli.innerHTML = "<a href='../Home/EventDetails'>" + result[i].TourName + " " + date + "</a>";
-            objli.innerHTML = "<a href='../Home/EventDetails/" + result[i].TourID + "?date=" + date.toISOString() + "')>" + result[i].TourName + " " + date + "</a>";
+            var objli = document.createElement("li");
+            objli.className = "list-group-item";
+            objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
+                              <div class="row">\
+                              <div class="col-md-4">\
+                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tours/GetImage/?tourid=' + result[i].TourID + '" alt="">\
+                    </div>\
+                    <div class="col-md-8">\
+                        <h2>'+ date + '</h2>\
+                        <h3 style="color:coral">'+ tourName + '</h3>\
+                        <p><a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '"">Details and Registration</a></p>\
+                    </div>\
+                </div>\
+           </a>'
             objUL.appendChild(objli);
         }
+
+        //for (i = 0; i < result.length; i++) {
+        //    var objli = document.createElement("li");
+        //    console.log(result[i].TourDate);
+        //    var date = result[i].TourDate.split("(");
+        //    date = date[1].split("+");
+        //    date = date[0];
+        //    console.log(date);
+        //    date = new Date(parseInt(date));
+        //    console.log(date);
+        //    var tourId = result[i].TourID;
+        //    var tourDate = result[i].TourDate;
+
+        //    //    var cSharpDate = "" + year + "" + month + "" + day + "" + hours + "" + minutes + "00";
+        //    //  console.log(cSharpDate);
+        //    var cSharpDate = new Date(result[i]);
+        //    console.log(cSharpDate);
+        //    // Decide about the date format. Make it consistent.
+        //    //  objli.innerHTML = "<a href='../Home/EventDetails'>" + result[i].TourName + " " + date + "</a>";
+        //    objli.innerHTML = "<a href='../Home/EventDetails/" + result[i].TourID + "?date=" + date.toISOString() + "')>" + result[i].TourName + " " + date + "</a>";
+        //    objUL.appendChild(objli);
+        //}
     }
 }
 
@@ -100,26 +127,50 @@ function sortByEventFieldSucceeded(result) {
     objUL = document.getElementById("sortingBy");
     objUL.innerHTML = "";
     if (objUL != null) {
+        //for (i = 0; i < result.length; i++) {
+        //    var objli = document.createElement("li");
+        //    console.log(result[i].TourDate);
+        //    var date = result[i].TourDate.split("(");
+        //    date = date[1].split("+");
+        //    date = date[0];
+        //    console.log(date);
+        //    date = new Date(parseInt(date));
+        //    console.log(date);
+        //    var tourId = result[i].TourID;
+        //    var tourDate = result[i].TourDate;
+
+        //    //    var cSharpDate = "" + year + "" + month + "" + day + "" + hours + "" + minutes + "00";
+        //    //  console.log(cSharpDate);
+        //    var cSharpDate = new Date(result[i]);
+        //    console.log(cSharpDate);
+        //    // Decide about the date format. Make it consistent.
+        //    //  objli.innerHTML = "<a href='../Home/EventDetails'>" + result[i].TourName + " " + date + "</a>";
+        //    objli.innerHTML = "<a href='../Home/EventDetails/" + result[i].TourID + "?date=" + date.toISOString() + "')>" + result[i].TourName + " " + date + "</a>";
+        
         for (i = 0; i < result.length; i++) {
-            var objli = document.createElement("li");
-            console.log(result[i].TourDate);
             var date = result[i].TourDate.split("(");
             date = date[1].split("+");
-            date = date[0];
-            console.log(date);
+            date = date[0];;
             date = new Date(parseInt(date));
-            console.log(date);
             var tourId = result[i].TourID;
-            var tourDate = result[i].TourDate;
-
-            //    var cSharpDate = "" + year + "" + month + "" + day + "" + hours + "" + minutes + "00";
-            //  console.log(cSharpDate);
+            tourDate = result[i].TourDate;
+            var tourName = result[i].TourName;
             var cSharpDate = new Date(result[i]);
-            console.log(cSharpDate);
-            // Decide about the date format. Make it consistent.
-            //  objli.innerHTML = "<a href='../Home/EventDetails'>" + result[i].TourName + " " + date + "</a>";
-            objli.innerHTML = "<a href='../Home/EventDetails/" + result[i].TourID + "?date=" + date.toISOString() + "')>" + result[i].TourName + " " + date + "</a>";
-            objUL.appendChild(objli);
+            var objli = document.createElement("li");
+            objli.className = "list-group-item";
+            objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
+                              <div class="row">\
+                              <div class="col-md-4">\
+                        <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tours/GetImage/?tourid=' + result[i].TourID + '" alt="">\
+                    </div>\
+                    <div class="col-md-8">\
+                        <h2>'+date+'</h2>\
+                        <h3 style="color:coral">'+ tourName + '</h3>\
+                        <p><a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '"">Details and Registration</a></p>\
+                    </div>\
+                </div>\
+           </a>'
+              objUL.appendChild(objli);
         }
     }
 

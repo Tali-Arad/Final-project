@@ -4,19 +4,21 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h1 class="page-header">
+   Delete Tour
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index")">Tour</a> </li>
+    <li><a href="#"></a>Delete</li>
+    <li class="active">
+        @Html.DisplayFor(model => model.TourName)
+    </li>
+</ol>
 
 <h3>Are you sure you want to delete this?</h3>
 <fieldset>
-    <legend>ATour</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TourID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TourID)
-    </div>
-
+    <legend>@Html.DisplayFor(model => model.TourName)</legend>
     <div class="display-label">
          @Html.DisplayNameFor(model => model.TourName)
     </div>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TourGuideBLL;
 using TourGuideProtocol.DataStruct;
+using TourGuideWebsite.Models;
 
 namespace TourGuideWebsite.Controllers
 {
@@ -44,33 +45,41 @@ namespace TourGuideWebsite.Controllers
         // POST: /User/Create
 
         [HttpPost]
-        public ActionResult Create(AUser user)
+        public ActionResult Create(UserDetails userdetails)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     BTourGuideOp tourOp = new BTourGuideOp();
+                    AUser user = new AUser();
                     user.RegTime = DateTime.Now;
                     user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
+                    user.UserFirstName = userdetails.UserFirstName;
+                    user.UserLastName = userdetails.UserLastName;
+                    user.UserEmail = userdetails.UserEmail;
+                    user.UserPhone = userdetails.UserPhone;
+                    user.UserPassword = userdetails.UserPassword;
+                    user.Username = userdetails.Username;
+                    user.UserBirthday = userdetails.UserBirthday;
                     tourOp.AddUser(user);
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    return View();
+                    return View(userdetails);
                 }
             }
             catch
             {
-                return View();
+                return View(userdetails);
             }
         }
 
         //
         // GET: /User/Edit/5
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, DateTime UserBirthday)
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AUser> users = tourOp.GetUsers();

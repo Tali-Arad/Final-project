@@ -31,7 +31,7 @@ namespace TourGuideWebsite.Controllers
                 {
                     TempData["SearchMessage"] = "No tours that match your keyword were found";
                     TempData["SearchTextbox"] = id;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             else // The search textbox is empty / the user clicked on "Tours"
@@ -47,6 +47,7 @@ namespace TourGuideWebsite.Controllers
         public ActionResult TourDescription(string id, string keyword)
         {
             ViewBag.keyword = keyword;
+            ViewBag.id = id;
             BTourGuideOp tourOp = new BTourGuideOp();
             ATour tour = tourOp.GetTourByID(id);
             return View(tour);
@@ -58,7 +59,8 @@ namespace TourGuideWebsite.Controllers
             ViewBag.keyword = keyword;
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AEvent> tourEvents = tourOp.GetEventsByTourId(id);
-            return View(tourEvents);
+                return View(tourEvents);
+           
         }
 
         [HttpGet]
@@ -147,6 +149,20 @@ namespace TourGuideWebsite.Controllers
             }
             ViewBag.dates = dates;
             return View(tourEvents);
+        }
+
+        public FileContentResult GetImage(string tourid)
+        {
+            BTourGuideOp tourOp = new BTourGuideOp();
+            ATour tour = tourOp.GetTourByID(tourid);
+            if (tour != null)
+            {
+                return File(tour.ImageData, tour.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
