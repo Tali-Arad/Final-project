@@ -34,7 +34,7 @@ namespace TourGuideProtocol.DataInt
         List<AEvent> GetEventsByTourId(string id);
         List<AEvent> GetEventsByTourField(string sort);
         List<AEvent> GetEventsByEventField(string sort);
-      
-
+        AUser GetUser(string username);
+        List<AReg> GetRegistrationsByUserID(string userID);
     }
 }

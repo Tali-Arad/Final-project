@@ -127,6 +127,16 @@ namespace TourGuideBLL
             return TourDAL.GetEventsByEventField(sort);
         }
 
+        public AUser GetUser(string username)
+        {
+            return TourDAL.GetUser(username);
+        }
+
+        public  List<AReg> GetRegistrationsByUserID(string userID)
+        {
+            return TourDAL.GetRegistrationsByUserID(userID);
+        }
+
 
     }
 }

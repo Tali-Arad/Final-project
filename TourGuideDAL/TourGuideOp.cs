@@ -274,6 +274,37 @@ namespace TourGuideDAL
             }
         }
 
+        public List<AReg> GetRegistrationsByUserID(string userID) // gets registrations related to user
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                List<AReg> rows = (from tours in dc.Tours 
+                                   join regs in dc.Registrations on tours.TourID equals regs.TourID
+                                   where regs.UserID.ToString()==userID
+                                   orderby regs.TourDate
+                                   select new AReg()
+                                   {
+                                       RegID = regs.RegID.ToString(),
+                                       TourID = regs.TourID.ToString(),
+                                       TourName = tours.TourName,
+                                       TourDate = regs.TourDate,
+                                       UserID = regs.UserID.ToString(),
+                                       UserName = "",
+                                       RegFirstName = regs.RegFirstName,
+                                       RegLastName = regs.RegLastName,
+                                       RegBirthday = regs.RegBirthday,
+                                       WillAttend = regs.WillAttend == 1 ? true : false,
+                                       IsPaid = regs.IsPaid == 1 ? true : false,
+                                       IsSentEmail = regs.IsSentEmail == 1 ? true : false,
+                                       Attended = regs.Attended == 1 ? true : false,
+                                       RegTime = regs.RegTime
+                                   }
+                              ).ToList<AReg>();
+                return rows;
+            }
+        }
+
+     
         public List<AUser> GetUsers() // gets all users
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
@@ -295,6 +326,30 @@ namespace TourGuideDAL
                                     }
                               ).ToList<AUser>();
                 return rows;
+            }
+        }
+
+        public AUser GetUser(string username) // gets user by username
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+                AUser user = (from c in dc.Users
+                                where c.Username == username
+                                    select new AUser()
+                                    {
+                                        UserID = c.UserID.ToString(),
+                                        RegTime = c.RegTime,
+                                        UserIP = c.RegIP,
+                                        UserFirstName = c.UserFirstName,
+                                        UserLastName = c.UserLastName,
+                                        UserPhone = c.UserPhone,
+                                        UserEmail = c.UserEmail,
+                                        UserPassword = c.UserPassword,
+                                        Username = c.Username,
+                                        UserBirthday = c.UserBirthday,
+                                    }
+                              ).SingleOrDefault<AUser>();
+                return user;
             }
         }
 

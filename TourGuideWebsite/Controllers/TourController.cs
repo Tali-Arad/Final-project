@@ -95,6 +95,7 @@ namespace TourGuideWebsite.Controllers
                     }
                     BTourGuideOp tourOp = new BTourGuideOp();
                     tour.TourID = id;
+                   
                     tourOp.EditTour(tour);
                     return RedirectToAction("Index");
                 }

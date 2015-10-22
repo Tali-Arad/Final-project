@@ -155,7 +155,7 @@ namespace TourGuideWebsite.Controllers
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             ATour tour = tourOp.GetTourByID(tourid);
-            if (tour != null)
+            if (tour != null && tour.ImageData!=null)
             {
                 return File(tour.ImageData, tour.ImageMimeType);
             }

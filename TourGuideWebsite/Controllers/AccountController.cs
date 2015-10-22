@@ -32,6 +32,9 @@ namespace TourGuideWebsite.Controllers
                     if (userValid)
                     {
                         FormsAuthentication.SetAuthCookie(model.UserName, false);
+                        //var cookie = new HttpCookie("userame", model.UserName.ToString());
+                        //Response.Cookies.Add(cookie);
+                        //System.Web.HttpContext.Current.Session["username"] = model.UserName;
                         return Redirect(returnUrl ?? Url.Action("Index", "Home"));
                     }
                     else
@@ -46,10 +49,52 @@ namespace TourGuideWebsite.Controllers
             }
         }
 
-        public ActionResult LogOff()
+        public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult UserProfile(string username)
+        {
+            BTourGuideOp tourOp = new BTourGuideOp();
+            AUser user = tourOp.GetUser(username);
+            List<AReg> userRegs =  tourOp.GetRegistrationsByUserID(user.UserID);
+            UserProfile userProfile = new UserProfile();
+            UserChanges userChanges = new UserChanges();
+            userProfile.UserRegs = userRegs;
+            userChanges.UserEmail = user.UserEmail;
+            userChanges.UserPhone = user.UserPhone;
+            userProfile.UserChanges = userChanges;
+
+            ViewBag.Username = username;
+
+            return View(userProfile);
+        }
+
+        [HttpPost]
+        public ActionResult UserProfile(UserProfile userProfile)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    string username = User.Identity.Name;
+                    AUser user = tourOp.GetUser(username);
+                    user.UserPhone = userProfile.UserChanges.UserPhone;
+                    user.UserEmail = userProfile.UserChanges.UserEmail;
+                    tourOp.EditUser(user);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                    return View(userProfile);
+            }
+            catch
+            {
+                return View(userProfile);
+            }
         }
 
 

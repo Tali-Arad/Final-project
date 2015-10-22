@@ -103,8 +103,8 @@
             <input type="button" value="Admin" onclick="gotoAdmin()" />
             <input type="button" value="Tours" onclick="gotoTours()" />*@
 
-        <script src="@Url.Content("~/JS/jquery.min.js")"></script>
-        <script src="@Url.Content("~/JS/bootstrap.min.js")"></script>
+        @*<script src="@Url.Content("~/JS/jquery.min.js")"></script>
+        <script src="@Url.Content("~/JS/bootstrap.min.js")"></script>*@
         <script src="@Url.Content("~/JS/bootstrap-accessibility_1.0.3.min.js")"></script>
         <script src="@Url.Content("~/JS/functions.js")"></script>
         <script src="JS/jquery.dataTables.min.js"></script>
@@ -151,7 +151,7 @@
             function GetUpcomingEvents() {
                 console.log('function')
                 Type = "GET";
-                Url = "http://localhost:53887/TourGuideSvc/TourGuideSvc.svc/GetUpcomingEvents";
+                Url = "../TourGuideSvc/TourGuideSvc.svc/GetUpcomingEvents";
                 Data = {}
                 ContentType = "application/json; charset=utf-8";
                 DataType = "json"; varProcessData = true;

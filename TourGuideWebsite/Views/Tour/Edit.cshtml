@@ -20,6 +20,10 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    
+        // To pass the current tour image data
+        @Html.HiddenFor(model => model.ImageData);
+        @Html.HiddenFor(model => model.ImageMimeType);
 
     <div class="form-horizontal">
         <div class="form-group">
@@ -96,6 +100,7 @@
                 {
                     <img width="150" height="150"
                          src="@Url.Action("GetImage", "Tour", new { Model.TourID })" />
+                    
                 }
                 <div>Upload new image: <input type="file" name="Image" /></div>
             </div>

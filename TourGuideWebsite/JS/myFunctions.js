@@ -6,7 +6,7 @@
     }
 
     Type = "POST";
-    Url = "http://localhost:53887/TourGuideSvc/TourGuideSvc.svc/SortToursByTourField"; // Do not hard code the URL! change this!
+    Url = "../../TourGuideSvc/TourGuideSvc.svc/SortToursByTourField"; // Do not hard code the URL! change this!
     ContentType = "application/json; charset=utf-8";
     DataType = "json"; varProcessData = true;
 
@@ -96,7 +96,7 @@ function sortByEventField(field) {
     }
 
     Type = "POST";
-    Url = "http://localhost:53887/TourGuideSvc/TourGuideSvc.svc/SortToursByEventField"; // Do not hard code the URL! change this!
+    Url = "../../TourGuideSvc/TourGuideSvc.svc/SortToursByEventField"; // Do not hard code the URL! change this!
     ContentType = "application/json; charset=utf-8";
     DataType = "json"; varProcessData = true;
 

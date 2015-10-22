@@ -1,0 +1,106 @@
+﻿@model TourGuideWebsite.Models.UserProfile 
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<h2>User Profile</h2>
+<h3> Tours you have registered people to:</h3>
+
+<table class="table">
+    <tr> 
+        <th>
+            Tour Date
+        </th>
+        <th>
+          Tour Name
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+           Last Name
+        </th>
+        <th>
+           Birthday
+        </th>
+        <th>
+           Will Attend
+        </th>
+        <th>
+           Paid
+        </th>
+        <th>
+           Attended
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.UserRegs) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TourName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegLastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegBirthday)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => item.WillAttend)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsPaid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Attended)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+        </td>
+    </tr>
+}
+
+</table>
+
+@using(Html.BeginForm(new {@class="form-horizontal",  @role="form"})){
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="UserPhone">Phone:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.UserChanges.UserPhone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserChanges.UserPhone)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="UserEmail">Email:</label>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(model => model.UserChanges.UserEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserChanges.UserEmail)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="button" class="btn btn-default" value="Change password" onclick="goToChangePassword()"  />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-default" value="Save" />
+            </div>
+        </div>
+    </div>
+}
