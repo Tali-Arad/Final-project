@@ -18,12 +18,14 @@ namespace TourGuideProtocol.DataStruct
         public string UserID { get; set; }
         public string UserName { get; set; }
         public string TourName { get; set; }
-        [Required]
+        [Required(ErrorMessage="Please enter first name")]
         public string RegFirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter last name")]
         public string RegLastName { get; set; }
         [Required]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
+        [CustomDateAttribute]
+        [Display(Name = "Birthday")]
         public DateTime RegBirthday { get; set; }
         public DateTime RegTime { get; set; }
         [Required]
@@ -32,5 +34,14 @@ namespace TourGuideProtocol.DataStruct
         public bool IsSentEmail { get; set; }
         public bool Attended { get; set; }
 
+    }
+
+    public class CustomDateAttribute : RangeAttribute
+    {
+        public CustomDateAttribute()
+            : base(typeof(DateTime),
+                    DateTime.Now.AddYears(-120).ToShortDateString(),
+                    DateTime.Now.ToShortDateString())
+        { }
     }
 }

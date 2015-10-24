@@ -9,16 +9,28 @@ namespace TourGuideWebsite.Models
 {
     public class RegResponse
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter first name")]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter last name")]
         public string LastName { get; set; }
         [Required]
+        [CustomDateAttribute]
+        [DataType(DataType.Date)]
+        [Display(Name = "Birthday")]
         public DateTime Birthday { get; set; }
-        [Required]
         public bool WillAttend { get; set; }
         public AEvent EventInfo { get; set; }
         public AUser UserInfo { get; set; }  
+    }
+
+
+    public class CustomDateAttribute : RangeAttribute
+    {
+        public CustomDateAttribute()
+            : base(typeof(DateTime),
+                    DateTime.Now.AddYears(-120).ToShortDateString(),
+                    DateTime.Now.ToShortDateString())
+        { }
     }
 }
 

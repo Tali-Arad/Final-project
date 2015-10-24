@@ -40,13 +40,11 @@ namespace TourGuideWebsite.Controllers
                     else
                     {
                         ModelState.AddModelError("", "Incorrect Username Or Password");
-                        return View();
+                        ViewBag.ReturnUrl = returnUrl;
+                        return View(); 
                     }
              }      
-            else
-            {
                 return View();
-            }
         }
 
         public ActionResult LogOut()

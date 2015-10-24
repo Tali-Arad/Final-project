@@ -51,19 +51,30 @@ namespace TourGuideWebsite.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    BTourGuideOp tourOp = new BTourGuideOp();
-                    AUser user = new AUser();
-                    user.RegTime = DateTime.Now;
-                    user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
-                    user.UserFirstName = userdetails.UserFirstName;
-                    user.UserLastName = userdetails.UserLastName;
-                    user.UserEmail = userdetails.UserEmail;
-                    user.UserPhone = userdetails.UserPhone;
-                    user.UserPassword = userdetails.UserPassword;
-                    user.Username = userdetails.Username;
-                    user.UserBirthday = userdetails.UserBirthday;
-                    tourOp.AddUser(user);
-                    return RedirectToAction("Index");
+                     // Checking the username availability in the server
+                      BTourGuideOp op = new BTourGuideOp();
+                      List<AUser> users = op.GetUsers();
+                      if (!users.Any(u => u.Username == userdetails.Username))
+                      {
+                          BTourGuideOp tourOp = new BTourGuideOp();
+                          AUser user = new AUser();
+                          user.RegTime = DateTime.Now;
+                          user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
+                          user.UserFirstName = userdetails.UserFirstName;
+                          user.UserLastName = userdetails.UserLastName;
+                          user.UserEmail = userdetails.UserEmail;
+                          user.UserPhone = userdetails.UserPhone;
+                          user.UserPassword = System.Web.Security.Membership.GeneratePassword(8, 2);
+                          user.Username = userdetails.Username;
+                          user.UserBirthday = userdetails.UserBirthday;
+                          tourOp.AddUser(user);
+                          return RedirectToAction("Index");
+                      }
+                      else
+                      {
+                          userdetails.Username = null;
+                          return View();
+                      }
                 }
                 else
                 {
@@ -84,30 +95,46 @@ namespace TourGuideWebsite.Controllers
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AUser> users = tourOp.GetUsers();
             AUser user = users.Single<AUser>(x => x.UserID == id);
-            return View(user);
+            UserDetails userDetails = new UserDetails();
+            userDetails.UserBirthday = user.UserBirthday;
+            userDetails.UserEmail = user.UserEmail;
+            userDetails.UserPhone = user.UserPhone;
+            userDetails.UserFirstName = user.UserFirstName;
+            userDetails.UserLastName = user.UserLastName;
+            userDetails.Username = user.Username;
+
+            // Not the true password
+            userDetails.UserPassword = "12345678";
+            userDetails.ConfirmPass = "12345678";
+            return View(userDetails);
         }
 
         //
         // POST: /User/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(string id, AUser user)
+        public ActionResult Edit(string id, UserDetails userDetails)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     BTourGuideOp tourOp = new BTourGuideOp();
-                    user.UserID = id;
+                    AUser user = tourOp.GetUser(userDetails.Username);
+                    user.UserFirstName = userDetails.UserFirstName;
+                    user.UserLastName = userDetails.UserLastName;
+                    user.UserPhone = userDetails.UserPhone;
+                    user.UserEmail = userDetails.UserEmail;
+                    user.UserBirthday = userDetails.UserBirthday;
                     tourOp.EditUser(user);
                     return RedirectToAction("Index");
                 }
                 else
-                    return View(user);
+                    return View(userDetails);
             }
             catch
             {
-                return View(user);
+                return View(userDetails);
             }
         }
 

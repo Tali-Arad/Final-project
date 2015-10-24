@@ -76,6 +76,17 @@ namespace TourGuideService
             }
             return tourEvents;
         }
+
+        public bool CheckUsernameAvaiability(Username username)
+        {
+            BTourGuideOp op = new BTourGuideOp();
+            List<AUser> users = op.GetUsers();
+            if(users.Any(u=>u.Username==username.Name))
+            {
+                return false;
+            }
+            else return true;
+        }
     }
     }
 

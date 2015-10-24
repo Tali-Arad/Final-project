@@ -1,4 +1,4 @@
-﻿@model TourGuideProtocol.DataStruct.AUser
+﻿@model TourGuideWebsite.Models.UserDetails
 
 @{
     ViewBag.Title = "Edit";
@@ -22,9 +22,10 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    // Passing to the controller (the div is hidden)
+   // Passing to the controller (the div is hidden)
     <div hidden="hidden">
         @Html.EditorFor(x => x.UserPassword);
+        @Html.EditorFor(x => x.ConfirmPass);
         @Html.EditorFor(x => x.Username);
     </div>
 
@@ -73,7 +74,7 @@
                 </div>
                 <script type="text/javascript">
                         $(function () {
-                            $('#datetimepicker2').datetimepicker();
+                            $('#datetimepicker2').datetimepicker({ format: 'L' });
                         });
                 </script>
             </div>

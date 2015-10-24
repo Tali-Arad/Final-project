@@ -38,11 +38,11 @@
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker2'>
                             @Html.TextBoxFor(model => model.TourDate, new {@class = "form-control", @type="text"})
+                            @Html.ValidationMessageFor(model => model.TourDate)
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        @Html.ValidationMessageFor(model => model.TourDate)
                     </div>
                 </div>
                 <script type="text/javascript">

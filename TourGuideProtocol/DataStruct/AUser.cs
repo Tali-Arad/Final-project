@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace TourGuideProtocol.DataStruct
 {
@@ -20,7 +21,8 @@ namespace TourGuideProtocol.DataStruct
         public string UserPhone { get; set; }
         [Required]
         public string UserEmail { get; set; }
-        [Required]
+        [HiddenInput(DisplayValue = false)]
+        [DataType(DataType.Password)]
         public string UserPassword { get; set; }
         [Required]
         public string Username { get; set; }

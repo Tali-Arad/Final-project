@@ -77,11 +77,10 @@ namespace TourGuideWebsite.Controllers
                 reg.UserID = rr.UserInfo.UserID;
                 reg.RegTime = DateTime.Now;
                 reg.WillAttend = rr.WillAttend;
-
                 BTourGuideOp tourOp = new BTourGuideOp();
                 tourOp.AddReg(reg);
                 return View("ThankYou");
-                // Add email sending in a desktop app
+                // Add email sending 
             }
             else
                 return View(rr);
@@ -91,7 +90,6 @@ namespace TourGuideWebsite.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
-            ViewBag.returnUrl = Request.UrlReferrer;
             return View();
         }
 
@@ -100,27 +98,38 @@ namespace TourGuideWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Add validation and password hashing
-                // Add password confirmation
-                AUser user = new AUser();
-                user.RegTime = DateTime.Now;
-                user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
-                user.UserFirstName = userdetails.UserFirstName;
-                user.UserLastName = userdetails.UserLastName;
-                user.UserEmail = userdetails.UserEmail;
-                user.UserPhone = userdetails.UserPhone;
-                user.UserPassword = userdetails.UserPassword;
-                user.Username = userdetails.Username;
-                user.UserBirthday = userdetails.UserBirthday;
-
-                BTourGuideOp tourOp = new BTourGuideOp();
-                tourOp.AddUser(user);
-             return RedirectToAction("Index"); // Do: redirect to previous page!
+                // Checking the username availability in the server
+                BTourGuideOp op = new BTourGuideOp();
+                List<AUser> users = op.GetUsers();
+                if (!users.Any(u => u.Username == userdetails.Username))
+                {
+                    // Add password hashing
+                    AUser user = new AUser();
+                    user.RegTime = DateTime.Now;
+                    user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
+                    user.UserFirstName = userdetails.UserFirstName;
+                    user.UserLastName = userdetails.UserLastName;
+                    user.UserEmail = userdetails.UserEmail;
+                    user.UserPhone = userdetails.UserPhone;
+                    user.UserPassword = userdetails.UserPassword;
+                    user.Username = userdetails.Username;
+                    user.UserBirthday = userdetails.UserBirthday;
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    tourOp.AddUser(user);
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    userdetails.Username = null;
+                    return View();
+                }
             }
             else
+            {
+                userdetails.Username = null;
                 return View();
+            }
         }
-
 
         //[HttpGet]
         //public ActionResult Tours(string id)
@@ -185,9 +194,6 @@ namespace TourGuideWebsite.Controllers
         {
             return View();
         }
-
-
-
 
     }
     }

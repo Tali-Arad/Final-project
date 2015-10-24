@@ -95,12 +95,15 @@ namespace TourGuideWebsite.Controllers
                     }
                     BTourGuideOp tourOp = new BTourGuideOp();
                     tour.TourID = id;
-                   
                     tourOp.EditTour(tour);
                     return RedirectToAction("Index");
                 }
                 else
+                {
+                    tour.TourID = id; // important to get the image
                     return View(tour);
+                }
+                
             }
             catch
             {
@@ -138,6 +141,7 @@ namespace TourGuideWebsite.Controllers
         }
 
         // GET: /Tour/AddEvent
+        [HttpGet]
         public ActionResult AddEvent(string id)
         {
             BTourGuideOp tourOp = new BTourGuideOp();

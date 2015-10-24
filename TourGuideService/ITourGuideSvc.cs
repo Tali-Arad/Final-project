@@ -35,8 +35,12 @@ namespace TourGuideService
         [WebInvoke(Method = "GET", UriTemplate = "/GetUpcomingEvents", RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         List<EventDetails> GetUpcomingEvents();
-       
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/CheckUsernameAvailability", RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool CheckUsernameAvaiability(Username username);
+      
     }
 
     [DataContract]
@@ -67,5 +71,12 @@ namespace TourGuideService
         public AEvent EventInfo { get; set; }
         [DataMember]
         public ATour TourInfo { get; set; }
+    }
+
+    [DataContract]
+    public class Username
+    {
+        [DataMember]
+        public string Name { get; set; }
     }
 }

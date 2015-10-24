@@ -11,13 +11,23 @@ namespace TourGuideProtocol.DataStruct
     {
         public string TourID { get; set; }
         public string TourName { get; set; }
-        [Required]
         [DataType(DataType.DateTime)]
+        [CustomEventDateAttribute]
         public DateTime TourDate { get; set; }
         public DateTime TourOriginalDate { get; set; }
-        [Required]
+        [Required(ErrorMessage="Enter a name of a tour guide")]
         public string TourGuide { get; set; }
-        [Required]
         public bool IsOn { get; set; }
     }
+
+    public class CustomEventDateAttribute : RangeAttribute
+    {
+        public CustomEventDateAttribute()
+            : base(typeof(DateTime),
+                    DateTime.Now.ToShortDateString(),
+                    DateTime.MaxValue.ToShortDateString())
+        { }
+    }
+
+
 }

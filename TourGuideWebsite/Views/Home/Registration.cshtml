@@ -57,22 +57,24 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
+                            @Html.ValidationMessageFor(model => model.UserBirthday)
                         </div>
-                        @Html.ValidationMessageFor(model => model.UserBirthday)
                     </div>
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#datetimepicker2').datetimepicker();
+                        $('#datetimepicker2').datetimepicker({ format: 'L' });
+                       
                     });
                 </script>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="Username">Username:</label>
-            <div class="col-sm-4">
-                @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+            <div class="col-sm-4"> 
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @id = "usernameText", @onfocusout = "checkUsernameAvailability()" })
                 @Html.ValidationMessageFor(model => model.Username)
+                <label id="username_availability_result"></label>
             </div>
         </div>
         <div class="form-group">
@@ -91,11 +93,75 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" class="btn btn-default" value="Sign up" />
-            </div>
+                <input type="submit" class="btn btn-default" value="Sign up" id="submitbtn" /></div>
         </div>
     </div>
     <p><input type="hidden" value="@ViewBag.returnUrl" /></p>
     <!-- Add client-side validation -->
 }
+
+<script type="text/javascript">
+
+        //the min chars for username  
+        var min_chars = 3;
+        //the max chars for username  
+         var max_chars = 10;
+        //result texts  
+        var characters_error = 'Username must be between 3 and 10 characters'
+        function checkUsernameAvailability() {
+            var username = document.getElementById("usernameText").value;          
+            var Data = {
+                Name: username
+            }
+
+            Type = "POST";
+            Url = "../../TourGuideSvc/TourGuideSvc.svc/CheckUsernameAvailability"; // Do not hard code the URL! change this!
+            ContentType = "application/json; charset=utf-8";
+            DataType = "json"; varProcessData = true;
+
+
+            if (username.length < min_chars || username.length > max_chars) {
+                //if it's bellow the minimum show characters_error text '  
+                $('#username_availability_result').html(characters_error);
+                document.getElementById('submitbtn').disabled = 'disabled';
+            } else {
+                document.getElementById('submitbtn').disabled = false;
+                $.ajax({
+                    type: Type,                   //GET or POST or PUT or DELETE verb
+                    url: Url,                     // Location of the service
+                    data: JSON.stringify(Data),             //Data sent to server
+                    contentType: ContentType,               // content type sent to server
+                    dataType: DataType,                     //Expected data format from server
+                    processdata: varProcessData,            //True or False
+                    success: function (msg) {               //On Successfull service call
+                        checkUsernameAvaiability(msg);
+                    },
+                    error: ServiceFailed// When Service call fails
+                });
+            }
+        };
+
+    function ServiceFailed(result) {
+        alert('Service call failed: ' + result.status + ' ' + result.statusText);
+        Type = null;
+        varUrl = null;
+        Data = null;
+        ContentType = null;
+        DataType = null;
+        ProcessData = null;
+    }
+    function checkUsernameAvaiability(result) {
+        var username = document.getElementById("usernameText").value;
+        if (result == true) {
+            //show that the username is available  
+            $('#username_availability_result').html(username + ' is Available');
+            document.getElementById('submitbtn').disabled = false;
+        } else {
+            //show that the username is NOT available  
+            $('#username_availability_result').html(username + ' is not Available');
+            document.getElementById('submitbtn').disabled = 'disabled';
+        }
+    }
+    
+</script>
 

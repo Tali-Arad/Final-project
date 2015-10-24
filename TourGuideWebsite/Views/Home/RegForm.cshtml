@@ -53,16 +53,16 @@
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker2'>
                             @Html.TextBoxFor(model => model.Birthday, new { @class = "form-control", @type = "text" })
+                            @Html.ValidationMessageFor(model => model.Birthday)
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-                        @Html.ValidationMessageFor(model => model.Birthday)
                     </div>
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#datetimepicker2').datetimepicker();
+                        $('#datetimepicker2').datetimepicker({ format: 'L' });
                     });
                 </script>
             </div>
@@ -72,6 +72,7 @@
                 <div class="row">
                     @Html.CheckBoxFor(model => model.WillAttend, new { @id = "WillAttend" })
                     <label class="control-label" for="WillAttend">I will attend</label>
+                    @Html.ValidationMessageFor(model => model.WillAttend)
                 </div>
             </div>
         </div>

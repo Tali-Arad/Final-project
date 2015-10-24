@@ -4,6 +4,7 @@
     ViewBag.Title = "Login";
 }
 
+
 <h1 class="page-header">
     Login
 </h1>
@@ -29,7 +30,8 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="Password">Password:</label>
             <div class="col-sm-4">
-                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password" })
+                <!-- User Html.PasswordFor to not show the typed password when the view is rendered -->
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @type = "password" })
                 @Html.ValidationMessageFor(model => model.Password)
             </div>
         </div>
@@ -47,9 +49,10 @@
         </div>
     </div>
 </div>
-        <!-- Add client-side validation -->  
 }
     
+
+
 
 @*<h1>Log In</h1>
 @using(Html.BeginForm())
