@@ -40,6 +40,7 @@ namespace TourGuideWebsite.Controllers
                     else
                     {
                         ModelState.AddModelError("", "Incorrect Username Or Password");
+                        ViewBag.IncorrectInput = "Incorrect";
                         ViewBag.ReturnUrl = returnUrl;
                         return View(); 
                     }
@@ -54,7 +55,7 @@ namespace TourGuideWebsite.Controllers
         }
 
         [HttpGet]
-        public ActionResult UserProfile(string username)
+        public ActionResult UserProfile(string username, string msg)
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             AUser user = tourOp.GetUser(username);
@@ -65,11 +66,11 @@ namespace TourGuideWebsite.Controllers
             userChanges.UserEmail = user.UserEmail;
             userChanges.UserPhone = user.UserPhone;
             userProfile.UserChanges = userChanges;
-
             ViewBag.Username = username;
-
+            ViewBag.Msg = msg; // Password change msg
             return View(userProfile);
         }
+
 
         [HttpPost]
         public ActionResult UserProfile(UserProfile userProfile)
@@ -95,7 +96,51 @@ namespace TourGuideWebsite.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ChangePassword(string username)
+        {
+            ViewBag.Username = username;
+            TempData["Username"] = username;
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePassword model, string username)
+        {
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    username = TempData["Username"].ToString();
+                    AUser user = tourOp.GetUser(username);
+                    if (user.UserPassword == model.OldPassword)
+                    {
+                        user.UserPassword = model.NewPassword;
+                        tourOp.EditUser(user);
+                        return RedirectToAction("UserProfile", new { Username = username, msg = "Your password has changed" });
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch
+            {
+                 return View();
+            }
+        }
+
+        public ActionResult ForgotPassword(string username)
+        {
+            // TODO: Send Email
+            return RedirectToAction("Login"); // Change this!
+        }
 
         //
         // GET: /Account/

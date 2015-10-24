@@ -6,6 +6,13 @@
 
 <h2>User Profile</h2>
 
+@if(ViewBag.Msg != null)
+{
+    <div>
+        <h4>@ViewBag.Msg</h4>
+    </div>
+}
+
 @if(Model.UserRegs.Count > 0)
 { 
 <h3> Tours you have registered people to:</h3>
@@ -102,13 +109,22 @@ else
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="button" class="btn btn-default" value="Change password" onclick="goToChangePassword()"  />
+                <input type="submit" class="btn btn-default" value="Save" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" class="btn btn-default" value="Save" />
+                <input type="button" class="btn btn-default" value="Change password" onclick="gotoChangePassword()" />
             </div>
         </div>
     </div>
 }
+
+
+
+<script type="text/javascript">
+    function gotoChangePassword() {
+        window.location.href = '@Url.Action("ChangePassword", new { username = ViewBag.Username })'
+    }
+</script>
+
