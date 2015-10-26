@@ -11,7 +11,6 @@ namespace TourGuideWebsite.Models
     {
         public List<AReg> UserRegs { get; set; }
         public UserChanges UserChanges { get; set;}
-   
     }
 }
    

@@ -10,6 +10,23 @@
       <Association Name="Tour_Event" Member="Tour" ThisKey="TourID" OtherKey="TourID" Type="Tour" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Tours" Member="Tours">
+    <Type Name="Tour">
+      <Column Name="TourID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TourName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TourLocation" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TourCategory" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TourArea" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TourDuration" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="TourPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="MinReg" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="MaxReg" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="TourDescription" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ImageData" Type="System.Byte[]" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ImageMimeType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Tour_Event" Member="Events" ThisKey="TourID" OtherKey="TourID" Type="Event" />
+    </Type>
+  </Table>
   <Table Name="dbo.Registrations" Member="Registrations">
     <Type Name="Registration">
       <Column Name="RegID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -37,27 +54,12 @@
       <Column Name="UserLastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="UserPhone" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="UserEmail" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="UserPassword" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="UserPassword" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="UserBirthday" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ResetToken" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="salt" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="User_Registration" Member="Registrations" ThisKey="UserID" OtherKey="UserID" Type="Registration" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Tours" Member="Tours">
-    <Type Name="Tour">
-      <Column Name="TourID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="TourName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="TourLocation" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="TourCategory" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="TourArea" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="TourDuration" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
-      <Column Name="TourPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
-      <Column Name="MinReg" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="MaxReg" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="TourDescription" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="ImageData" Type="System.Byte[]" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="ImageMimeType" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="Tour_Event" Member="Events" ThisKey="TourID" OtherKey="TourID" Type="Event" />
     </Type>
   </Table>
 </Database>

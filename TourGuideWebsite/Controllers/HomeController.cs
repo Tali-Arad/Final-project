@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Net.Mail;
 using TourGuideWebsite.Models;
 using TourGuideBLL;
 using TourGuideProtocol.DataInt;
@@ -79,8 +81,49 @@ namespace TourGuideWebsite.Controllers
                 reg.WillAttend = rr.WillAttend;
                 BTourGuideOp tourOp = new BTourGuideOp();
                 tourOp.AddReg(reg);
-                return View("ThankYou");
-                // Add email sending 
+
+                // Send email to user:
+              
+                // Email stuff
+                string subject = "Your registartion to the tour " + rr.EventInfo.TourName + " on " + rr.EventInfo.TourDate.ToString("dd-MM-yyyy");
+                string body = "Thank you for your registartion to the tour " + rr.EventInfo.TourName + " on " + rr.EventInfo.TourDate.ToString("dd-MM-yyyy") + "<br />" +
+                               "Registration name: " + rr.FirstName + " " + rr.LastName + "<br />" +
+                               "<a href='" + Url.Action("EventDetails", "Home", new { id = rr.EventInfo.TourID, date = rr.EventInfo.TourDate }, "http")
+                               + "'>Click here</a> to see the tour details." + "<br />" +
+                               "To see your user profile <a href='" + Url.Action("UserProfile", "Account", new { username = rr.UserInfo.Username }, "http")
+                               + "'>Click here</a>";
+                        
+                string from = "tali85arad@gmail.com";
+
+                MailMessage message = new MailMessage(from, rr.UserInfo.UserEmail);
+                message.Subject = subject;
+                message.Body = body;
+                message.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    UseDefaultCredentials = false,
+                    EnableSsl = true,
+                    Timeout = 20000,
+                    Credentials = new NetworkCredential("tali85arad@gmail.com", "henhqwcfvmtzplgb")
+
+                };
+
+                // Attempt to send the email
+                try
+                {
+                    client.Send(message);
+
+                    // Updating the IsSentEmail in the DB
+
+                    tourOp.UpdateEmailSent(rr.UserInfo.UserID, rr.FirstName, rr.LastName, rr.EventInfo.TourID, rr.EventInfo.TourDate, true);
+                    return View("ThankYou", rr);
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                    return View(rr);
+                }
             }
             else
                 return View(rr);
@@ -103,7 +146,12 @@ namespace TourGuideWebsite.Controllers
                 List<AUser> users = op.GetUsers();
                 if (!users.Any(u => u.Username == userdetails.Username))
                 {
-                    // Add password hashing
+                    // password salting & hashing
+                    PasswordManager passMan = new PasswordManager();
+                    string salt = null;
+                    string passwordHash = passMan.GeneratePasswordHash(userdetails.UserPassword, out salt);
+
+
                     AUser user = new AUser();
                     user.RegTime = DateTime.Now;
                     user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
@@ -111,7 +159,8 @@ namespace TourGuideWebsite.Controllers
                     user.UserLastName = userdetails.UserLastName;
                     user.UserEmail = userdetails.UserEmail;
                     user.UserPhone = userdetails.UserPhone;
-                    user.UserPassword = userdetails.UserPassword;
+                    user.UserPassword = passwordHash;
+                    user.Salt = salt;
                     user.Username = userdetails.Username;
                     user.UserBirthday = userdetails.UserBirthday;
                     BTourGuideOp tourOp = new BTourGuideOp();
@@ -130,52 +179,6 @@ namespace TourGuideWebsite.Controllers
                 return View();
             }
         }
-
-        //[HttpGet]
-        //public ActionResult Tours(string id)
-        //{
-        //    if(id!=null && id!="" && id!="undefined") // The user typed a keyword
-        //    { 
-        //        ViewBag.keyword = id;
-        //        BTourGuideOp tourOp = new BTourGuideOp();
-        //        List<ATour> tours = tourOp.GetTours(id);
-        //        if (tours.Count > 0)
-        //        {
-        //            return View(tours);
-        //        }
-        //        else
-        //        {
-        //            TempData["SearchMessage"] = "No tours that match your keyword were found";
-        //            TempData["SearchTextbox"] = id;
-        //            return RedirectToAction("Index");
-        //        }
-        //    }
-        //    else // The search textbox is empty / the user clicked on "Tours"
-        //    {
-        //        BTourGuideOp tourOp = new BTourGuideOp();
-        //        List<ATour> tours = tourOp.GetTours();
-        //        return View(tours);
-        //        //return RedirectToAction("AdvancedSearch");
-        //    }
-        //}
-
-        //[HttpGet]
-        //public ActionResult TourDescription(string id, string keyword)
-        //{
-        //    ViewBag.keyword = keyword;
-        //    BTourGuideOp tourOp = new BTourGuideOp();
-        //    ATour tour = tourOp.GetTourByID(id);
-        //    return View(tour);
-        //}
-
-        //[HttpGet]
-        //public ActionResult TourDates(string id, string keyword="")
-        //{
-        //    ViewBag.keyword = keyword;
-        //    BTourGuideOp tourOp = new BTourGuideOp();
-        //    List<AEvent> tourEvents = tourOp.GetEventsByTourId(id);
-        //    return View(tourEvents);
-        //}
 
         [HttpGet]
         public ActionResult AdvancedSearch()

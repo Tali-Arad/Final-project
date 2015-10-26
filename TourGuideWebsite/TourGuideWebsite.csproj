@@ -146,13 +146,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangePassword.cs" />
+    <Compile Include="Models\EmailForm.cs" />
     <Compile Include="Models\EventDetails.cs" />
+    <Compile Include="Models\ForgotPassword.cs" />
+    <Compile Include="Models\HashComputer.cs" />
     <Compile Include="Models\Lists.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PasswordManager.cs" />
     <Compile Include="Models\RegResponse.cs" />
+    <Compile Include="Models\ResetPassword.cs" />
+    <Compile Include="Models\SaltGenerator.cs" />
     <Compile Include="Models\UserChanges.cs" />
     <Compile Include="Models\UserDetails.cs" />
     <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Models\Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +395,8 @@
     <Content Include="Views\Admin\CreateRole.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

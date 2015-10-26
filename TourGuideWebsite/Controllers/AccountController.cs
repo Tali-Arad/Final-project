@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using TourGuideWebsite.Models;
 using System.Web.Security;
+using WebMatrix.WebData;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography;
 using TourGuideBLL;
 using TourGuideProtocol.DataInt;
 using TourGuideProtocol.DataStruct;
@@ -28,22 +32,32 @@ namespace TourGuideWebsite.Controllers
             {
                     BTourGuideOp tourOp = new BTourGuideOp();
                     List<AUser> users = tourOp.GetUsers();
-                    bool userValid = users.Any(user => user.Username == model.UserName && user.UserPassword == model.Password);
-                    if (userValid)
+                    AUser user = tourOp.GetUser(model.UserName);
+                    if (user != null)
                     {
-                        FormsAuthentication.SetAuthCookie(model.UserName, false);
-                        //var cookie = new HttpCookie("userame", model.UserName.ToString());
-                        //Response.Cookies.Add(cookie);
-                        //System.Web.HttpContext.Current.Session["username"] = model.UserName;
-                        return Redirect(returnUrl ?? Url.Action("Index", "Home"));
+                        // hasing & salting
+                        PasswordManager passMan = new PasswordManager();
+                        bool result = passMan.IsPasswordMatch(model.Password, user.Salt, user.UserPassword);
+                       // bool result = users.Any(u => u.Username == model.UserName && user.UserPassword == model.Password);   
+                        if (result)
+                        {
+                            FormsAuthentication.SetAuthCookie(model.UserName, false);
+                            //var cookie = new HttpCookie("userame", model.UserName.ToString());
+                            //Response.Cookies.Add(cookie);
+                            //System.Web.HttpContext.Current.Session["username"] = model.UserName;
+                            return Redirect(returnUrl ?? Url.Action("Index", "Home"));
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Incorrect Username Or Password");
+                            ViewBag.IncorrectInput = "Incorrect";
+                            ViewBag.ReturnUrl = returnUrl;
+                            return View();
+                        }
                     }
                     else
-                    {
-                        ModelState.AddModelError("", "Incorrect Username Or Password");
-                        ViewBag.IncorrectInput = "Incorrect";
-                        ViewBag.ReturnUrl = returnUrl;
-                        return View(); 
-                    }
+                        return View();
+                   // bool userValid = users.Any(user => user.Username == model.UserName && user.UserPassword == model.Password);      
              }      
                 return View();
         }
@@ -53,7 +67,8 @@ namespace TourGuideWebsite.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
-
+        
+        [Authorize]
         [HttpGet]
         public ActionResult UserProfile(string username, string msg)
         {
@@ -96,6 +111,7 @@ namespace TourGuideWebsite.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult ChangePassword(string username)
         {
@@ -136,11 +152,125 @@ namespace TourGuideWebsite.Controllers
             }
         }
 
-        public ActionResult ForgotPassword(string username)
-        {
-            // TODO: Send Email
-            return RedirectToAction("Login"); // Change this!
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {      
+            return View(); 
         }
+   
+        [HttpPost]
+        public ActionResult ForgotPassword(ForgotPassword model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Get the user by email:
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    List<AUser> users = tourOp.GetUsers();
+                    AUser user = users.FirstOrDefault(u => u.UserEmail == model.Email);
+                    // If a user with the email provided was found:
+                    if (user != null)
+                    {
+                        // Send Email:
+
+                        // Generae password token that will be used in the email link to authenticate user
+                         string resetToken = Guid.NewGuid().ToString();
+                   
+                        // Generate the html link sent via email
+                        user.ResetToken = resetToken;
+                        tourOp.EditUser(user);
+                        string resetLink = "<a href='"
+                           + Url.Action("ResetPassword", "Account", new { rt = resetToken }, "http")
+                           + "'>Reset Password Link</a>";
+
+                        // Email stuff
+                        string subject = "Reset your password for TourGuideWebsite";
+                        string body = "Your link: " + resetLink;
+                        string from = "tali85arad@gmail.com";
+
+                        MailMessage message = new MailMessage(from, model.Email);
+                        message.Subject = subject;
+                        message.Body = body; 
+                        message.IsBodyHtml = true;
+
+                        SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+                        {
+                            UseDefaultCredentials = false,
+                            EnableSsl = true,
+                            Timeout = 20000,
+                            Credentials = new NetworkCredential("tali85arad@gmail.com", "henhqwcfvmtzplgb")
+                            
+                        };
+
+                        // Attempt to send the email
+                        try
+                        {
+                            client.Send(message);
+                            ViewBag.Message = "A reset password email has been sent.";
+                            return View();
+                        }
+                        catch (Exception e)
+                        {
+                            ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                        }
+                    }
+
+                    // For testing:
+                    //else // Email not found
+                    //{
+                    //    /* Note: You may not want to provide the following information
+                    //    * since it gives an intruder information as to whether a
+                    //    * certain email address is registered with this website or not.
+                    //    * If you're really concerned about privacy, you may want to
+                    //    * forward to the same "Success" page regardless whether an
+                    //    * user was found or not. This is only for illustration purposes.
+                    //    */
+                    //    ModelState.AddModelError("", "No user found by that email.");
+                    //}
+                }
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                return View(model);
+            }
+        }
+
+        public ActionResult ResetPassword(string rt)
+        {
+            ResetPassword model = new ResetPassword();
+            model.ReturnToken = rt;
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPassword model)
+        {
+            if (ModelState.IsValid)
+            {
+                BTourGuideOp tourOp = new BTourGuideOp();
+                List<AUser> users = tourOp.GetUsers();
+                AUser user = users.FirstOrDefault(u => u.ResetToken == model.ReturnToken);
+                if(user!=null)
+                {
+                    user.UserPassword = model.Password;
+                    user.ResetToken = null;
+                    tourOp.EditUser(user);
+                    ViewBag.Message = "Successfully Changed";
+                }
+                else
+                {
+                    ViewBag.Message = "Something went wrong!";
+                }
+            }
+            return View(model);
+        }
+        
 
         //
         // GET: /Account/

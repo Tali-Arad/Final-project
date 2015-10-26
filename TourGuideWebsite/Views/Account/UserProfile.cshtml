@@ -103,7 +103,7 @@ else
         <div class="form-group">
             <label class="control-label col-sm-2" for="UserEmail">Email:</label>
             <div class="col-sm-4">
-                @Html.TextBoxFor(model => model.UserChanges.UserEmail, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.UserChanges.UserEmail, new { @class = "form-control", @type = "email"})
                 @Html.ValidationMessageFor(model => model.UserChanges.UserEmail)
             </div>
         </div>

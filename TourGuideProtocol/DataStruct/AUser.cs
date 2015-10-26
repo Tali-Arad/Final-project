@@ -29,5 +29,7 @@ namespace TourGuideProtocol.DataStruct
         [Required]
         [DataType(DataType.Date)]
         public DateTime UserBirthday { get; set; }
+        public string ResetToken { get; set; }
+        public string Salt { get; set; }
     }
 }

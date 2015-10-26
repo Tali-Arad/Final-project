@@ -36,16 +36,16 @@
             </div>
         </div>
      <div class="form-group">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-offset-2 col-sm-3 col-xs-12">
-                <input type="submit" class="btn btn-default" value="Login" name="login" />
-            </div>
-            <div class="col-sm-2 col-xs-12">
-                <input type="button" class="btn btn-default" value="Sign Up" name="signup" onclick="gotoRegistration()" />
-            </div>
-        </div>
-        </div>
+         <div class="container">
+             <div class="row">
+                 <div class="col-sm-offset-2 col-sm-3 col-xs-12">
+                     <input type="submit" class="btn btn-default" value="Login" name="login" />
+                 </div>
+                 <div class="col-sm-2 col-xs-12">
+                     <input type="button" class="btn btn-default" value="Sign Up" name="signup" onclick="gotoRegistration()" />
+                 </div>
+             </div>
+         </div>
     </div>
 </div>
 }
@@ -53,7 +53,7 @@
 @if (ViewBag.IncorrectInput != null)
 {
     <div class="container">
-        @Html.ActionLink("Forgot Password", "ForgotPassword", new { Username = ViewBag.Username })
+       @Html.ActionLink("Forgot your password?", "ForgotPassword")
     </div>
 }
 

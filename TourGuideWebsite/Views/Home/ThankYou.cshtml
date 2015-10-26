@@ -1,7 +1,18 @@
-﻿@model TourGuideProtocol.DataStruct.AReg
+﻿@model TourGuideWebsite.Models.RegResponse
 
 @{
     ViewBag.Title = "ThankYou";
 }
 
-<h2>ThankYou</h2>
+<div class="container">
+<div class="jumbotron">
+    <h1 style="color:cadetblue">Thank You!</h1>
+    <p>
+        Thank you for your registration to the tour <a href=@Url.Action("EventDetails", new { id = Model.EventInfo.TourID, date= Model.EventInfo.TourDate})>@Model.EventInfo.TourName on @Model.EventInfo.TourDate.ToShortDateString() @Model.EventInfo.TourDate.ToShortTimeString()</a><br />
+        You will receive an email with the tour details and your registration details.
+    </p>
+    <p>
+        <h3 style="color:cadetblue"> Hope you enjoy the tour!</h3>
+    </p>
+</div>
+</div>

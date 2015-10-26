@@ -323,6 +323,8 @@ namespace TourGuideDAL
                                         UserPassword = c.UserPassword,
                                         Username = c.Username,
                                         UserBirthday = c.UserBirthday,
+                                        ResetToken = c.ResetToken,
+                                        Salt = c.salt.ToString()
                                     }
                               ).ToList<AUser>();
                 return rows;
@@ -347,6 +349,8 @@ namespace TourGuideDAL
                                         UserPassword = c.UserPassword,
                                         Username = c.Username,
                                         UserBirthday = c.UserBirthday,
+                                        ResetToken = c.ResetToken,
+                                        Salt = c.salt.ToString()
                                     }
                               ).SingleOrDefault<AUser>();
                 return user;
@@ -390,6 +394,7 @@ namespace TourGuideDAL
                 user.UserPassword = userReg.UserPassword;
                 user.UserBirthday = userReg.UserBirthday;
                 user.Username = userReg.Username;
+                user.salt = userReg.Salt;
                 user.UserID = System.Guid.NewGuid(); 
 
                 dc.Users.InsertOnSubmit(user);
@@ -523,6 +528,25 @@ namespace TourGuideDAL
             }
         }
 
+        public bool UpdateEmailSent(string userid, string first, string last, string tourid, DateTime tourdate, bool sentEmail)
+        {
+            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
+            {
+
+                Registration row = (from c in dc.Registrations
+                                    where (c.UserID.ToString()== userid &&
+                                           c.RegFirstName == first &&
+                                           c.RegLastName == last &&
+                                           c.TourID.ToString() == tourid &&
+                                           c.TourDate == tourdate
+                                           )
+                                    select c).FirstOrDefault<Registration>();
+                row.IsSentEmail = (byte)(sentEmail? 1 : 0);
+                dc.SubmitChanges();
+                return true;
+            }
+        }
+
         public bool EditTour(ATour tour)
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
@@ -562,6 +586,7 @@ namespace TourGuideDAL
                 row.Username = user.Username;
                 row.UserPassword = user.UserPassword;
                 row.UserPhone = user.UserPhone;
+                row.ResetToken = user.ResetToken;
                 dc.SubmitChanges();
                 return true;
             }

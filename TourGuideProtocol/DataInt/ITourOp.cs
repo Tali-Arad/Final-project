@@ -36,5 +36,6 @@ namespace TourGuideProtocol.DataInt
         List<AEvent> GetEventsByEventField(string sort);
         AUser GetUser(string username);
         List<AReg> GetRegistrationsByUserID(string userID);
+        bool UpdateEmailSent(string userid, string first, string last, string tourid, DateTime tourdate, bool sentEmail);
     }
 }

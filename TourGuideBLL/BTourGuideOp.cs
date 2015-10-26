@@ -137,6 +137,11 @@ namespace TourGuideBLL
             return TourDAL.GetRegistrationsByUserID(userID);
         }
 
+        public bool UpdateEmailSent(string userid, string first, string last, string tourid, DateTime tourdate, bool sentEmail)
+        {
+            return TourDAL.UpdateEmailSent(userid, first, last, tourid, tourdate, sentEmail);
+        }
+
 
     }
 }
