@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace TourGuideWebsite.Models
+namespace TourGuideWebsite.Hashing
 {
     public class PasswordManager
     {

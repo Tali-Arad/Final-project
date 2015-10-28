@@ -24,25 +24,6 @@ namespace TourGuideWebsite.Controllers
             return View(tours);
         }
 
-        [HttpGet]
-        public ActionResult CreateRole()
-        {
-            return View();
-        }
-
-       [HttpPost]
-       public ActionResult CreateRole(string roleName)
-        {
-            System.Web.Security.Roles.CreateRole(roleName);
-            return View();
-        }
-
-       [HttpPost]
-       public ActionResult AddUserRole(string username)
-       {
-           System.Web.Security.Roles.AddUserToRole(username, "admin");
-           return View("CreateRole");
-       }
     }
     
 }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Net;
 using System.Net.Mail;
 using TourGuideWebsite.Models;
+using TourGuideWebsite.Hashing;
 using TourGuideBLL;
 using TourGuideProtocol.DataInt;
 using TourGuideProtocol.DataStruct;
@@ -178,12 +179,6 @@ namespace TourGuideWebsite.Controllers
                 userdetails.Username = null;
                 return View();
             }
-        }
-
-        [HttpGet]
-        public ActionResult AdvancedSearch()
-        {
-            return View();
         }
 
         [HttpGet]

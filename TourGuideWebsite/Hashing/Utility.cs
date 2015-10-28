@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TourGuideWebsite.Models
+namespace TourGuideWebsite.Hashing
  {
          static class Utility
    {

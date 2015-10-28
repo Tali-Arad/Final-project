@@ -5,7 +5,7 @@ using System.Web;
 using System.Security.Cryptography;
 
 
-namespace TourGuideWebsite.Models
+namespace TourGuideWebsite.Hashing
 {
     public class HashComputer
     {

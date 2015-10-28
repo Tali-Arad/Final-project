@@ -8,6 +8,7 @@ using System.Net.Mail;
 using TourGuideBLL;
 using TourGuideProtocol.DataStruct;
 using TourGuideWebsite.Models;
+using TourGuideWebsite.Hashing;
 
 namespace TourGuideWebsite.Controllers
 {

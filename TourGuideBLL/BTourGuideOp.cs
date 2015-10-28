@@ -10,7 +10,7 @@ using TourGuideDAL;
 
 namespace TourGuideBLL
 {
-    public class BTourGuideOp
+    public class BTourGuideOp 
     {
         ITourOp TourDAL = null;
 
