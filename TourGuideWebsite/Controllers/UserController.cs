@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Net.Mail;
 using TourGuideBLL;
 using TourGuideProtocol.DataStruct;
 using TourGuideWebsite.Models;
@@ -64,10 +66,66 @@ namespace TourGuideWebsite.Controllers
                           user.UserLastName = userdetails.UserLastName;
                           user.UserEmail = userdetails.UserEmail;
                           user.UserPhone = userdetails.UserPhone;
-                          user.UserPassword = System.Web.Security.Membership.GeneratePassword(8, 2);
+
+                          // Create a random password
+                          string password = System.Web.Security.Membership.GeneratePassword(8, 2);
+                          // hash and salt the password
+                          PasswordManager passMan = new PasswordManager();
+                          string salt = null;
+                          string hashPassword = passMan.GeneratePasswordHash(password, out salt);
+
+                          user.UserPassword = hashPassword;
+                          user.Salt = salt;
                           user.Username = userdetails.Username;
                           user.UserBirthday = userdetails.UserBirthday;
                           tourOp.AddUser(user);
+
+
+                          // Generae password token that will be used in the email link to authenticate user
+                          string resetToken = Guid.NewGuid().ToString();
+
+                          // Hash the reset token
+                          HashComputer hashComp = new HashComputer();
+                          string resetTokenHash = hashComp.GetPasswordHashAndSalt(resetToken);
+
+                          AUser theNewUser = tourOp.GetUser(user.Username);
+
+                          // Generate the html link sent via email
+                          theNewUser.ResetToken = resetTokenHash;
+                          tourOp.EditUser(theNewUser);
+
+                          // Email stuff
+                          string subject = "New account in TourGuideWebsite";
+                          string body = "You have a new account in TourGuideWebsite. " +
+                                         "To reset your password <a href='" + Url.Action("ResetPassword", "Account", new { rt = resetToken }, "http")
+                                         + "'>Click here</a>";
+
+                          string from = "tali85arad@gmail.com";
+
+                          MailMessage message = new MailMessage(from, user.UserEmail);
+                          message.Subject = subject;
+                          message.Body = body;
+                          message.IsBodyHtml = true;
+
+                          SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+                          {
+                              UseDefaultCredentials = false,
+                              EnableSsl = true,
+                              Timeout = 20000,
+                              Credentials = new NetworkCredential("tali85arad@gmail.com", "henhqwcfvmtzplgb")
+
+                          };
+
+                          // Attempt to send the email
+                          try
+                          {
+                              client.Send(message);
+                          }
+                          catch (Exception e)
+                          {
+                              ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                          }
+
                           return RedirectToAction("Index");
                       }
                       else
@@ -145,7 +203,11 @@ namespace TourGuideWebsite.Controllers
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AUser> users = tourOp.GetUsers();
-            AUser user = users.Single<AUser>(x => x.UserID == id);
+            AUser user = users.SingleOrDefault<AUser>(x => x.UserID == id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
             return View(user);
         }
 

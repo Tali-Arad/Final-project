@@ -134,7 +134,11 @@ namespace TourGuideWebsite.Controllers
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AReg> regs = tourOp.GetRegistrations();
-            AReg reg = regs.Single<AReg>(x => x.RegID == id);
+            AReg reg = regs.SingleOrDefault<AReg>(x => x.RegID == id);
+            if(reg == null)
+            {
+                return HttpNotFound();
+            }
             return View(reg);
         }
 

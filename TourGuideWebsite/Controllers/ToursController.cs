@@ -59,8 +59,8 @@ namespace TourGuideWebsite.Controllers
             ViewBag.keyword = keyword;
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AEvent> tourEvents = tourOp.GetEventsByTourId(id);
-                return View(tourEvents);
-           
+            return View(tourEvents);
+   
         }
 
         [HttpGet]

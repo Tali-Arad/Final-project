@@ -78,18 +78,11 @@ namespace TourGuideWebsite.Controllers
         // GET: /Event/Edit/5
         public ActionResult Edit(string tourid, DateTime tourdate)
         {
-            // This does not work because UrlReferrer does not include the querystring
-            // Preventing access to the Edit/Delete view after an Event was deleted or updated
-            //string url = Request.UrlReferrer.AbsoluteUri;
-        //    if (url.Contains("Yes"))
-       //     {
-         //       return RedirectToAction("Index");
-         //   }
-          //  else
-          //  {
             // Passing the current values to the view:
             BTourGuideOp tourOp = new BTourGuideOp();
             AEvent tourEvent = tourOp.GetEvent(tourid, tourdate);
+            if(tourEvent == null)
+                 return HttpNotFound();
             return View(tourEvent);
           //  }
         }
@@ -103,7 +96,6 @@ namespace TourGuideWebsite.Controllers
         {
             try
             {
-                // TODO: Add update logic here
                 if (ModelState.IsValid)
                 {
                     BTourGuideOp tourOp = new BTourGuideOp();
@@ -128,7 +120,11 @@ namespace TourGuideWebsite.Controllers
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             List<AEvent> events = tourOp.GetEvents();
-            AEvent tourEvent = events.Single<AEvent>(x => x.TourID == tourid && x.TourDate == tourdate);
+            AEvent tourEvent = events.SingleOrDefault<AEvent>(x => x.TourID == tourid && x.TourDate == tourdate);
+            if (tourEvent == null)
+            {
+                return HttpNotFound();
+            }
             return View(tourEvent);
         }
 

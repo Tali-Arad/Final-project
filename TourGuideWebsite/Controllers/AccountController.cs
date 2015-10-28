@@ -38,7 +38,7 @@ namespace TourGuideWebsite.Controllers
                         // hasing & salting
                         PasswordManager passMan = new PasswordManager();
                         bool result = passMan.IsPasswordMatch(model.Password, user.Salt, user.UserPassword);
-                       // bool result = users.Any(u => u.Username == model.UserName && user.UserPassword == model.Password);   
+                        //bool result = users.Any(u => u.Username == model.UserName && user.UserPassword == model.Password);   
                         if (result)
                         {
                             FormsAuthentication.SetAuthCookie(model.UserName, false);
@@ -56,6 +56,9 @@ namespace TourGuideWebsite.Controllers
                         }
                     }
                     else
+                        ModelState.AddModelError("", "Incorrect Username Or Password");
+                        ViewBag.IncorrectInput = "Incorrect";
+                        ViewBag.ReturnUrl = returnUrl;
                         return View();
                    // bool userValid = users.Any(user => user.Username == model.UserName && user.UserPassword == model.Password);      
              }      
@@ -130,9 +133,16 @@ namespace TourGuideWebsite.Controllers
                     BTourGuideOp tourOp = new BTourGuideOp();
                     username = TempData["Username"].ToString();
                     AUser user = tourOp.GetUser(username);
-                    if (user.UserPassword == model.OldPassword)
+
+                    PasswordManager passMan = new PasswordManager();
+                    if (passMan.IsPasswordMatch(model.OldPassword, user.Salt, user.UserPassword))
                     {
-                        user.UserPassword = model.NewPassword;
+                        // hash and salt the new password    
+                        string salt = null;
+                        string hashPassword = passMan.GeneratePasswordHash(model.NewPassword, out salt);
+
+                        user.UserPassword = hashPassword;
+                        user.Salt = salt;
                         tourOp.EditUser(user);
                         return RedirectToAction("UserProfile", new { Username = username, msg = "Your password has changed" });
                     }
@@ -173,13 +183,16 @@ namespace TourGuideWebsite.Controllers
                     // If a user with the email provided was found:
                     if (user != null)
                     {
-                        // Send Email:
 
                         // Generae password token that will be used in the email link to authenticate user
                          string resetToken = Guid.NewGuid().ToString();
+
+                        // Hash the reset token
+                         HashComputer hashComp = new HashComputer();
+                         string resetTokenHash = hashComp.GetPasswordHashAndSalt(resetToken);
                    
                         // Generate the html link sent via email
-                        user.ResetToken = resetToken;
+                        user.ResetToken = resetTokenHash;
                         tourOp.EditUser(user);
                         string resetLink = "<a href='"
                            + Url.Action("ResetPassword", "Account", new { rt = resetToken }, "http")
@@ -255,10 +268,20 @@ namespace TourGuideWebsite.Controllers
             {
                 BTourGuideOp tourOp = new BTourGuideOp();
                 List<AUser> users = tourOp.GetUsers();
-                AUser user = users.FirstOrDefault(u => u.ResetToken == model.ReturnToken);
+                // hasing the resetToken from the url
+                HashComputer hashComp = new HashComputer();
+                string hashedResetToken = hashComp.GetPasswordHashAndSalt(model.ReturnToken);
+                // Checking if the hash matches the resetToken from the DB
+                AUser user = users.FirstOrDefault(u => u.ResetToken == hashedResetToken);
                 if(user!=null)
                 {
-                    user.UserPassword = model.Password;
+                    // password salting & hashing
+                    PasswordManager passMan = new PasswordManager();
+                    string salt = null;
+                    string passwordHash = passMan.GeneratePasswordHash(model.Password, out salt);
+
+                    user.UserPassword = passwordHash;
+                    user.Salt = salt;
                     user.ResetToken = null;
                     tourOp.EditUser(user);
                     ViewBag.Message = "Successfully Changed";

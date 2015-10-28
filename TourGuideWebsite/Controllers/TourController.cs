@@ -118,7 +118,11 @@ namespace TourGuideWebsite.Controllers
         {
             BTourGuideOp tourOp = new BTourGuideOp();
             List<ATour> tours = tourOp.GetTours();
-            ATour tour = tours.Single<ATour>(x => x.TourID == id);
+            ATour tour = tours.SingleOrDefault<ATour>(x => x.TourID == id);
+            if (tour == null)
+            {
+                return HttpNotFound();
+            }
             return View(tour);
         }
 

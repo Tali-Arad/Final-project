@@ -42,14 +42,18 @@ function sortByTourFieldSucceeded(result) {
             var date = result[i].TourDate.split("(");
             date = date[1].split("+");
             date = date[0];;
+            dateToCompare = date;
             date = new Date(parseInt(date));
+            console.log(date);
+  
             var tourId = result[i].TourID;
             tourDate = result[i].TourDate;
             var tourName = result[i].TourName;
             var cSharpDate = new Date(result[i]);
-            var objli = document.createElement("li");
-            objli.className = "list-group-item";
-            objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
+            if (dateToCompare > Date.now()) {
+                var objli = document.createElement("li");
+                objli.className = "list-group-item";
+                objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
                               <div class="row">\
                               <div class="col-md-4">\
                         <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tours/GetImage/?tourid=' + result[i].TourID + '" alt="">\
@@ -61,7 +65,8 @@ function sortByTourFieldSucceeded(result) {
                     </div>\
                 </div>\
            </a>'
-            objUL.appendChild(objli);
+                objUL.appendChild(objli);
+            }
         }
 
         //for (i = 0; i < result.length; i++) {
@@ -150,27 +155,30 @@ function sortByEventFieldSucceeded(result) {
         for (i = 0; i < result.length; i++) {
             var date = result[i].TourDate.split("(");
             date = date[1].split("+");
-            date = date[0];;
+            date = date[0];
+            dateToCompare = date;
             date = new Date(parseInt(date));
             var tourId = result[i].TourID;
             tourDate = result[i].TourDate;
             var tourName = result[i].TourName;
             var cSharpDate = new Date(result[i]);
-            var objli = document.createElement("li");
-            objli.className = "list-group-item";
-            objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
+            if (dateToCompare > Date.now()) {
+                var objli = document.createElement("li");
+                objli.className = "list-group-item";
+                objli.innerHTML = '<a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '" class="img-rounded">\
                               <div class="row">\
                               <div class="col-md-4">\
                         <img class="img-responsive img-rounded img-hover" style="width:200px;height:160px" src="../Tours/GetImage/?tourid=' + result[i].TourID + '" alt="">\
                     </div>\
                     <div class="col-md-8">\
-                        <h2>'+date+'</h2>\
+                        <h2>'+ date + '</h2>\
                         <h3 style="color:coral">'+ tourName + '</h3>\
                         <p><a href="../Home/EventDetails/' + result[i].TourID + '?date=' + date.toISOString() + '"">Details and Registration</a></p>\
                     </div>\
                 </div>\
            </a>'
-              objUL.appendChild(objli);
+                objUL.appendChild(objli);
+            }
         }
     }
 

@@ -29,6 +29,7 @@
 <ul id="sortingBy">
     @foreach (AEvent e in Model)
     {
+         if (e.TourDate > DateTime.Now) {    
         <li class="list-group-item">
             <a href="@Url.Action("EventDetails", "Home", new {id = e.TourID, date=@e.TourDate})" class="img-rounded">
                 <div class="row">
@@ -43,6 +44,7 @@
                 </div>
             </a>
         </li>
+    }
         @*<li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>*@
     }
 </ul>

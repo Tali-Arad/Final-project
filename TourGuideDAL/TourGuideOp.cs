@@ -587,6 +587,7 @@ namespace TourGuideDAL
                 row.UserPassword = user.UserPassword;
                 row.UserPhone = user.UserPhone;
                 row.ResetToken = user.ResetToken;
+                row.salt = user.Salt;
                 dc.SubmitChanges();
                 return true;
             }
