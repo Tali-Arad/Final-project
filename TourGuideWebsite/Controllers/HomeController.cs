@@ -58,7 +58,7 @@ namespace TourGuideWebsite.Controllers
                 BTourGuideOp tourOp = new BTourGuideOp();
                 AEvent tourEvent = tourOp.GetEvent(id, date);
                 string username = HttpContext.User.Identity.Name;
-                AUser user = tourOp.GetUserByUsername(username);
+                AUser user = tourOp.GetUser(username);
                 RegResponse rr = new RegResponse();
                 rr.EventInfo = tourEvent;
                 rr.UserInfo = user;

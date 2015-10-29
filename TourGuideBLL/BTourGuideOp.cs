@@ -49,11 +49,6 @@ namespace TourGuideBLL
             return TourDAL.GetRegistrations();
         }
 
-        public AUser GetUserByUsername(string username)
-        {
-            return TourDAL.GetUserByUsername(username);
-        }
-
         public bool AddUser(AUser userReg)
         {
             return TourDAL.AddUser(userReg);

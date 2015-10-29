@@ -74,9 +74,5 @@ namespace TourGuideWebsite.Models
             }
             return tourDates;
         }
-
-        // TODO: Add functions that create lists for TourLocation, TourArea and TourCategory (create these tables in the DB first)
-        
-
     }
 }

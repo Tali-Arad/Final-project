@@ -75,53 +75,6 @@
     </div>
 }
 
-@*@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    // Passing the TourID to the controller (the div is hidden)
-    <div hidden="hidden">
-        @Html.EditorFor(x => x.TourID);
-    </div>
-
-    <fieldset>
-        <legend>AEvent</legend>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TourName)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("TourNameOptions")
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TourDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TourDate)  This should be a datetime picker 
-            @Html.ValidationMessageFor(model => model.TourDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TourGuide)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TourGuide)
-            @Html.ValidationMessageFor(model => model.TourGuide)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsOn)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsOn)
-            @Html.ValidationMessageFor(model => model.IsOn)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}*@
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

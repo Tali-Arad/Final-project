@@ -12,7 +12,6 @@ namespace TourGuideProtocol.DataStruct
     {
         public string RegID { get; set; }
         public string TourID { get; set; }
-        [Required]
         [DataType(DataType.DateTime)]
         public DateTime TourDate { get; set; }
         public string UserID { get; set; }

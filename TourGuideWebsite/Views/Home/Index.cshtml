@@ -90,18 +90,6 @@
         </div><!-- /.row -->
         </form>
     </div>
-        @*<ul>
-                @foreach(AEvent e in Model)
-                {
-
-                    <li>@Html.ActionLink(@e.TourName +" " + @e.TourDate, "EventDetails", new { id = @e.TourID, date = @e.TourDate })  <span></span></li>
-                }
-            </ul>*@
-
-        @*<input type="button" value="Sign up" onclick="gotoRegistration()" />
-            <input type="button" value="Log in" onclick="gotoLogin()" />
-            <input type="button" value="Admin" onclick="gotoAdmin()" />
-            <input type="button" value="Tours" onclick="gotoTours()" />*@
 
         @*<script src="@Url.Content("~/JS/jquery.min.js")"></script>
         <script src="@Url.Content("~/JS/bootstrap.min.js")"></script>*@
@@ -111,18 +99,6 @@
         <script src="JS/dataTables.bootstrap.js"></script>
 
         <script type="text/javascript">
-            //function gotoRegistration() {
-            //    window.location.href = 'Home/Registration';
-            //}
-
-            //function gotoLogin() {
-            //    window.location.href = 'Account/Login';
-            //}
-
-            //function gotoAdmin() {
-            //    window.location.href = 'Admin';
-            //}
-
             function gotoTours(keyword) {
                 if (keyword != undefined) {
                     window.location.href = "../Tours/Index/" + keyword;

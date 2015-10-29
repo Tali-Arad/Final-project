@@ -84,7 +84,7 @@ namespace TourGuideDAL
             }
         }
 
-        public List<AEvent> GetEvents(string tourName) // gets events for specific tour
+        public List<AEvent> GetEvents(string tourName) // gets events for a specific tour
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
@@ -157,7 +157,7 @@ namespace TourGuideDAL
             }
         }
 
-        public List<AEvent> GetEventsByTourId(string id)
+        public List<AEvent> GetEventsByTourId(string id) // gets events by the tourid
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
@@ -197,7 +197,7 @@ namespace TourGuideDAL
             }
         }
 
-        public AEvent GetEvent(string id, DateTime date) // gets event by tour id and tour date
+        public AEvent GetEvent(string id, DateTime date) // gets an event by tour id and tour date
         {
             using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
             {
@@ -436,31 +436,6 @@ namespace TourGuideDAL
                 dc.Events.InsertOnSubmit(newEvent);
                 dc.SubmitChanges();
                 return true;
-            }
-        }
-
-
-        public AUser GetUserByUsername(string username) // gets user by username
-        {
-            using (DataClassesTourGuideDataContext dc = new DataClassesTourGuideDataContext())
-            {
-                AUser user = (from c in dc.Users
-                                    where c.Username == username
-                                    select new AUser()
-                                    {
-                                        UserID = c.UserID.ToString(),
-                                        RegTime = c.RegTime,
-                                        UserIP = c.RegIP,
-                                        UserFirstName = c.UserFirstName,
-                                        UserLastName = c.UserLastName,
-                                        UserPhone = c.UserPhone,
-                                        UserEmail = c.UserEmail,
-                                        UserPassword = c.UserPassword,
-                                        Username = c.Username,
-                                        UserBirthday = c.UserBirthday,
-                                    }
-                              ).FirstOrDefault<AUser>();
-                return user;
             }
         }
 

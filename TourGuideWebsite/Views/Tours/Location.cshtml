@@ -25,13 +25,6 @@
         }
 </div><br /><br />
 
-@*<ul id="sortingBy">
-    @foreach (AEvent e in Model)
-    {
-        <li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>
-    }
-</ul>*@
-
 <ul id="sortingBy" class="list-group">
     @foreach (AEvent e in Model)
     {
@@ -51,7 +44,7 @@
             </a>
         </li>
     }
-        @*<li>@Html.ActionLink(@e.TourName + " " + @e.TourDate, "EventDetails", "Home", new { id = @e.TourID, date = @e.TourDate }, null)  <span></span></li>*@
+    
     }
 </ul>
 

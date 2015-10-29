@@ -15,59 +15,6 @@
                 </ul>
             </div><br /><br />
 <div class="tab-content responsive">
-    @*<div class="table-responsive">
-        <table class="table table-condensed">
-            <tr>
-                <th>
-                    Tour Name
-                </th>
-                <th>
-                    Location
-                </th>
-                <th>
-                    Area
-                </th>
-                <th>
-                    Category
-                </th>
-                <th>
-                    Duration (in hours)
-                </th>
-                <th>
-                    Price
-                </th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TourName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TourLocation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TourArea)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TourCategory)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TourDuration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TourPrice)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Tour Description", "TourDescription", new { id = item.TourID, keyword = ViewBag.keyword }) |
-                        @Html.ActionLink("Tour Dates", "TourDates", new { id = item.TourID, keyword = ViewBag.keyword })
-
-                    </td>
-                </tr>
-            }
-        </table>*@
-
         <!-- Tours section -->
                 <div class="container">
                     <div class="row">
