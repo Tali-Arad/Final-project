@@ -53,7 +53,7 @@
 
 <div class="container">
     <div class="col-lg-12">
-        <h1 class="page-header responsive">
+        <h1 class="page-header responsive" style="color:DarkSlateGray">
             I invite you to register on tours and discover amazing Israel!
         </h1>
     </div>
@@ -187,12 +187,14 @@
                         date = date[0];
                         date = new Date(parseInt(date));
                         // Decide about the date format. Make it consistent.
-                        var heading = "" + result[i].TourInfo.TourName + " " + date.toDateString() + " " + date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+                        var heading1 = "" + result[i].TourInfo.TourName;
+                        var heading2 = "" + date.toDateString() + " " + date.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 
 
                         div1.innerHTML = '<div class="panel panel-default">\
                                                 <div class="panel-heading">\
-                                                   <h4>' + heading + '</h4>\
+                                                   <h3 style="color:DarkRed">' + heading1 + '</h3>\
+                                                   <h4>' + heading2 + '</h4>\
                                                 </div>\
                                                 <div class="panel-body">\
                                                     <p>'+ result[i].TourInfo.TourDescription + '</p>\
