@@ -187,7 +187,7 @@
                         date = date[0];
                         date = new Date(parseInt(date));
                         // Decide about the date format. Make it consistent.
-                        var heading = "" + result[i].TourInfo.TourName + " " + date.toDateString() + " " + date.toLocaleTimeString();
+                        var heading = "" + result[i].TourInfo.TourName + " " + date.toDateString() + " " + date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
 
 
                         div1.innerHTML = '<div class="panel panel-default">\
