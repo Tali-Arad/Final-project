@@ -67,8 +67,9 @@ namespace TourGuideWebsite.Controllers
                     return View(tourEvent);
                 }
             }
-            catch
+            catch(Exception e)
             {
+                TempData["CreateException"] = "Error in event creation: " + e.Message;
                 return View();
             }
         }
@@ -84,7 +85,6 @@ namespace TourGuideWebsite.Controllers
             if(tourEvent == null)
                  return HttpNotFound();
             return View(tourEvent);
-          //  }
         }
         
 
@@ -107,8 +107,9 @@ namespace TourGuideWebsite.Controllers
                 else
                     return View(tourEvent);
             }
-            catch
+            catch(Exception e)
             {
+                TempData["EditException"] = "Error in event edit: " + e.Message;
                 return View(tourEvent);
             }
         }
@@ -140,8 +141,9 @@ namespace TourGuideWebsite.Controllers
                 tourOp.DeleteEvent(tourid, tourEvent.TourDate);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
+                TempData["DeleteException"] = "Error in event deletion: " + e.Message;
                 return View();
             }
         }

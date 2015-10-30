@@ -29,6 +29,7 @@ namespace TourGuideWebsite.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model, string returnUrl) 
         {
+            try {
             if (ModelState.IsValid)
             {
                     BTourGuideOp tourOp = new BTourGuideOp();
@@ -38,14 +39,10 @@ namespace TourGuideWebsite.Controllers
                     {
                         // hasing & salting
                         PasswordManager passMan = new PasswordManager();
-                        bool result = passMan.IsPasswordMatch(model.Password, user.Salt, user.UserPassword);
-                        //bool result = users.Any(u => u.Username == model.UserName && user.UserPassword == model.Password);   
+                        bool result = passMan.IsPasswordMatch(model.Password, user.Salt, user.UserPassword);    
                         if (result)
                         {
                             FormsAuthentication.SetAuthCookie(model.UserName, false);
-                            //var cookie = new HttpCookie("userame", model.UserName.ToString());
-                            //Response.Cookies.Add(cookie);
-                            //System.Web.HttpContext.Current.Session["username"] = model.UserName;
                             return Redirect(returnUrl ?? Url.Action("Index", "Home"));
                         }
                         else
@@ -60,10 +57,16 @@ namespace TourGuideWebsite.Controllers
                         ModelState.AddModelError("", "Incorrect Username Or Password");
                         ViewBag.IncorrectInput = "Incorrect";
                         ViewBag.ReturnUrl = returnUrl;
-                        return View();
-                   // bool userValid = users.Any(user => user.Username == model.UserName && user.UserPassword == model.Password);      
+                        return View();  
              }      
                 return View();
+            }
+            catch (Exception e)
+            {
+                TempData["LoginException"] = "Login Error: " + e.Message;
+                return View();
+            }
+        
         }
 
         public ActionResult LogOut()
@@ -109,8 +112,9 @@ namespace TourGuideWebsite.Controllers
                 else
                     return View(userProfile);
             }
-            catch
+            catch(Exception e)
             {
+                TempData["UserProfileException"] = "" + e.Message;
                 return View(userProfile);
             }
         }
@@ -157,9 +161,10 @@ namespace TourGuideWebsite.Controllers
                     return View();
                 }
             }
-            catch
+            catch(Exception e)
             {
-                 return View();
+                TempData["ChangePassException"] = "Something went wrong. " + e.Message;
+                return View();
             }
         }
 
@@ -181,10 +186,8 @@ namespace TourGuideWebsite.Controllers
                     BTourGuideOp tourOp = new BTourGuideOp();
                     List<AUser> users = tourOp.GetUsers();
                     AUser user = users.FirstOrDefault(u => u.UserEmail == model.Email);
-                    // If a user with the email provided was found:
-                    if (user != null)
+                    if (user != null)  // If a user with the email provided was found
                     {
-
                         // Generae password token that will be used in the email link to authenticate user
                          string resetToken = Guid.NewGuid().ToString();
 
@@ -227,7 +230,7 @@ namespace TourGuideWebsite.Controllers
                         }
                         catch (Exception e)
                         {
-                            ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                            TempData["EmailException"] = "Issue sending email: " + e.Message;
                         }
                     }
 
@@ -248,7 +251,7 @@ namespace TourGuideWebsite.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                TempData["Exception"] = "" + e.Message;
                 return View(model);
             }
         }
@@ -265,34 +268,42 @@ namespace TourGuideWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ResetPassword(ResetPassword model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                BTourGuideOp tourOp = new BTourGuideOp();
-                List<AUser> users = tourOp.GetUsers();
-                // hasing the resetToken from the url
-                HashComputer hashComp = new HashComputer();
-                string hashedResetToken = hashComp.GetPasswordHashAndSalt(model.ReturnToken);
-                // Checking if the hash matches the resetToken from the DB
-                AUser user = users.FirstOrDefault(u => u.ResetToken == hashedResetToken);
-                if(user!=null)
+                if (ModelState.IsValid)
                 {
-                    // password salting & hashing
-                    PasswordManager passMan = new PasswordManager();
-                    string salt = null;
-                    string passwordHash = passMan.GeneratePasswordHash(model.Password, out salt);
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    List<AUser> users = tourOp.GetUsers();
+                    // hasing the resetToken from the url
+                    HashComputer hashComp = new HashComputer();
+                    string hashedResetToken = hashComp.GetPasswordHashAndSalt(model.ReturnToken);
+                    // Checking if the hash matches the resetToken from the DB
+                    AUser user = users.FirstOrDefault(u => u.ResetToken == hashedResetToken);
+                    if (user != null)
+                    {
+                        // password salting & hashing
+                        PasswordManager passMan = new PasswordManager();
+                        string salt = null;
+                        string passwordHash = passMan.GeneratePasswordHash(model.Password, out salt);
 
-                    user.UserPassword = passwordHash;
-                    user.Salt = salt;
-                    user.ResetToken = null;
-                    tourOp.EditUser(user);
-                    ViewBag.Message = "Successfully Changed";
+                        user.UserPassword = passwordHash;
+                        user.Salt = salt;
+                        user.ResetToken = null;
+                        tourOp.EditUser(user);
+                        ViewBag.Message = "Successfully Changed";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Something went wrong!";
+                    }
                 }
-                else
-                {
-                    ViewBag.Message = "Something went wrong!";
-                }
+                return View(model);
             }
-            return View(model);
+            catch(Exception e)
+            {
+                TempData["Exception"] = "" + e.Message;
+                return View();
+            }
         }
         
 
@@ -303,10 +314,6 @@ namespace TourGuideWebsite.Controllers
         {
             return View();
         }
-
-       
-
-
     }
 }
 

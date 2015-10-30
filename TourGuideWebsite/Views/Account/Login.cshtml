@@ -57,6 +57,14 @@
     </div>
 }
 
+<!-- Exception msg -->
+@if (TempData["LoginException"] != null)
+{
+    <div class="container">
+        <h2>@TempData["LoginException"]</h2>
+    </div>
+}
+
 <script type="text/javascript">
     function gotoRegistration() {
         window.location.href = '../../Home/Registration';

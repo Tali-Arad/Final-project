@@ -124,9 +124,8 @@ namespace TourGuideWebsite.Controllers
                           }
                           catch (Exception e)
                           {
-                              ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                             TempData["EmailException"] = "Issue sending email: " + e.Message;
                           }
-
                           return RedirectToAction("Index");
                       }
                       else
@@ -140,8 +139,9 @@ namespace TourGuideWebsite.Controllers
                     return View(userdetails);
                 }
             }
-            catch
+            catch(Exception e)
             {
+                TempData["Exception"] = "" + e.Message;
                 return View(userdetails);
             }
         }
@@ -191,8 +191,9 @@ namespace TourGuideWebsite.Controllers
                 else
                     return View(userDetails);
             }
-            catch
+            catch(Exception e)
             {
+                TempData["EditException"] = "Error in user edit: " + e.Message;
                 return View(userDetails);
             }
         }
@@ -224,8 +225,9 @@ namespace TourGuideWebsite.Controllers
                 tourOp.DeleteUser(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
+                TempData["DeleteException"] = "Error in user deletion: " + e.Message;
                 return View();
             }
         }

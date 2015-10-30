@@ -83,3 +83,21 @@
         </div>
     </div>
 }
+
+<!-- Exception msg-->
+@if(TempData["EmailException"]!=null)
+{
+    <div class="container">
+        <h2>
+            @TempData["EmailException"];
+        </h2>
+    </div>
+}
+@if (TempData["Exception"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["Exception"];
+        </h2>
+    </div>
+}

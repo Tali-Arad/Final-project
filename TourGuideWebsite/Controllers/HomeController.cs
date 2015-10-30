@@ -30,9 +30,6 @@ namespace TourGuideWebsite.Controllers
             }
             ViewBag.SearchMessage = TempData["SearchMessage"].ToString();
             ViewBag.SearchTextbox = TempData["SearchTextbox"].ToString();
-        //    BTourGuideOp tourOp = new BTourGuideOp();
-       //     List<AEvent> events = tourOp.GetEvents();
-           // return View(events);
             return View();
         }
 
@@ -68,66 +65,75 @@ namespace TourGuideWebsite.Controllers
         [HttpPost]
         public ActionResult RegForm(RegResponse rr, string id)
         {
-            
-            if (ModelState.IsValid)
+            try
             {
-                AReg reg = new AReg();
-                reg.TourID = id;
-                reg.TourDate = rr.EventInfo.TourDate;
-                reg.RegFirstName = rr.FirstName;
-                reg.RegLastName = rr.LastName;
-                reg.RegBirthday = rr.Birthday;
-                reg.UserID = rr.UserInfo.UserID;
-                reg.RegTime = DateTime.Now;
-                reg.WillAttend = rr.WillAttend;
-                BTourGuideOp tourOp = new BTourGuideOp();
-                tourOp.AddReg(reg);
 
-                // Send email to user:
-              
-                // Email stuff
-                string subject = "Your registartion to the tour " + rr.EventInfo.TourName + " on " + rr.EventInfo.TourDate.ToString("dd-MM-yyyy");
-                string body = "Thank you for your registartion to the tour " + rr.EventInfo.TourName + " on " + rr.EventInfo.TourDate.ToString("dd-MM-yyyy") + "<br />" +
-                               "Registration name: " + rr.FirstName + " " + rr.LastName + "<br />" +
-                               "<a href='" + Url.Action("EventDetails", "Home", new { id = rr.EventInfo.TourID, date = rr.EventInfo.TourDate }, "http")
-                               + "'>Click here</a> to see the tour details." + "<br />" +
-                               "To see your user profile <a href='" + Url.Action("UserProfile", "Account", new { username = rr.UserInfo.Username }, "http")
-                               + "'>Click here</a>";
-                        
-                string from = "tali85arad@gmail.com";
-
-                MailMessage message = new MailMessage(from, rr.UserInfo.UserEmail);
-                message.Subject = subject;
-                message.Body = body;
-                message.IsBodyHtml = true;
-
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+                if (ModelState.IsValid)
                 {
-                    UseDefaultCredentials = false,
-                    EnableSsl = true,
-                    Timeout = 20000,
-                    Credentials = new NetworkCredential("tali85arad@gmail.com", "henhqwcfvmtzplgb")
+                    AReg reg = new AReg();
+                    reg.TourID = id;
+                    reg.TourDate = rr.EventInfo.TourDate;
+                    reg.RegFirstName = rr.FirstName;
+                    reg.RegLastName = rr.LastName;
+                    reg.RegBirthday = rr.Birthday;
+                    reg.UserID = rr.UserInfo.UserID;
+                    reg.RegTime = DateTime.Now;
+                    reg.WillAttend = rr.WillAttend;
+                    BTourGuideOp tourOp = new BTourGuideOp();
+                    tourOp.AddReg(reg);
 
-                };
+                    // Send email to user:
 
-                // Attempt to send the email
-                try
-                {
-                    client.Send(message);
+                    // Email stuff
+                    string subject = "Your registartion to the tour " + rr.EventInfo.TourName + " on " + rr.EventInfo.TourDate.ToString("dd-MM-yyyy");
+                    string body = "Thank you for your registartion to the tour " + rr.EventInfo.TourName + " on " + rr.EventInfo.TourDate.ToString("dd-MM-yyyy") + "<br />" +
+                                   "Registration name: " + rr.FirstName + " " + rr.LastName + "<br />" +
+                                   "<a href='" + Url.Action("EventDetails", "Home", new { id = rr.EventInfo.TourID, date = rr.EventInfo.TourDate }, "http")
+                                   + "'>Click here</a> to see the tour details." + "<br />" +
+                                   "To see your user profile <a href='" + Url.Action("UserProfile", "Account", new { username = rr.UserInfo.Username }, "http")
+                                   + "'>Click here</a>";
 
-                    // Updating the IsSentEmail in the DB
+                    string from = "tali85arad@gmail.com";
 
-                    tourOp.UpdateEmailSent(rr.UserInfo.UserID, rr.FirstName, rr.LastName, rr.EventInfo.TourID, rr.EventInfo.TourDate, true);
-                    return View("ThankYou", rr);
+                    MailMessage message = new MailMessage(from, rr.UserInfo.UserEmail);
+                    message.Subject = subject;
+                    message.Body = body;
+                    message.IsBodyHtml = true;
+
+                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+                    {
+                        UseDefaultCredentials = false,
+                        EnableSsl = true,
+                        Timeout = 20000,
+                        Credentials = new NetworkCredential("tali85arad@gmail.com", "henhqwcfvmtzplgb")
+
+                    };
+
+                    // Attempt to send the email
+                    try
+                    {
+                        client.Send(message);
+
+                        // Updating the IsSentEmail in the DB
+
+                        tourOp.UpdateEmailSent(rr.UserInfo.UserID, rr.FirstName, rr.LastName, rr.EventInfo.TourID, rr.EventInfo.TourDate, true);
+                        return View("ThankYou", rr);
+                    }
+                    catch (Exception e)
+                    {
+                        TempData["EmailException"] = "Issue sending email: " + e.Message;
+                        return View(rr);
+                    }
                 }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", "Issue sending email: " + e.Message);
+                else
                     return View(rr);
-                }
-            }
-            else
+            } 
+            catch(Exception e)
+            {
+            
+                TempData["Exception"] = "" + e.Message;
                 return View(rr);
+            }
  
         }
 
@@ -140,33 +146,39 @@ namespace TourGuideWebsite.Controllers
         [HttpPost]
         public ActionResult Registration(UserDetails userdetails, string returnUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Checking the username availability in the server
-                BTourGuideOp op = new BTourGuideOp();
-                List<AUser> users = op.GetUsers();
-                if (!users.Any(u => u.Username == userdetails.Username))
+                if (ModelState.IsValid)
                 {
-                    // password salting & hashing
-                    PasswordManager passMan = new PasswordManager();
-                    string salt = null;
-                    string passwordHash = passMan.GeneratePasswordHash(userdetails.UserPassword, out salt);
-
-
-                    AUser user = new AUser();
-                    user.RegTime = DateTime.Now;
-                    user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
-                    user.UserFirstName = userdetails.UserFirstName;
-                    user.UserLastName = userdetails.UserLastName;
-                    user.UserEmail = userdetails.UserEmail;
-                    user.UserPhone = userdetails.UserPhone;
-                    user.UserPassword = passwordHash;
-                    user.Salt = salt;
-                    user.Username = userdetails.Username;
-                    user.UserBirthday = userdetails.UserBirthday;
-                    BTourGuideOp tourOp = new BTourGuideOp();
-                    tourOp.AddUser(user);
-                    return RedirectToAction("Login", "Account");
+                    // Checking the username availability in the server
+                    BTourGuideOp op = new BTourGuideOp();
+                    List<AUser> users = op.GetUsers();
+                    if (!users.Any(u => u.Username == userdetails.Username))
+                    {
+                        // password salting & hashing
+                        PasswordManager passMan = new PasswordManager();
+                        string salt = null;
+                        string passwordHash = passMan.GeneratePasswordHash(userdetails.UserPassword, out salt);
+                        AUser user = new AUser();
+                        user.RegTime = DateTime.Now;
+                        user.UserIP = Request.ServerVariables["REMOTE_ADDR"];
+                        user.UserFirstName = userdetails.UserFirstName;
+                        user.UserLastName = userdetails.UserLastName;
+                        user.UserEmail = userdetails.UserEmail;
+                        user.UserPhone = userdetails.UserPhone;
+                        user.UserPassword = passwordHash;
+                        user.Salt = salt;
+                        user.Username = userdetails.Username;
+                        user.UserBirthday = userdetails.UserBirthday;
+                        BTourGuideOp tourOp = new BTourGuideOp();
+                        tourOp.AddUser(user);
+                        return RedirectToAction("Login", "Account");
+                    }
+                    else
+                    {
+                        userdetails.Username = null;
+                        return View();
+                    }
                 }
                 else
                 {
@@ -174,9 +186,9 @@ namespace TourGuideWebsite.Controllers
                     return View();
                 }
             }
-            else
+            catch(Exception e)
             {
-                userdetails.Username = null;
+                TempData["Exception"] = "" + e.Message;
                 return View();
             }
         }

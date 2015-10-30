@@ -97,7 +97,16 @@
         </div>
     </div>
     <p><input type="hidden" value="@ViewBag.returnUrl" /></p>
-    <!-- Add client-side validation -->
+}
+
+<!-- Exception msg -->
+@if (TempData["Exception"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["Exception"];
+        </h2>
+    </div>
 }
 
 <script type="text/javascript">

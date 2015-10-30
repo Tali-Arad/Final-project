@@ -103,6 +103,25 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
+<!-- Exception mgs -->
+@if(TempData["EmailException"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["EmailException"];
+        </h2>
+    </div>
+}
+@if (TempData["Exception"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["Exception"];
+        </h2>
+    </div>
+}
+
 <script type="text/javascript">
 
     //the min chars for username

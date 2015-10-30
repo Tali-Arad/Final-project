@@ -89,3 +89,13 @@
         @Html.ActionLink("Back to List", "Index")
     </p>
 }
+
+<!-- Exception mgs -->
+@if(TempData["DeleteException"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["DeleteException"];
+        </h2>
+    </div>
+}

@@ -92,3 +92,13 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<!-- Exception msg -->
+@if (TempData["EditException"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["EditException"];
+        </h2>
+    </div>
+}
+

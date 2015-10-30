@@ -86,8 +86,9 @@ namespace TourGuideWebsite.Controllers
                     return View(reg);
                 }
             }
-            catch
+            catch(Exception e)
             {
+                TempData["CreateException"] = "Error in Reg creation: " + e.Message;
                 return View(reg);
             }
         }
@@ -121,8 +122,9 @@ namespace TourGuideWebsite.Controllers
                 else
                     return View(reg);
             }
-            catch
+            catch(Exception e)
             {
+                TempData["EditException"] = "Error in Reg edit: " + e.Message;
                 return View(reg);
             }
         }
@@ -154,8 +156,9 @@ namespace TourGuideWebsite.Controllers
                 tourOp.DeleteReg(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
+                TempData["DeleteException"] = "Error in Reg deletion: " + e.Message;
                 return View();
             }
         }

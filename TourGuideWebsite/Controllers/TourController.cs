@@ -60,8 +60,9 @@ namespace TourGuideWebsite.Controllers
                     return View();
                 }
             }
-            catch
+            catch(Exception e)
             {
+                TempData["CreateException"] = "Error in tour creation: " + e.Message;
                 return View();
             }
         }
@@ -105,8 +106,9 @@ namespace TourGuideWebsite.Controllers
                 }
                 
             }
-            catch
+            catch (Exception e)
             {
+                TempData["EditException"] = "Error in tour edit: " + e.Message;
                 return View(tour);
             }
         }
@@ -138,8 +140,9 @@ namespace TourGuideWebsite.Controllers
                 tourOp.DeleteTour(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                TempData["DeleteException"] = "Error in tour deletion: " + e.Message;
                 return View();
             }
         }
@@ -187,8 +190,9 @@ namespace TourGuideWebsite.Controllers
                     return View(eventDetails);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                TempData["AddEventException"] = "Error in adding event: " + e.Message;
                 return View(eventDetails);
             }
         }

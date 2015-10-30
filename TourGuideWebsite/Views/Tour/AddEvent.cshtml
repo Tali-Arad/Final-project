@@ -77,3 +77,13 @@
         <div>
             @Html.ActionLink("Back to Tours", "Index")
         </div>
+
+<!-- Exception mgs -->
+@if(TempData["AddEventException"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["AddEventException"];
+        </h2>
+    </div>
+}

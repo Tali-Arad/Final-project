@@ -93,3 +93,13 @@
 <div class="container">
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<!-- Exception mgs -->
+@if(TempData["CreateException"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["CreateException"];
+        </h2>
+    </div>
+}

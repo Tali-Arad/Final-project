@@ -23,7 +23,5 @@ namespace TourGuideWebsite.Controllers
             List<ATour> tours = tourOp.GetTours();
             return View(tours);
         }
-
-    }
-    
+    }   
 }

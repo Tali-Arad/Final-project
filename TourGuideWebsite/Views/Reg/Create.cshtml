@@ -121,6 +121,16 @@
     </div>
 }
 
+<!-- Exception msg-->
+@if (TempData["CreateException"] != null)
+{
+    <div class="container">
+        <h2>
+            @TempData["CreateException"];
+        </h2>
+    </div>
+}
+
 @*<script src="@Url.Content("~/JS/bootstrap-accessibility_1.0.3.min.js")"></script>*@
 <script src="@Url.Content("~/JS/functions.js")"></script>
 <script src="@Url.Content("~/JS/jquery.dataTables.min.js")"></script>

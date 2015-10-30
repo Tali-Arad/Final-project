@@ -115,6 +115,15 @@ else
     </div>
 }
 
+<!-- Exception msg -->
+
+@if (TempData["UserProfileException"] != null)
+{
+    <div class="container">
+        <h2>@TempData["UserProfileException"]</h2>
+    </div>
+}
+
 <script type="text/javascript">
     function gotoChangePassword() {
         window.location.href = '@Url.Action("ChangePassword", new { username = ViewBag.Username })'
